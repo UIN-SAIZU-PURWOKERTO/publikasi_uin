@@ -1,4 +1,4 @@
-<nav class='main-header navbar navbar-expand navbar-green navbar-dark'>
+<nav class="main-header navbar navbar-expand navbar-green navbar-dark">
 
     <!-- LEFT -->
     <ul class="navbar-nav">
@@ -34,7 +34,7 @@
         <?php endforeach; ?>
 
         <!-- INI UNTUK MENU ADMIN SAJA -->
-        <?php if (!empty($_SESSION['id']) && $_SESSION['id']['role_id'] == 1) { ?>
+        <?php if ($this->session->userdata('role_id')=== "1") { ?>
         <!-- NOTIFIKASI -->
         <!-- <ul class="navbar-nav ml-3"> -->
         <li class="nav-item dropdown">
@@ -95,7 +95,7 @@
             </a>
         </li> -->
 
-        <?php if(['userinfo'] != ""){?>
+        <?php if ($this->session->userdata('role_id') === "1") { ?>
         <!-- Profile -->
         <li class="nav-item">
             <a class="nav-link" href="">

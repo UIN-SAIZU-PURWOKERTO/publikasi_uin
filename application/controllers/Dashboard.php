@@ -49,7 +49,7 @@ class Dashboard extends CI_Controller
 
         $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
         $data['javascript'] = array('data-table.js');
-        $data['javascript_controllers'] = array('dashboard_authors.js','pesan.js');
+        $data['javascript_controllers'] = array('pesan.js');
 
         // $this->load->library('pagination');
 
@@ -114,7 +114,7 @@ class Dashboard extends CI_Controller
 
         $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
         $data['javascript'] = array('data-table.js');
-        $data['javascript_controllers'] = array('dashboard_authors.js','pesan.js');
+        $data['javascript_controllers'] = array('pesan.js');
 
         // $data['aff'] = $this->dashboard->get_affiliations();
         $data['aff'] = $this->db->get('sinta_affiliations')->row_array();

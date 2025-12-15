@@ -64,6 +64,7 @@ class Auth extends CI_Controller
                 $this->session->set_userdata($data);
 
                 $this->session->set_flashdata('flash', 'Selamat datang di UIN Saizu Purwokerto');
+                // sendTemplateView(1, 'dashboard/authors', $data);
                 redirect('dashboard/authors');
                 
             } 
@@ -75,11 +76,14 @@ class Auth extends CI_Controller
 
     public function log_out()
     {
-        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('id');
+        unset($_SESSION['id']);
 
         $this->session->set_flashdata('flashinfo', 'Sesi berakhir, anda telah logout');
-        redirect('auth');
-        $this->session->sess_destroy();
+        session_destroy(); // pastikan session PHP ikut hilang
+
+        redirect('dashboard/authors');
     }
+
     
 }
