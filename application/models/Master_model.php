@@ -22,6 +22,7 @@ class Master_model extends CI_Model
 
     public function getAuthor()
     {
+        $this->db->where('is_deleted', '0');
         return $this->db->get('sinta_authors')->result_array();
     }
 
@@ -48,6 +49,14 @@ class Master_model extends CI_Model
         $data["is_delete"]        = 0;
 
         $this->db->insert('mst_fakultas',$data);
+    }
+
+    public function deleteauthor($id)
+    {
+        $data["is_deleted"]        = 1;
+
+        $this->db->where('id', $id);
+        $this->db->update('sinta_authors',$data);
     }
 
 }

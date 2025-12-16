@@ -25,6 +25,7 @@ class Dashboard extends CI_Controller
 
         foreach ($query->result() as $row) {
             $data['lecturers'][] = [
+                'id' => $row->id,
                 'foto' => $row->foto,
                 'nama' => $row->name,
                 'dept' => $row->department,
@@ -88,6 +89,7 @@ class Dashboard extends CI_Controller
         $data['lecturers'] = [];
         foreach ($query->result() as $r) {
             $data['lecturers'][] = [
+                'id' => $r->id,
                 'photo' => $r->photo,
                 'nama' => $r->name,
                 'dept' => $r->department,
@@ -122,6 +124,21 @@ class Dashboard extends CI_Controller
         // die;
 
         sendTemplateView(1, 'pub/affiliations', $data);
+    }
+
+    public function detail($id)
+    {
+        $data['author'] = $this->dashboard->getDetailAuthor($id);
+        // $data['citations_per_year'] = $this->dashboard->getCitationsPerYear($id);
+        // print_r($data['author']);
+        // die;
+
+        if (!$data['author']) {
+            show_404();
+        }
+
+        sendTemplateView(1, 'pub/detailAuthor', $data);
+        // $this->load->view('pub/detailAuthor', $data);
     }
 
 }

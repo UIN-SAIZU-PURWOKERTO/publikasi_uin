@@ -19,6 +19,20 @@ class Dashboard_model extends CI_Model
     {
         return $this->db->count_all('sinta_affiliations');
     }
-    
+
+    public function getDetailAuthor($id)
+    {
+        $author = $this->db
+            ->where('id', $id)
+            ->get('sinta_authors')
+            ->row_array();
+
+        if ($author) {
+            $author['subject'] = explode(',', $author['subject']);
+        }
+
+        return $author;
+    }
+
 
 }

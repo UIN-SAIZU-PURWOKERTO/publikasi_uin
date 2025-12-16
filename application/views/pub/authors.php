@@ -149,45 +149,47 @@
     <div class="lecturer-grid">
 
         <?php foreach($lecturers as $d): ?>
-        <div class="profile-card progress-animate">
+        <a href="<?= base_url('dashboard/detail/'.$d['id']) ?>" style="text-decoration:none;color:inherit">
 
-            <div class="profile-header">
-                <img src="<?= $d['photo'] ?>">
-                <div>
-                    <div class="name"><?= $d['nama'] ?></div>
-                    <div class="department"><?= $d['dept'] ?></div>
+            <div class="profile-card progress-animate">
+
+                <div class="profile-header">
+                    <img src="<?= $d['photo'] ?>">
+                    <div>
+                        <div class="name"><?= $d['nama'] ?></div>
+                        <div class="department"><?= $d['dept'] ?></div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="info-box">
-                <div><b>Artikel:</b> Scholar <?= $d['artikel_scholar'] ?> | Scopus <?= $d['artikel_scopus'] ?> | WoS
-                    <?= $d['artikel_wos'] ?></div>
-                <div><b>Citation:</b> Scholar <?= $d['cit_scholar'] ?> | Scopus <?= $d['cit_scopus'] ?> | WoS
-                    <?= $d['cit_wos'] ?></div>
-            </div>
-
-            <div style="margin-top:10px;">
-                <?php foreach($d['subject'] as $sub): ?>
-                <span class="subject-badge"><?= trim($sub) ?></span>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="progress-box">
-                <div class="progress-title">Score All: <?= $d['score_all'] ?></div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="--value:<?= min($d['score_all'],100) ?>%;"></div>
+                <div class="info-box">
+                    <div><b>Artikel:</b> Scholar <?= $d['artikel_scholar'] ?> | Scopus <?= $d['artikel_scopus'] ?> | WoS
+                        <?= $d['artikel_wos'] ?></div>
+                    <div><b>Citation:</b> Scholar <?= $d['cit_scholar'] ?> | Scopus <?= $d['cit_scopus'] ?> | WoS
+                        <?= $d['cit_wos'] ?></div>
                 </div>
-            </div>
 
-            <div class="progress-box">
-                <div class="progress-title">Score 3 Years: <?= $d['score_3_years'] ?></div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="--value:<?= min($d['score_3_years'],100) ?>%;"></div>
+                <div style="margin-top:10px;">
+                    <?php foreach($d['subject'] as $sub): ?>
+                    <span class="subject-badge"><?= trim($sub) ?></span>
+                    <?php endforeach; ?>
                 </div>
-            </div>
 
-        </div>
-        <?php endforeach; ?>
+                <div class="progress-box">
+                    <div class="progress-title">Score All: <?= $d['score_all'] ?></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="--value:<?= min($d['score_all'],100) ?>%;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-box">
+                    <div class="progress-title">Score 3 Years: <?= $d['score_3_years'] ?></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="--value:<?= min($d['score_3_years'],100) ?>%;"></div>
+                    </div>
+                </div>
+
+            </div>
+            <?php endforeach; ?>
 
     </div>
 
