@@ -9,6 +9,7 @@ class Dashboard extends CI_Controller
         // ini untuk login
         // is_logged_in();
         $this->load->model('Dashboard_model', 'dashboard');
+        $this->load->model('Master_model', 'master');
         $this->load->helper('master', 'master');
     }
 
@@ -20,7 +21,9 @@ class Dashboard extends CI_Controller
         $data['javascript'] = array('data-table.js');
         $data['javascript_controllers'] = array('dashboard.js','pesan.js');
 
-        $query = $this->db->get('sinta_authors');
+        $query = $this->db
+                ->where('is_deleted', 0)
+                ->get('sinta_authors');
         $data['lecturers'] = [];
 
         foreach ($query->result() as $row) {
@@ -82,7 +85,7 @@ class Dashboard extends CI_Controller
         //     ->limit($config['per_page'], $page)
         //     ->get('sinta_authors');
 
-        $query = $this->db
+        $query = $this->db->where('is_deleted', 0)
             ->order_by('name', 'ASC')
             ->get('sinta_authors');
 
@@ -118,9 +121,44 @@ class Dashboard extends CI_Controller
         $data['javascript'] = array('data-table.js');
         $data['javascript_controllers'] = array('pesan.js');
 
-        // $data['aff'] = $this->dashboard->get_affiliations();
-        $data['aff'] = $this->db->get('sinta_affiliations')->row_array();
-        // print_r($data['aff']);
+        // artikel per prodi
+        $data['prodi_articles'] = $this->db
+                                ->select('
+                                    p.nama_program_studi AS prodi,
+                                    p.id_jenjang_pendidikan AS jenjang,
+                                    p.nama_jenjang_pendidikan AS jenjang_name,
+                                    COALESCE(SUM(au.articles_scopus),0)  AS scopus,
+                                    COALESCE(SUM(au.articles_scholar),0) AS scholar,
+                                    COALESCE(SUM(au.articles_wos),0)     AS wos
+                                ')
+                                ->from('mst_prodi p')
+                                ->join(
+                                    'sinta_authors au',
+                                    'au.prodi_id = p.id AND au.is_deleted = 0',
+                                    'left'
+                                )
+                                ->group_by('p.id, p.id_jenjang_pendidikan')
+                                ->order_by('p.id_jenjang_pendidikan, p.nama_program_studi', 'ASC')
+                                ->get()
+                                ->result_array();
+
+
+        // print_r($data['prodi_articles']);
+        // die;
+
+        // $data['aff'] = $this->db->get('sinta_affiliations')->row_array();
+        $data['aff'] = $this->db->select('a.*, au.name, au.department, au.photo, au.prodi_id')
+                        ->from('sinta_affiliations a')
+                        ->join(
+                            'sinta_authors au',
+                            'au.id = a.id AND au.is_deleted = 0',
+                            'left'
+                        )
+                        ->get()
+                        ->row_array();
+
+
+        // print_r($data['prodi']);
         // die;
 
         sendTemplateView(1, 'pub/affiliations', $data);
