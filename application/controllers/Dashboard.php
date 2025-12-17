@@ -167,6 +167,7 @@ class Dashboard extends CI_Controller
     public function detail($id)
     {
         $data['author'] = $this->dashboard->getDetailAuthor($id);
+        $data['result'] = $this->dashboard->getScopusArticlesByAuthor($id);
         // $data['citations_per_year'] = $this->dashboard->getCitationsPerYear($id);
         // print_r($data['author']);
         // die;

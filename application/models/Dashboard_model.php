@@ -34,5 +34,11 @@ class Dashboard_model extends CI_Model
         return $author;
     }
 
-
+    public function getScopusArticlesByAuthor($id)
+    {
+        return $this->db
+            ->where('author_id', $id)
+            ->get('scopus_publications')
+            ->result_array();
+    }
 }

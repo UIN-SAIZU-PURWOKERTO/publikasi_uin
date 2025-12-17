@@ -91,3 +91,77 @@ $subjects = explode(',', $author['subjects']);
 </div>
 
 <br><br>
+
+<div class="row">
+    <!-- TABEL KIRI -->
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="mb-3">Data Scopus Publication</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tahun</th>
+                                <th>Judul</th>
+                                <th>Creator</th>
+                                <th>Citation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1; foreach ($result as $data) : ?>
+                            <tr>
+                                <td><?= $no++; ?></td>
+                                <td><?= $data['year']; ?></td>
+                                <td><?= $data['publication_name']; ?></td>
+                                <td><?= $data['creator']; ?></td>
+                                <td><?= $data['citation']; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- TABEL KANAN -->
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="mb-3">Data Google Scholar Publications</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tahun</th>
+                                <th>Judul</th>
+                                <th>Creator</th>
+                                <th>Citation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1; foreach ($result2 as $data) : ?>
+                            <tr>
+                                <td><?= $no++; ?></td>
+                                <td><?= $data['year']; ?></td>
+                                <td><?= $data['publication_name']; ?></td>
+                                <td><?= $data['creator']; ?></td>
+                                <td><?= $data['citation']; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
