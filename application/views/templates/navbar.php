@@ -57,6 +57,10 @@
                     <i class="fas fa-users mr-2"></i> Author / Tendik
                     <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
                 </a>
+                <a href="<?= base_url('scopus/import') ?>" class="dropdown-item">
+                    <i class="fas fa-users mr-2"></i> Import Scopus
+                    <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
+                </a>
             </div>
         </li>
 
