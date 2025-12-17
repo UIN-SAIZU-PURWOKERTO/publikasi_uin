@@ -13,6 +13,12 @@ class Scopus_model extends CI_Model
             ->count_all_results($this->table) > 0;
     }
 
+    public function getPublication()
+    {
+        // $this->db->where('is_delete', '0');
+        return $this->db->get('scopus_publications')->result_array();
+    }
+
     public function insert($data)
     {
         return $this->db->insert($this->table, $data);

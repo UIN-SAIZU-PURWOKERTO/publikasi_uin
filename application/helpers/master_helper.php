@@ -1,5 +1,16 @@
 <?php
 
+function getAuthor($code, $strcol)
+{
+    $ci =   get_instance();
+    $result = $ci->db->get_where('sinta_authors', ['id' => $code])->row_array();
+    if ($result) {
+        $response =  $result[$strcol];
+    } else {
+        $response =  "-";
+    }
+    return $response;
+}
 function getRole($code, $strcol)
 {
     $ci =   get_instance();

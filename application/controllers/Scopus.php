@@ -8,7 +8,9 @@ class Scopus extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Scopus_model');
+        is_logged_in();
+        $this->load->model('Scopus_model', 'scopus');
+        $this->load->helper('master', 'master');
     }
 
     public function import()
@@ -22,6 +24,9 @@ class Scopus extends CI_Controller
             'sweetalert2/sweetalert2.min.js');
         $data['javascript'] = array('data-table.js','select2.js');
         $data['javascript_controllers'] = array('pesan.js','pegawai.js');
+        $data['result'] = $this->scopus->getPublication();
+        // print_r($data['result']);
+        // die;
         // $this->load->view('scopus/import');
         // print_r("ini form import");
         sendTemplateView(1, 'scopus/import', $data);
