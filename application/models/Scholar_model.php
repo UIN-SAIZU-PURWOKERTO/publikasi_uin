@@ -5,6 +5,83 @@ class Scholar_model extends CI_Model
 {
     private $table = 'scholar_publications';
 
+    protected $column_order = [
+        null,
+        'author_id',
+        'accreditation',
+        'title',
+        'journal',
+        'author',
+        'year',
+        'citation'
+    ];
+
+    protected $column_search = [
+        'author_id',
+        'accreditation',
+        'title',
+        'journal',
+        'author',
+        'year',
+        'citation'
+    ];
+
+    protected $order = ['year' => 'desc'];
+
+    private function _get_datatables_query()
+    {
+        $this->db->from($this->table);
+
+        // 🔎 SEARCH
+        $search = $this->input->post('search', true);
+        if (!empty($search['value'])) {
+            $this->db->group_start();
+            foreach ($this->column_search as $item) {
+                $this->db->or_like($item, $search['value']);
+            }
+            $this->db->group_end();
+        }
+
+        // ↕ ORDER
+        $order = $this->input->post('order', true);
+        if (!empty($order)) {
+            $colIndex = (int) $order[0]['column'];
+            $dir = $order[0]['dir'];
+
+            // hindari kolom NULL (No)
+            if (isset($this->column_order[$colIndex]) && $this->column_order[$colIndex] !== null) {
+                $this->db->order_by($this->column_order[$colIndex], $dir);
+            }
+        } else {
+            $this->db->order_by(key($this->order), current($this->order));
+        }
+    }
+
+    public function get_datatables()
+    {
+        $this->_get_datatables_query();
+
+        $length = (int) $this->input->post('length', true);
+        $start  = (int) $this->input->post('start', true);
+
+        if ($length !== -1) {
+            $this->db->limit($length, $start);
+        }
+
+        return $this->db->get()->result();
+    }
+
+    public function count_filtered()
+    {
+        $this->_get_datatables_query();
+        return $this->db->count_all_results();
+    }
+
+    public function count_all()
+    {
+        return $this->db->count_all($this->table);
+    }
+
     public function exists($identifier, $year)
     {
         return $this->db
@@ -143,8 +220,8 @@ class Scholar_model extends CI_Model
     public function upsertPublication($data)
     {
         $exists = $this->db
-            ->where('title', $data['title'])
             ->where('journal', $data['journal'])
+            ->where('author', $data['author'])
             ->where('year', $data['year'])
             ->get('scholar_publications')
             ->row();

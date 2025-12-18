@@ -18,6 +18,49 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+$(function() {
+    $('#tableScholar').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "<?= base_url('scholar/ajax_publication') ?>",
+            type: "POST",
+            data: function(d) {
+                d['<?= $this->security->get_csrf_token_name(); ?>'] =
+                    '<?= $this->security->get_csrf_hash(); ?>';
+            }
+        },
+        columns: [{
+                data: 0
+            },
+            {
+                data: 1
+            },
+            {
+                data: 2
+            },
+            {
+                data: 3
+            },
+            {
+                data: 4
+            },
+            {
+                data: 5
+            },
+            {
+                data: 6
+            },
+            {
+                data: 7
+            }
+        ]
+    });
+
+});
+</script>
+
+<script>
 const ctx = document.getElementById('metricRadar');
 
 new Chart(ctx, {

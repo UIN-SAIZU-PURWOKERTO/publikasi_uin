@@ -36,11 +36,11 @@
 
 
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="tableScholar" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>author sinta</th>
+                                <th>Author Sinta</th>
                                 <th>accreditation</th>
                                 <th>title</th>
                                 <th>journal</th>
@@ -49,32 +49,8 @@
                                 <th>citation</th>
                             </tr>
                         </thead>
-                        <tbody>
-
-                            <?php
-                            $no = 1;
-								foreach ($result as $data) : ?>
-                            <tr>
-                                <!-- <td>
-
-                                    <a href="<?= base_url('master/hapususer/'); ?><?php echo $data['jadwal_id']; ?>"
-                                        class="btn btn-outline-danger btn-sm tombol-hapus"><i class="fa fa-trash"></i>
-                                        Hapus
-                                    </a>
-                                </td> -->
-                                <td><?= $no++; ?></td>
-                                <td><?= getAuthor($data['author_id'], 'name'); ?></td>
-                                <td><?= $data['accreditation']; ?></td>
-                                <td><?= $data['title']; ?></td>
-                                <td><?= $data['journal']; ?></td>
-                                <td><?= $data['author']; ?></td>
-                                <td><?= $data['year'];?></td>
-                                <td><?= $data['citation'];?></td>
-                            </tr>
-                            <?php endforeach; ?>
-
-                        </tbody>
                     </table>
+
                 </div>
 
             </div>

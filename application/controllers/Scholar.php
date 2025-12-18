@@ -8,7 +8,7 @@ class Scholar extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // is_logged_in();
+        is_logged_in();
         $this->load->model('Scholar_model', 'scholar');
         $this->load->model('Scopus_model', 'scopus');
         $this->load->helper('master', 'master');
@@ -25,13 +25,51 @@ class Scholar extends CI_Controller
             'sweetalert2/sweetalert2.min.js');
         $data['javascript'] = array('data-table.js','select2.js');
         $data['javascript_controllers'] = array('pesan.js','pegawai.js');
-        $data['result'] = $this->scholar->getPublication();
+        // $data['result'] = $this->scholar->getPublication();
         // print_r($data['result']);
         // die;
         // $this->load->view('scopus/import');
         // print_r("ini form import");
         sendTemplateView(1, 'scholar/import', $data);
     }
+
+    public function ajax_publication()
+    {
+        // WAJIB untuk DataTables
+        header('Content-Type: application/json');
+
+        $start = (int) $this->input->post('start', true);
+        $draw  = (int) $this->input->post('draw', true);
+
+        $list = $this->scholar->get_datatables();
+
+        $data = [];
+        $no = $start;
+
+        foreach ($list as $row) {
+            $no++;
+            $data[] = [
+                $no,
+                getAuthorArray($row->author_id,'name') ?? '-',
+                $row->accreditation ?? '-',
+                $row->title ?? '-',
+                $row->journal ?? '-',
+                $row->author ?? '-',
+                $row->year ?? '-',
+                $row->citation ?? 0
+            ];
+        }
+
+        echo json_encode([
+            "draw" => $draw,
+            "recordsTotal" => $this->scholar->count_all(),
+            "recordsFiltered" => $this->scholar->count_filtered(),
+            "data" => $data
+        ]);
+        exit;
+    }
+
+
 
     public function import_process()
     {
