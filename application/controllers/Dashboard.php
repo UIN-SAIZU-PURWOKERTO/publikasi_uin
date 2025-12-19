@@ -47,48 +47,103 @@ class Dashboard extends CI_Controller
         sendTemplateView(1, 'dashboard', $data);
     }
 
+    // public function authors()
+    // {
+    //     $data['title'] = 'Authors Data';
+
+    //     $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
+    //     $data['javascript'] = array('data-table.js');
+    //     $data['javascript_controllers'] = array('pesan.js');
+
+    //     $query = $this->db->where('is_deleted', 0)
+    //         ->order_by('name', 'ASC')
+    //         ->get('sinta_authors');
+
+    //     $data['lecturers'] = [];
+    //     foreach ($query->result() as $r) {
+    //         $data['lecturers'][] = [
+    //             'id' => $r->id,
+    //             'photo' => $r->photo,
+    //             'nama' => $r->name,
+    //             'dept' => $r->department,
+    //             'score_all' => $r->score_overall,
+    //             'score_3_years' => $r->score_3_years,
+    //             'artikel_scholar' => $r->articles_scholar,
+    //             'artikel_scopus' => $r->articles_scopus,
+    //             'artikel_wos' => $r->articles_wos,
+    //             'cit_scholar' => $r->citations_scholar,
+    //             'cit_scopus' => $r->citations_scopus,
+    //             'cit_wos' => $r->citations_wos,
+    //             'subject' => explode(",", $r->subjects)
+    //         ];
+    //     }
+
+    //     // $data['pagination'] = $this->pagination->create_links();
+
+    //     sendTemplateView(1, 'pub/authors', $data);
+    // }
+
     public function authors()
     {
         $data['title'] = 'Authors Data';
+        $keyword = $this->input->get('q'); 
+        $this->load->library('pagination');
 
+        // 1. Inisialisasi Query Dasar
+        $this->db->from('sinta_authors');
+        $this->db->where('is_deleted', 0);
+
+        // 2. Terapkan Filter Pencarian jika ada
+        if (!empty($keyword)) {
+            $this->db->group_start();
+                $this->db->like('name', $keyword);
+                $this->db->or_like('department', $keyword);
+                $this->db->or_like('subjects', $keyword);
+            $this->db->group_end();
+        }
+
+        // 3. Hitung Total (Gunakan FALSE agar Query Builder TIDAK ter-reset)
+        $total_rows = $this->db->count_all_results('', FALSE);
+
+        // 4. Konfigurasi Pagination
+        $config['base_url'] = site_url('dashboard/authors');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = 12;
+        $config['uri_segment'] = 3;
+        $config['reuse_query_string'] = TRUE; // Penting agar keyword ?q= tetap ada
+
+        // Styling Bootstrap 4
+        $config['full_tag_open'] = '<ul class="pagination justify-content-center">';
+        $config['full_tag_close'] = '</ul>';
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+        $config['attributes'] = array('class' => 'page-link');
+
+        $this->pagination->initialize($config);
+
+        // 5. Eksekusi Query dengan Limit & Offset
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        
+        $query = $this->db->order_by('name', 'ASC')
+                        ->limit($config['per_page'], $page)
+                        ->get(); // Tidak perlu isi nama tabel lagi di sini
+
+        // Assets
         $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
         $data['javascript'] = array('data-table.js');
         $data['javascript_controllers'] = array('pesan.js');
 
-        // $this->load->library('pagination');
-
-        // === PAGINATION CONFIG ===
-        // $config['base_url'] = base_url('dashboard/authors');
-        // $config['total_rows'] = $this->db->count_all('sinta_authors');
-        // $config['per_page'] = 6;
-        // $config['uri_segment'] = 3;
-
-        // Tampilan bootstrap
-        // $config['full_tag_open'] = '<ul class="pagination justify-content-center mt-3">';
-        // $config['full_tag_close'] = '</ul>';
-        // $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';
-        // $config['num_tag_close'] = '</span></li>';
-        // $config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
-        // $config['cur_tag_close'] = '</span></li>';
-        // $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
-        // $config['prev_tag_close'] = '</span></li>';
-        // $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
-        // $config['next_tag_close'] = '</span></li>';
-
-        // $this->pagination->initialize($config);
-
-        // $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
-        // GET DATA
-        // $query = $this->db
-        //     ->order_by('name', 'ASC')
-        //     ->limit($config['per_page'], $page)
-        //     ->get('sinta_authors');
-
-        $query = $this->db->where('is_deleted', 0)
-            ->order_by('name', 'ASC')
-            ->get('sinta_authors');
-
+        // Data Processing
         $data['lecturers'] = [];
         foreach ($query->result() as $r) {
             $data['lecturers'][] = [
@@ -108,7 +163,8 @@ class Dashboard extends CI_Controller
             ];
         }
 
-        // $data['pagination'] = $this->pagination->create_links();
+        $data['pagination'] = $this->pagination->create_links();
+        $data['keyword'] = $keyword;
 
         sendTemplateView(1, 'pub/authors', $data);
     }

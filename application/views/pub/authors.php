@@ -134,16 +134,64 @@
         width: 90% !important;
     }
 }
+
+.pagination-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Styling link pagination CodeIgniter */
+.pagination-container ul.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    gap: 5px;
+}
+
+.pagination-container .page-item .page-link {
+    color: #4f8ef7;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.pagination-container .page-item.active .page-link {
+    background-color: #4f8ef7;
+    border-color: #4f8ef7;
+    color: white;
+}
+
+.pagination-container .page-item .page-link:hover:not(.active) {
+    background-color: #eef4ff;
+}
 </style>
 
 <div style="margin-bottom:20px; text-align:center;">
-    <input type="text" id="searchInput" placeholder="Cari nama dosen atau subject..." style="
+    <!-- <input type="text" id="searchInput" placeholder="Cari nama dosen atau subject..." style="
             width: 60%; padding: 10px 16px; border-radius: 30px;
             border: 1px solid #ccc; font-size: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-        " onkeyup="filterLecturers()">
+        " onkeyup="filterLecturers()"> -->
+
+    <form action="<?= site_url('dashboard/authors') ?>" method="GET">
+        <input type="text" name="q" value="<?= $keyword ?>" placeholder="Cari nama dosen atau subject..." style="
+            width: 60%; padding: 10px 16px; border-radius: 30px;
+            border: 1px solid #ccc; font-size: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        ">
+        <button style="
+            width: 10%; padding: 10px 16px; border-radius: 30px;
+            border: 1px solid #ccc; font-size: 15px;
+            box-shadow: 0 4px 10px rgba(3, 196, 45, 0.87);
+        ">Cari</button>
+    </form>
 </div>
-<div class="row">
+<div class=" row">
 
     <!-- <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px;"> -->
     <div class="lecturer-grid">
@@ -162,7 +210,8 @@
                 </div>
 
                 <div class="info-box">
-                    <div><b>Artikel:</b> Scholar <?= $d['artikel_scholar'] ?> | Scopus <?= $d['artikel_scopus'] ?> | WoS
+                    <div><b>Artikel:</b> Scholar <?= $d['artikel_scholar'] ?> | Scopus <?= $d['artikel_scopus'] ?> |
+                        WoS
                         <?= $d['artikel_wos'] ?></div>
                     <div><b>Citation:</b> Scholar <?= $d['cit_scholar'] ?> | Scopus <?= $d['cit_scopus'] ?> | WoS
                         <?= $d['cit_wos'] ?></div>
@@ -196,9 +245,9 @@
 </div>
 
 <!-- PAGINATION -->
-<!-- <div class="mt-4">
+<div class="mt-4">
     <?= $pagination ?>
-</div> -->
+</div>
 
 <script>
 function filterLecturers() {
