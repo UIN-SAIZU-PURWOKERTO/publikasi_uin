@@ -17,9 +17,9 @@ class Dashboard extends CI_Controller
     {
         $data['title'] = 'Dashboard';
 
-        $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
-        $data['javascript'] = array('data-table.js');
-        $data['javascript_controllers'] = array('dashboard.js','pesan.js');
+        // $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
+        // $data['javascript'] = array('data-table.js');
+        // $data['javascript_controllers'] = array('dashboard.js','pesan.js');
 
         $query = $this->db
                 ->where('is_deleted', 0)
@@ -139,8 +139,9 @@ class Dashboard extends CI_Controller
                         ->get(); // Tidak perlu isi nama tabel lagi di sini
 
         // Assets
-        $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
-        $data['javascript'] = array('data-table.js');
+        $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js'
+        ,'chart.js/Chart.min.js', 'apex/apexcharts.min.js', 'jquery/jquery.min.js');
+        $data['javascript'] = array('data-table.js', 'adminlte.min.js');
         $data['javascript_controllers'] = array('pesan.js');
 
         // Data Processing
