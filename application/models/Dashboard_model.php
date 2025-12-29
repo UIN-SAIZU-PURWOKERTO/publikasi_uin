@@ -41,4 +41,12 @@ class Dashboard_model extends CI_Model
             ->get('scopus_publications')
             ->result_array();
     }
+
+    public function getScholarArticlesByAuthor($id)
+    {
+        return $this->db
+        ->where("FIND_IN_SET($id, author_id) !=", 0)
+        ->get('scholar_publications')
+        ->result_array();
+    }
 }

@@ -91,76 +91,92 @@ $subjects = explode(',', $author['subjects']);
 </div>
 
 <br><br>
+<div class="sc-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
 
-<div class="row">
-    <!-- TABEL KIRI -->
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
+                    <!-- NAV TABS -->
+                    <ul class="nav nav-tabs mb-3" id="publicationTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="scopus-tab" data-toggle="tab" href="#scopus" role="tab">
+                                Scopus Publication
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="scholar-tab" data-toggle="tab" href="#scholar" role="tab">
+                                Google Scholar
+                            </a>
+                        </li>
+                    </ul>
 
-                <h4 class="mb-3">Data Scopus Publication</h4>
+                    <!-- TAB CONTENT -->
+                    <div class="tab-content" id="publicationTabContent">
 
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tahun</th>
-                                <th>Judul</th>
-                                <th>Creator</th>
-                                <th>Citation</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1; foreach ($result as $data) : ?>
-                            <tr>
-                                <td><?= $no++; ?></td>
-                                <td><?= $data['year']; ?></td>
-                                <td><?= $data['publication_name']; ?></td>
-                                <td><?= $data['creator']; ?></td>
-                                <td><?= $data['citation']; ?></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                        <!-- TAB SCOPUS -->
+                        <div class="tab-pane fade show active" id="scopus" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tahun</th>
+                                            <th>Jurnal/Conference</th>
+                                            <th>Publication Name</th>
+                                            <th>Creator</th>
+                                            <th>Citation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $no = 1; foreach ($result as $data) : ?>
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $data['year']; ?></td>
+                                            <td><?= $data['title']; ?></td>
+                                            <td><?= $data['publication_name']; ?></td>
+                                            <td><?= $data['creator']; ?></td>
+                                            <td><?= $data['citation']; ?></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- TAB GOOGLE SCHOLAR -->
+                        <div class="tab-pane fade" id="scholar" role="tabpanel">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tahun</th>
+                                            <th>Title</th>
+                                            <th>Journal</th>
+                                            <th>Creator</th>
+                                            <th>Citation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $no = 1; foreach ($result2 as $data) : ?>
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $data['year']; ?></td>
+                                            <td><?= $data['title']; ?></td>
+                                            <td><?= $data['journal']; ?></td>
+                                            <td><?= $data['author']; ?></td>
+                                            <td><?= $data['citation']; ?></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- TABEL KANAN -->
-    <div class="col-md-6 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-
-                <h4 class="mb-3">Data Google Scholar Publications</h4>
-
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tahun</th>
-                                <th>Judul</th>
-                                <th>Creator</th>
-                                <th>Citation</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $no = 1; foreach ($result2 as $data) : ?>
-                            <tr>
-                                <td><?= $no++; ?></td>
-                                <td><?= $data['year']; ?></td>
-                                <td><?= $data['publication_name']; ?></td>
-                                <td><?= $data['creator']; ?></td>
-                                <td><?= $data['citation']; ?></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-
             </div>
         </div>
     </div>

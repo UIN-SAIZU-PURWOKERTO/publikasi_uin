@@ -139,8 +139,7 @@ class Dashboard extends CI_Controller
                         ->get(); // Tidak perlu isi nama tabel lagi di sini
 
         // Assets
-        $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js'
-        ,'chart.js/Chart.min.js', 'apex/apexcharts.min.js', 'jquery/jquery.min.js');
+        $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js', 'apex/apexcharts.min.js', 'jquery/jquery.min.js', 'jquery/jquery.slim.js', 'jquery/jquery.slim.min.js');
         $data['javascript'] = array('data-table.js', 'adminlte.min.js');
         $data['javascript_controllers'] = array('pesan.js');
 
@@ -223,12 +222,19 @@ class Dashboard extends CI_Controller
 
     public function detail($id)
     {
+        // Assets
+        $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js', 'apex/apexcharts.min.js', 'jquery/jquery.min.js', 'jquery/jquery.slim.js', 'jquery/jquery.slim.min.js');
+        $data['javascript'] = array('data-table.js', 'adminlte.min.js', 'popper.min.js');
+        $data['javascript_controllers'] = array('pesan.js');
+        
+        // print_r($data['javascript_vendors']);
+        // die;
         $data['author'] = $this->dashboard->getDetailAuthor($id);
         $data['result'] = $this->dashboard->getScopusArticlesByAuthor($id);
+        $data['result2'] = $this->dashboard->getScholarArticlesByAuthor($id);
         // $data['citations_per_year'] = $this->dashboard->getCitationsPerYear($id);
-        // print_r($data['author']);
+        // print_r($data['result2']);
         // die;
-
         if (!$data['author']) {
             show_404();
         }
