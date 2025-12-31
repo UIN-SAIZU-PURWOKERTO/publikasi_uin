@@ -87,11 +87,34 @@ class Dashboard extends CI_Controller
     {
         $data['title'] = 'Authors Data';
         $keyword = $this->input->get('q'); 
+        $fakultas  = $this->input->get('fakultas');
+        $prodi     = $this->input->get('prodi');
+        $sort  = $this->input->get('sort');
+        $order = $this->input->get('order') ?: 'desc';
+
         $this->load->library('pagination');
 
         // 1. Inisialisasi Query Dasar
         $this->db->from('sinta_authors');
         $this->db->where('is_deleted', 0);
+
+        $allowed_sort = [
+            'score_overall' => 'sinta_authors.score_overall',
+            'score_3_years' => 'sinta_authors.score_3_years',
+            'score_affiliation' => 'sinta_authors.score_affiliation',
+            'score_affiliation_3_years' => 'sinta_authors.score_affiliation_3_years',
+            'articles_scholar' => 'sinta_authors.articles_scholar',
+            'articles_scopus' => 'sinta_authors.articles_scopus',
+            'articles_wos' => 'sinta_authors.articles_wos',
+            'citations_scholar' => 'sinta_authors.citations_scholar',
+            'citations_scopus' => 'sinta_authors.citations_scopus',
+            'citations_wos' => 'sinta_authors.citations_wos',
+        ];
+        if (!empty($sort) && isset($allowed_sort[$sort])) {
+            $this->db->order_by($allowed_sort[$sort], $order);
+        } else {
+            $this->db->order_by('name', 'ASC');
+        }                
 
         // 2. Terapkan Filter Pencarian jika ada
         if (!empty($keyword)) {
@@ -101,6 +124,18 @@ class Dashboard extends CI_Controller
                 $this->db->or_like('subjects', $keyword);
             $this->db->group_end();
         }
+
+        $this->db->join('mst_prodi', 'mst_prodi.id = sinta_authors.prodi_id', 'left');
+        $this->db->join('mst_fakultas', 'mst_fakultas.fakultas_id = mst_prodi.fakultas_id', 'left');
+
+        if (!empty($fakultas)) {
+            $this->db->where('mst_fakultas.fakultas_id', $fakultas);
+        }
+
+        if (!empty($prodi)) {
+            $this->db->where('mst_prodi.id', $prodi);
+        }
+
 
         // 3. Hitung Total (Gunakan FALSE agar Query Builder TIDAK ter-reset)
         $total_rows = $this->db->count_all_results('', FALSE);
@@ -142,6 +177,8 @@ class Dashboard extends CI_Controller
         $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js', 'apex/apexcharts.min.js', 'jquery/jquery.min.js', 'jquery/jquery.slim.js', 'jquery/jquery.slim.min.js');
         $data['javascript'] = array('data-table.js', 'adminlte.min.js');
         $data['javascript_controllers'] = array('pesan.js');
+        $data['fakultas_list'] = $this->master->getFakultas();
+        $data['prodi_list'] = $this->master->getProdi();
 
         // Data Processing
         $data['lecturers'] = [];
@@ -159,12 +196,17 @@ class Dashboard extends CI_Controller
                 'cit_scholar' => $r->citations_scholar,
                 'cit_scopus' => $r->citations_scopus,
                 'cit_wos' => $r->citations_wos,
-                'subject' => explode(",", $r->subjects)
+                'subject' => explode(",", $r->subjects),
+                'prodi_id' => $r->prodi_id
             ];
         }
 
         $data['pagination'] = $this->pagination->create_links();
+        $data['selected_fakultas'] = $fakultas;
+        $data['selected_prodi']    = $prodi;
         $data['keyword'] = $keyword;
+        $data['sort']  = $sort;
+        $data['order'] = $order;
 
         sendTemplateView(1, 'pub/authors', $data);
     }

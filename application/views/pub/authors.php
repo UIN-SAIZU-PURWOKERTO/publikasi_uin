@@ -180,10 +180,76 @@
 
     <form action="<?= site_url('dashboard/authors') ?>" method="GET">
         <input type="text" name="q" value="<?= $keyword ?>" placeholder="Cari nama dosen atau subject..." style="
-            width: 60%; padding: 10px 16px; border-radius: 30px;
+            width: 40%; padding: 10px 16px; border-radius: 30px;
             border: 1px solid #ccc; font-size: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.06);
         ">
+
+        <!-- FAKULTAS -->
+        <select name="fakultas" style="
+                padding: 10px 16px;
+                border-radius: 30px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+            ">
+            <option value="">Semua Fakultas</option>
+            <?php foreach ($fakultas_list as $f): ?>
+            <option value="<?= $f['fakultas_id'] ?>" <?= ($selected_fakultas == $f['fakultas_id']) ? 'selected' : '' ?>>
+                <?= $f['fakultas_name'] ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+
+        <!-- PRODI -->
+        <select name="prodi" style="
+                padding: 10px 16px;
+                border-radius: 30px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+            ">
+            <option value="">Semua Prodi</option>
+            <?php foreach ($prodi_list as $p): ?>
+            <option value="<?= $p['id'] ?>" <?= ($selected_prodi == $p['id']) ? 'selected' : '' ?>>
+                <?= $p['nama_program_studi'] ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+
+        <br>
+        <select name="sort" style="
+            padding: 10px 16px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        ">
+            <option value="">Sort By (Default)</option>
+            <option value="score_overall" <?= ($sort=='score_overall')?'selected':'' ?>>Score Overall</option>
+            <option value="score_3_years" <?= ($sort=='score_3_years')?'selected':'' ?>>Score 3 Years</option>
+            <option value="score_affiliation" <?= ($sort=='score_affiliation')?'selected':'' ?>>Score Affiliation
+            </option>
+            <option value="score_affiliation_3_years" <?= ($sort=='score_affiliation_3_years')?'selected':'' ?>>Score
+                Affiliation 3 Years</option>
+
+            <option value="articles_scholar" <?= ($sort=='articles_scholar')?'selected':'' ?>>Articles Scholar</option>
+            <option value="articles_scopus" <?= ($sort=='articles_scopus')?'selected':'' ?>>Articles Scopus</option>
+            <option value="articles_wos" <?= ($sort=='articles_wos')?'selected':'' ?>>Articles WoS</option>
+
+            <option value="citations_scholar" <?= ($sort=='citations_scholar')?'selected':'' ?>>Citations Scholar
+            </option>
+            <option value="citations_scopus" <?= ($sort=='citations_scopus')?'selected':'' ?>>Citations Scopus</option>
+            <option value="citations_wos" <?= ($sort=='citations_wos')?'selected':'' ?>>Citations WoS</option>
+        </select>
+
+        <select name="order" style="
+        padding: 10px 14px;
+        border-radius: 30px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    ">
+            <option value="desc" <?= ($order=='desc')?'selected':'' ?>>Desc</option>
+            <option value="asc" <?= ($order=='asc')?'selected':'' ?>>Asc</option>
+        </select>
+
         <button style="
             width: 10%; padding: 10px 16px; border-radius: 30px;
             border: 1px solid #ccc; font-size: 15px;
