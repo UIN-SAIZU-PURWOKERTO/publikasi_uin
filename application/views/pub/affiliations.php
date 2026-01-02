@@ -68,6 +68,14 @@
         </div>
     </div>
 
+    <br>
+    <div class="stat-card" style="margin-top:25px;">
+        <div class="stat-title">Total Sinta Artikel Fakultas</div>
+        <div class="chart-wrapper">
+            <canvas id="articlesStackedChartFakultas" height="180"></canvas>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -375,7 +383,55 @@ document.addEventListener("DOMContentLoaded", function() {
                 {
                     label: "WoS",
                     data: d.map(x => Number(x.wos)),
-                    backgroundColor: "#4BC0C0"
+                    backgroundColor: "#FFCE56"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const d = <?= json_encode($fakultas_articles) ?>;
+
+    if (!d || d.length === 0) {
+        console.warn("Data artikel per fakultas kosong");
+        return;
+    }
+
+    new Chart(document.getElementById("articlesStackedChartFakultas"), {
+        type: "bar",
+        data: {
+            labels: d.map(x => `${x.fakultas}`),
+            datasets: [{
+                    label: "Scopus",
+                    data: d.map(x => Number(x.scopus)),
+                    backgroundColor: "#FF6384"
+                },
+                {
+                    label: "Scholar",
+                    data: d.map(x => Number(x.scholar)),
+                    backgroundColor: "#36A2EB"
+                },
+                {
+                    label: "WoS",
+                    data: d.map(x => Number(x.wos)),
+                    backgroundColor: "#FFCE56"
                 }
             ]
         },

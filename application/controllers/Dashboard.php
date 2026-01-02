@@ -244,6 +244,31 @@ class Dashboard extends CI_Controller
         // print_r($data['prodi_articles']);
         // die;
 
+        $data['fakultas_articles'] = $this->db
+                                    ->select('
+                                        f.fakultas_name AS fakultas,
+                                        COALESCE(SUM(au.articles_scopus), 0)  AS scopus,
+                                        COALESCE(SUM(au.articles_scholar), 0) AS scholar,
+                                        COALESCE(SUM(au.articles_wos), 0)     AS wos
+                                    ')
+                                    ->from('mst_fakultas f')
+                                    ->join(
+                                        'mst_prodi p',
+                                        'p.fakultas_id = f.fakultas_id',
+                                        'left'
+                                    )
+                                    ->join(
+                                        'sinta_authors au',
+                                        'au.prodi_id = p.id AND au.is_deleted = 0',
+                                        'left'
+                                    )
+                                    ->group_by('f.fakultas_id')
+                                    ->order_by('f.fakultas_name', 'ASC')
+                                    ->get()
+                                    ->result_array();
+        // print_r($data['fakultas_articles']);
+        // die;
+
         // $data['aff'] = $this->db->get('sinta_affiliations')->row_array();
         $data['aff'] = $this->db->select('a.*, au.name, au.department, au.photo, au.prodi_id')
                         ->from('sinta_affiliations a')
