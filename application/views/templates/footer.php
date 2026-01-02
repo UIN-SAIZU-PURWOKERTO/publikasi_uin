@@ -29,10 +29,10 @@
 <script type="text/javascript" src="<?php echo base_url('assets/controllers/') . $jsc;  ?>"></script>
 <?php endforeach; ?>
 <?php endif; ?>
-<!-- <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
+<script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 <script src="<?= base_url('assets/') ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url('assets/') ?>dist/js/adminlte.min.js"></script>
-<script src="<?= base_url('assets/') ?>controllers/my.js"></script> -->
+<script src="<?= base_url('assets/') ?>controllers/my.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
