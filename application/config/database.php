@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => 'localhost:8888',
 	'username' => 'root',
-	'password' => '',
+	'password' => 'root',
 	'database' => 'uinsaizu_publikasi',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

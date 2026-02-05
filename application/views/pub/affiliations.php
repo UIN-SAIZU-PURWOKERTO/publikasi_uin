@@ -445,8 +445,23 @@ document.addEventListener("DOMContentLoaded", function() {
                     stacked: true,
                     beginAtZero: true
                 }
+            },
+            plugins: {
+                datalabels: {
+                    color: "#000",
+                    anchor: "center",
+                    align: "center",
+                    font: {
+                        weight: "bold",
+                        size: 11
+                    },
+                    formatter: function(value) {
+                        return value > 0 ? value : '';
+                    }
+                }
             }
-        }
+        },
+        plugins: [ChartDataLabels]
     });
 
 });
