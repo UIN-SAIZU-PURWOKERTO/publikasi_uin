@@ -366,7 +366,7 @@ class Dashboard extends CI_Controller
         $data['javascript'] = array('data-table.js');
         $data['javascript_controllers'] = array('pesan.js');
 
-        $data['scopus_ftik'] = $this->db->select('SUM(sp.id) AS jumlah_sitasi, sp.year AS tahun');
+        $data['scopus_ftik'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun');
                                 $this->db->from('scopus_publications sp');
                                 $this->db->join('sinta_authors sa', 'sa.id = sp.author_id', 'left');
                                 $this->db->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left');
@@ -448,6 +448,98 @@ class Dashboard extends CI_Controller
         // die;
 
         sendTemplateView(1, 'pub/scopus_spgs', $data);
+    }
+
+    public function scholar_spgs()
+    {
+        // $data['title'] = 'Affiliations Data';
+
+        $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
+        $data['javascript'] = array('data-table.js');
+        $data['javascript_controllers'] = array('pesan.js');
+
+        $data['scholar_ftik'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun');
+                                $this->db->from('scholar_publications sp');
+                                $this->db->join('sinta_authors sa', 'sa.id = sp.author_id', 'left');
+                                $this->db->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left');
+                                $this->db->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left');
+                                $this->db->where('mf.fakultas_id', 1);
+                                $this->db->group_by('sp.year');
+                                $this->db->order_by('sp.year', 'ASC');
+
+                                $query = $this->db->get();
+                                $result = $query->result();
+        $data['scholar_ftik'] = $result;
+
+        $data['scholar_dakwah'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun');
+                                $this->db->from('scholar_publications sp');
+                                $this->db->join('sinta_authors sa', 'sa.id = sp.author_id', 'left');
+                                $this->db->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left');
+                                $this->db->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left');
+                                $this->db->where('mf.fakultas_id', 2);
+                                $this->db->group_by('sp.year');
+                                $this->db->order_by('sp.year', 'ASC');
+
+                                $query = $this->db->get();
+                                $result = $query->result();
+        $data['scholar_dakwah'] = $result;
+
+        $data['scholar_syariah'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun');
+                                $this->db->from('scholar_publications sp');
+                                $this->db->join('sinta_authors sa', 'sa.id = sp.author_id', 'left');
+                                $this->db->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left');
+                                $this->db->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left');
+                                $this->db->where('mf.fakultas_id', 3);
+                                $this->db->group_by('sp.year');
+                                $this->db->order_by('sp.year', 'ASC');
+
+                                $query = $this->db->get();
+                                $result = $query->result();
+        $data['scholar_syariah'] = $result;
+
+        $data['scholar_fuah'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun');
+                                $this->db->from('scholar_publications sp');
+                                $this->db->join('sinta_authors sa', 'sa.id = sp.author_id', 'left');
+                                $this->db->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left');
+                                $this->db->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left');
+                                $this->db->where('mf.fakultas_id', 4);
+                                $this->db->group_by('sp.year');
+                                $this->db->order_by('sp.year', 'ASC');
+
+                                $query = $this->db->get();
+                                $result = $query->result();
+        $data['scholar_fuah'] = $result;
+
+        $data['scholar_febi'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun');
+                                $this->db->from('scholar_publications sp');
+                                $this->db->join('sinta_authors sa', 'sa.id = sp.author_id', 'left');
+                                $this->db->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left');
+                                $this->db->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left');
+                                $this->db->where('mf.fakultas_id', 5);
+                                $this->db->group_by('sp.year');
+                                $this->db->order_by('sp.year', 'ASC');
+
+                                $query = $this->db->get();
+                                $result = $query->result();
+        $data['scholar_febi'] = $result;
+
+        $data['scholar_pasca'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun');
+                                $this->db->from('scholar_publications sp');
+                                $this->db->join('sinta_authors sa', 'sa.id = sp.author_id', 'left');
+                                $this->db->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left');
+                                $this->db->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left');
+                                $this->db->where('mf.fakultas_id', 6);
+                                $this->db->group_by('sp.year');
+                                $this->db->order_by('sp.year', 'ASC');
+
+                                $query = $this->db->get();
+                                $result = $query->result();
+        $data['scholar_pasca'] = $result;
+
+        // print_r($data['prodi']);
+        // die;
+
+        sendTemplateView(1, 'pub/scholar_spgs', $data);
     }
 
     public function detail($id)

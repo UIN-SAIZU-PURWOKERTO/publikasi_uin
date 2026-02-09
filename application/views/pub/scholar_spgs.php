@@ -1,0 +1,175 @@
+<style>
+    .aff-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+    }
+
+    @media (max-width: 992px) {
+        .aff-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+</style>
+<div class="aff-container progress-animate">
+
+    <!-- HEADER -->
+    <div class="aff-header">
+        <div>
+            <div class="aff-title"><?= $aff['name'] ?></div>
+            <div class="aff-abbrev"><?= $aff['abbreviation'] ?></div>
+            <div class="aff-location"><?= $aff['location'] ?></div>
+        </div>
+
+        <a href="https://sinta.kemdiktisaintek.go.id/affiliations/profile/184" target="_blank" class="aff-link">
+            Buka Profil SINTA →
+        </a>
+    </div>
+
+    <div class="aff-grid">
+
+        <!-- FTIK -->
+        <div class="stat-card">
+            <div class="stat-title">Sitasi Scholar FTIK per Tahun</div>
+            <canvas id="chart_ftik" height="180"></canvas>
+        </div>
+
+        <!-- DAKWAH -->
+        <div class="stat-card">
+            <div class="stat-title">Sitasi Scholar Dakwah per Tahun</div>
+            <canvas id="chart_dakwah" height="180"></canvas>
+        </div>
+
+        <!-- SYARIAH -->
+        <div class="stat-card">
+            <div class="stat-title">Sitasi Scholar Syariah per Tahun</div>
+            <canvas id="chart_syariah" height="180"></canvas>
+        </div>
+
+        <!-- FUAD -->
+        <div class="stat-card">
+            <div class="stat-title">Sitasi Scholar FUAH per Tahun</div>
+            <canvas id="chart_fuah" height="180"></canvas>
+        </div>
+
+        <!-- FEBI -->
+        <div class="stat-card">
+            <div class="stat-title">Sitasi Scholar FEBI per Tahun</div>
+            <canvas id="chart_febi" height="180"></canvas>
+        </div>
+
+        <!-- PASCA -->
+        <div class="stat-card">
+            <div class="stat-title">Sitasi Scholar Pascasarjana per Tahun</div>
+            <canvas id="chart_pasca" height="180"></canvas>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    function buildLineChart(canvasId, rawData, label, color) {
+
+        if (!rawData || rawData.length === 0) {
+            console.warn(label + " kosong");
+            return;
+        }
+
+        const labels = rawData.map(x => x.tahun);
+        const values = rawData.map(x => Number(x.jumlah_sitasi));
+
+        new Chart(document.getElementById(canvasId), {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: values,
+                    borderColor: color,
+                    backgroundColor: color + "33",
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Jumlah Sitasi"
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Tahun"
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+
+    // =====================
+    // DATA DARI CONTROLLER
+    // =====================
+    buildLineChart(
+        "chart_ftik",
+        <?= json_encode($scholar_ftik) ?>,
+        "FTIK",
+        "#36A2EB"
+    );
+
+    buildLineChart(
+        "chart_dakwah",
+        <?= json_encode($scholar_dakwah) ?>,
+        "Dakwah",
+        "#FF9F40"
+    );
+
+    buildLineChart(
+        "chart_syariah",
+        <?= json_encode($scholar_syariah) ?>,
+        "Syariah",
+        "#4BC0C0"
+    );
+
+    buildLineChart(
+        "chart_fuah",
+        <?= json_encode($scholar_fuah) ?>,
+        "FUAH",
+        "#9966FF"
+    );
+
+    buildLineChart(
+        "chart_febi",
+        <?= json_encode($scholar_febi) ?>,
+        "FEBI",
+        "#FF6384"
+    );
+
+    buildLineChart(
+        "chart_pasca",
+        <?= json_encode($scholar_pasca) ?>,
+        "Pascasarjana",
+        "#2ECC71"
+    );
+
+});
+</script>
