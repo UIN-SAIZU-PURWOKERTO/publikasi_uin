@@ -9,7 +9,7 @@
         </li> -->
 
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">
+            <a href="<?= base_url() ?>" class="nav-link" class="font-weight-bold" style="font-size: 18px; color: #fbff00;">
                 <b>PUBLIKASI - UIN SAIZU PURWOKERTO</b>
             </a>
         </li>
