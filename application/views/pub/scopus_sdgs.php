@@ -45,7 +45,7 @@
 
         <!-- Fakultas -->
         <div class="stat-card">
-            <div class="stat-title">Sitasi Scholar Fakultas per Tahun</div>
+            <div class="stat-title">Sitasi Scopus Fakultas per Tahun</div>
             <canvas id="chart_faculty" height="180"></canvas>
         </div>
         

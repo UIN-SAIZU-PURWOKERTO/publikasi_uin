@@ -13,7 +13,7 @@ class Dashboard extends CI_Controller
         $this->load->helper('master', 'master');
     }
 
-    public function index()
+    public function scopus_lama()
     {
         $data['title'] = 'Dashboard';
 
@@ -49,43 +49,7 @@ class Dashboard extends CI_Controller
         sendTemplateView(1, 'dashboard', $data);
     }
 
-    // public function authors()
-    // {
-    //     $data['title'] = 'Authors Data';
-
-    //     $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
-    //     $data['javascript'] = array('data-table.js');
-    //     $data['javascript_controllers'] = array('pesan.js');
-
-    //     $query = $this->db->where('is_deleted', 0)
-    //         ->order_by('name', 'ASC')
-    //         ->get('sinta_authors');
-
-    //     $data['lecturers'] = [];
-    //     foreach ($query->result() as $r) {
-    //         $data['lecturers'][] = [
-    //             'id' => $r->id,
-    //             'photo' => $r->photo,
-    //             'nama' => $r->name,
-    //             'dept' => $r->department,
-    //             'score_all' => $r->score_overall,
-    //             'score_3_years' => $r->score_3_years,
-    //             'artikel_scholar' => $r->articles_scholar,
-    //             'artikel_scopus' => $r->articles_scopus,
-    //             'artikel_wos' => $r->articles_wos,
-    //             'cit_scholar' => $r->citations_scholar,
-    //             'cit_scopus' => $r->citations_scopus,
-    //             'cit_wos' => $r->citations_wos,
-    //             'subject' => explode(",", $r->subjects)
-    //         ];
-    //     }
-
-    //     // $data['pagination'] = $this->pagination->create_links();
-
-    //     sendTemplateView(1, 'pub/authors', $data);
-    // }
-
-    public function authors()
+    public function index()
     {
         $data['title'] = 'Authors Data';
         $keyword = $this->input->get('q'); 
@@ -289,9 +253,9 @@ class Dashboard extends CI_Controller
         sendTemplateView(1, 'pub/affiliations', $data);
     }
 
-    public function scopus_spgs()
+    public function scopus_sdgs()
     {
-        // $data['title'] = 'Affiliations Data';
+        $data['title'] = 'Scopus SDGS Data';
 
         $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
         $data['javascript'] = array('data-table.js');
@@ -496,12 +460,12 @@ class Dashboard extends CI_Controller
         // print_r($data['prodi']);
         // die;
 
-        sendTemplateView(1, 'pub/scopus_spgs', $data);
+        sendTemplateView(1, 'pub/scopus_sdgs', $data);
     }
 
-    public function scholar_spgs()
+    public function scholar_sdgs()
     {
-        // $data['title'] = 'Affiliations Data';
+        $data['title'] = 'Scholar SDGS Data';
 
         $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
         $data['javascript'] = array('data-table.js');
@@ -708,7 +672,7 @@ class Dashboard extends CI_Controller
         // print_r($data['scholar_pasca_pub']);
         // die;
 
-        sendTemplateView(1, 'pub/scholar_spgs', $data);
+        sendTemplateView(1, 'pub/scholar_sdgs', $data);
     }
 
     public function detail($id)
