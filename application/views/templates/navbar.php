@@ -8,8 +8,7 @@
             </a>
         </li> -->
 
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="<?= base_url() ?>" class="nav-link" class="font-weight-bold" style="font-size: 18px; color: #fbff00;">
+        <li class="nav-item d-none d-sm-inline-block"><a href="<?= base_url() ?>" class="nav-link" class="font-weight-bold" style="font-size: 18px; color: #fbff00;">
                 <b>PUBLIKASI - UIN SAIZU PURWOKERTO</b>
             </a>
         </li>
@@ -65,6 +64,7 @@
                     <i class="fas fa-users mr-2"></i> Import Scholar
                     <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
                 </a>
+                
             </div>
         </li>
 

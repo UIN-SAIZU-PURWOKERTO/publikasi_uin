@@ -66,7 +66,7 @@ class Auth extends CI_Controller
                 $this->session->set_flashdata('flash', 'Selamat datang di UIN Saizu Purwokerto');
                 // sendTemplateView(1, 'dashboard/authors', $data);
                 redirect('dashboard');
-                
+ 
             } 
             else {
                 $this->session->set_flashdata('flashsalah', 'username / password yang anda masukan salah');

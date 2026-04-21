@@ -8,6 +8,7 @@ class Dashboard extends CI_Controller
         parent::__construct();
         // ini untuk login
         is_logged_in();
+
         $this->load->model('Dashboard_model', 'dashboard');
         $this->load->model('Master_model', 'master');
         $this->load->helper('master', 'master');
