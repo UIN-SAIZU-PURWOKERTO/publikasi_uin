@@ -137,12 +137,13 @@ class Master extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function hapusJadwal($jadwal_id)
+    public function hapusAuthor($id)
     {
-        $this->master->deletejadwal($jadwal_id);
+        $this->master->deleteauthor($id);
         // print_r($query);
         // die;
-        redirect('master/jadwal');
+        $this->session->set_flashdata('flashsalah', 'Berhasil menghapus author');
+        redirect('master/author');
     }
 
 }

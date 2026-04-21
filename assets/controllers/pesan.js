@@ -1,11 +1,10 @@
 'use strict';
 
 
-const flashData = $('.flash-data').data('flashdata');
-const flashSalah = $('.flash-salah').data('flashdata');
-const flashInfo = $('.flash-info').data('flashdata');
-
 $(function () {
+	const flashData = $('.flash-data').data('flashdata');
+	const flashSalah = $('.flash-salah').data('flashdata');
+	const flashInfo = $('.flash-info').data('flashdata');
 	var Toast = Swal.mixin({
 		toast: true,
 		position: 'top-end',

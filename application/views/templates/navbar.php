@@ -1,4 +1,4 @@
-<nav class='main-header navbar navbar-expand navbar-green navbar-dark'>
+<nav class="main-header navbar navbar-expand navbar-green navbar-dark">
 
     <!-- LEFT -->
     <ul class="navbar-nav">
@@ -9,7 +9,7 @@
         </li> -->
 
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">
+            <a href="<?= base_url() ?>" class="nav-link" class="font-weight-bold" style="font-size: 18px; color: #fbff00;">
                 <b>PUBLIKASI - UIN SAIZU PURWOKERTO</b>
             </a>
         </li>
@@ -34,7 +34,7 @@
         <?php endforeach; ?>
 
         <!-- INI UNTUK MENU ADMIN SAJA -->
-        <?php if (!empty($_SESSION['id']) && $_SESSION['id']['role_id'] == 1) { ?>
+        <?php if (isset($user_info) && ($user_info['role_id'] == 1 || $user_info['role_id'] == 2)) { ?>
         <!-- NOTIFIKASI -->
         <!-- <ul class="navbar-nav ml-3"> -->
         <li class="nav-item dropdown">
@@ -55,6 +55,14 @@
                 <div class="dropdown-divider"></div>
                 <a href="<?= base_url('master/author') ?>" class="dropdown-item">
                     <i class="fas fa-users mr-2"></i> Author / Tendik
+                    <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
+                </a>
+                <a href="<?= base_url('scopus/import') ?>" class="dropdown-item">
+                    <i class="fas fa-users mr-2"></i> Import Scopus
+                    <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
+                </a>
+                <a href="<?= base_url('scholar/import') ?>" class="dropdown-item">
+                    <i class="fas fa-users mr-2"></i> Import Scholar
                     <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
                 </a>
             </div>
@@ -95,7 +103,7 @@
             </a>
         </li> -->
 
-        <?php if(['userinfo'] != ""){?>
+        <?php if (isset($user_info) && ($user_info['role_id'] == 1 || $user_info['role_id'] == 2)) { ?>
         <!-- Profile -->
         <li class="nav-item">
             <a class="nav-link" href="">

@@ -22,6 +22,7 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th>Aksi</th>
                                 <th>No</th>
                                 <th>ID Sinta</th>
                                 <th>Author</th>
@@ -36,13 +37,13 @@
                             $no = 1;
 								foreach ($result as $data) : ?>
                             <tr>
-                                <!-- <td>
+                                <td>
 
-                                    <a href="<?= base_url('master/hapususer/'); ?><?php echo $data['jadwal_id']; ?>"
+                                    <a href="<?= base_url('master/hapusauthor/'); ?><?php echo $data['id']; ?>"
                                         class="btn btn-outline-danger btn-sm tombol-hapus"><i class="fa fa-trash"></i>
                                         Hapus
                                     </a>
-                                </td> -->
+                                </td>
                                 <td><?= $no++; ?></td>
                                 <td><?= $data['id']; ?></td>
                                 <td><?= $data['name']; ?></td>

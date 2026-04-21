@@ -134,69 +134,186 @@
         width: 90% !important;
     }
 }
+
+.pagination-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Styling link pagination CodeIgniter */
+.pagination-container ul.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    gap: 5px;
+}
+
+.pagination-container .page-item .page-link {
+    color: #4f8ef7;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.pagination-container .page-item.active .page-link {
+    background-color: #4f8ef7;
+    border-color: #4f8ef7;
+    color: white;
+}
+
+.pagination-container .page-item .page-link:hover:not(.active) {
+    background-color: #eef4ff;
+}
 </style>
 
 <div style="margin-bottom:20px; text-align:center;">
-    <input type="text" id="searchInput" placeholder="Cari nama dosen atau subject..." style="
+    <!-- <input type="text" id="searchInput" placeholder="Cari nama dosen atau subject..." style="
             width: 60%; padding: 10px 16px; border-radius: 30px;
             border: 1px solid #ccc; font-size: 15px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-        " onkeyup="filterLecturers()">
+        " onkeyup="filterLecturers()"> -->
+
+    <form action="<?= site_url('dashboard/authors') ?>" method="GET">
+        <input type="text" name="q" value="<?= $keyword ?>" placeholder="Cari nama dosen atau subject..." style="
+            width: 40%; padding: 10px 16px; border-radius: 30px;
+            border: 1px solid #ccc; font-size: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        ">
+
+        <!-- FAKULTAS -->
+        <select name="fakultas" style="
+                padding: 10px 16px;
+                border-radius: 30px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+            ">
+            <option value="">Semua Fakultas</option>
+            <?php foreach ($fakultas_list as $f): ?>
+            <option value="<?= $f['fakultas_id'] ?>" <?= ($selected_fakultas == $f['fakultas_id']) ? 'selected' : '' ?>>
+                <?= $f['fakultas_name'] ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+
+        <!-- PRODI -->
+        <select name="prodi" style="
+                padding: 10px 16px;
+                border-radius: 30px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+            ">
+            <option value="">Semua Prodi</option>
+            <?php foreach ($prodi_list as $p): ?>
+            <option value="<?= $p['id'] ?>" <?= ($selected_prodi == $p['id']) ? 'selected' : '' ?>>
+                <?= $p['nama_program_studi'] ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+
+        <br>
+        <select name="sort" style="
+            padding: 10px 16px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        ">
+            <option value="">Sort By (Default)</option>
+            <option value="score_overall" <?= ($sort=='score_overall')?'selected':'' ?>>Score Overall</option>
+            <option value="score_3_years" <?= ($sort=='score_3_years')?'selected':'' ?>>Score 3 Years</option>
+            <option value="score_affiliation" <?= ($sort=='score_affiliation')?'selected':'' ?>>Score Affiliation
+            </option>
+            <option value="score_affiliation_3_years" <?= ($sort=='score_affiliation_3_years')?'selected':'' ?>>Score
+                Affiliation 3 Years</option>
+
+            <option value="articles_scholar" <?= ($sort=='articles_scholar')?'selected':'' ?>>Articles Scholar</option>
+            <option value="articles_scopus" <?= ($sort=='articles_scopus')?'selected':'' ?>>Articles Scopus</option>
+            <option value="articles_wos" <?= ($sort=='articles_wos')?'selected':'' ?>>Articles WoS</option>
+
+            <option value="citations_scholar" <?= ($sort=='citations_scholar')?'selected':'' ?>>Citations Scholar
+            </option>
+            <option value="citations_scopus" <?= ($sort=='citations_scopus')?'selected':'' ?>>Citations Scopus</option>
+            <option value="citations_wos" <?= ($sort=='citations_wos')?'selected':'' ?>>Citations WoS</option>
+        </select>
+
+        <select name="order" style="
+        padding: 10px 14px;
+        border-radius: 30px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    ">
+            <option value="desc" <?= ($order=='desc')?'selected':'' ?>>Desc</option>
+            <option value="asc" <?= ($order=='asc')?'selected':'' ?>>Asc</option>
+        </select>
+
+        <button style="
+            width: 10%; padding: 10px 16px; border-radius: 30px;
+            border: 1px solid #ccc; font-size: 15px;
+            box-shadow: 0 4px 10px rgba(3, 196, 45, 0.87);
+        ">Cari</button>
+    </form>
 </div>
-<div class="row">
+<div class=" row">
 
     <!-- <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px;"> -->
     <div class="lecturer-grid">
 
         <?php foreach($lecturers as $d): ?>
-        <div class="profile-card progress-animate">
+        <a href="<?= base_url('dashboard/detail/'.$d['id']) ?>" style="text-decoration:none;color:inherit">
 
-            <div class="profile-header">
-                <img src="<?= $d['photo'] ?>">
-                <div>
-                    <div class="name"><?= $d['nama'] ?></div>
-                    <div class="department"><?= $d['dept'] ?></div>
+            <div class="profile-card progress-animate">
+
+                <div class="profile-header">
+                    <img src="<?= $d['photo'] ?>">
+                    <div>
+                        <div class="name"><?= $d['nama'] ?></div>
+                        <div class="department"><?= $d['dept'] ?></div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="info-box">
-                <div><b>Artikel:</b> Scholar <?= $d['artikel_scholar'] ?> | Scopus <?= $d['artikel_scopus'] ?> | WoS
-                    <?= $d['artikel_wos'] ?></div>
-                <div><b>Citation:</b> Scholar <?= $d['cit_scholar'] ?> | Scopus <?= $d['cit_scopus'] ?> | WoS
-                    <?= $d['cit_wos'] ?></div>
-            </div>
-
-            <div style="margin-top:10px;">
-                <?php foreach($d['subject'] as $sub): ?>
-                <span class="subject-badge"><?= trim($sub) ?></span>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="progress-box">
-                <div class="progress-title">Score All: <?= $d['score_all'] ?></div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="--value:<?= min($d['score_all'],100) ?>%;"></div>
+                <div class="info-box">
+                    <div><b>Artikel:</b> Scholar <?= $d['artikel_scholar'] ?> | Scopus <?= $d['artikel_scopus'] ?> |
+                        WoS
+                        <?= $d['artikel_wos'] ?></div>
+                    <div><b>Citation:</b> Scholar <?= $d['cit_scholar'] ?> | Scopus <?= $d['cit_scopus'] ?> | WoS
+                        <?= $d['cit_wos'] ?></div>
                 </div>
-            </div>
 
-            <div class="progress-box">
-                <div class="progress-title">Score 3 Years: <?= $d['score_3_years'] ?></div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="--value:<?= min($d['score_3_years'],100) ?>%;"></div>
+                <div style="margin-top:10px;">
+                    <?php foreach($d['subject'] as $sub): ?>
+                    <span class="subject-badge"><?= trim($sub) ?></span>
+                    <?php endforeach; ?>
                 </div>
-            </div>
 
-        </div>
-        <?php endforeach; ?>
+                <div class="progress-box">
+                    <div class="progress-title">Score All: <?= $d['score_all'] ?></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="--value:<?= min($d['score_all'],100) ?>%;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-box">
+                    <div class="progress-title">Score 3 Years: <?= $d['score_3_years'] ?></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="--value:<?= min($d['score_3_years'],100) ?>%;"></div>
+                    </div>
+                </div>
+
+            </div>
+            <?php endforeach; ?>
 
     </div>
 
 </div>
 
 <!-- PAGINATION -->
-<!-- <div class="mt-4">
+<div class="mt-4">
     <?= $pagination ?>
-</div> -->
+</div>
 
 <script>
 function filterLecturers() {

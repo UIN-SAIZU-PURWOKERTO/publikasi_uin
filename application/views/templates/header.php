@@ -18,6 +18,8 @@
         href="<?= base_url('assets/') ?>plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/adminlte.min.css">
     <!-- <link rel="shortcut icon" href="<?= base_url('assets/') ?>images/favicon.ico" /> -->
+
+    <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/styleAuthorDetail.css">
     <style>
     .blink {
         animation: blinker 1s linear infinite;

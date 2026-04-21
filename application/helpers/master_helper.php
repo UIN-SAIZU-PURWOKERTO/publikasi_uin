@@ -1,5 +1,47 @@
 <?php
 
+function getAuthor($code, $strcol)
+{
+    $ci =   get_instance();
+    $result = $ci->db->get_where('sinta_authors', ['id' => $code])->row_array();
+    if ($result) {
+        $response =  $result[$strcol];
+    } else {
+        $response =  "-";
+    }
+    return $response;
+}
+
+function getAuthorArray($author_ids, $field = 'name')
+    {
+        if (empty($author_ids)) {
+            return '-';
+        }
+
+        $CI =& get_instance();
+
+        // Ubah "6677906,6965139" → [6677906, 6965139]
+        $ids = array_filter(array_map('trim', explode(',', $author_ids)));
+
+        if (empty($ids)) {
+            return '-';
+        }
+
+        $CI->db->select($field);
+        $CI->db->from('sinta_authors');
+        $CI->db->where_in('id', $ids);
+        $query = $CI->db->get()->result_array();
+
+        if (!$query) {
+            return '-';
+        }
+
+        // Ambil hanya field yg diminta
+        $result = array_column($query, $field);
+
+        return implode(', ', $result);
+    }
+    
 function getRole($code, $strcol)
 {
     $ci =   get_instance();

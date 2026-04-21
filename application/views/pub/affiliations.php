@@ -22,45 +22,60 @@
 
 
     <!-- GRID -->
-    <div class="stats-grid">
+    <!-- <div class="stats-grid"> -->
 
-        <!-- LEFT: SCORE -->
-        <!-- CHART SINTA SCORE -->
-        <div class="stat-card" style="margin-top:25px;">
+    <!-- LEFT: SCORE -->
+    <!-- CHART SINTA SCORE -->
+    <!-- <div class="stat-card" style="margin-top:25px;">
             <div class="stat-title">SINTA Score Chart</div>
             <div class="chart-wrapper">
                 <canvas id="sintaScoreChart" height="140"></canvas>
             </div>
-        </div>
+        </div> -->
 
 
-        <!-- CHART ARTIKEL -->
-        <div class="stat-card" style="margin-top:25px;">
+    <!-- CHART ARTIKEL -->
+    <!-- <div class="stat-card" style="margin-top:25px;">
             <div class="stat-title">Articles Chart</div>
             <div class="chart-wrapper">
                 <canvas id="articlesChart" height="140"></canvas>
             </div>
-        </div>
+        </div> -->
 
-        <!-- CHART AUTHORS & JOURNALS -->
-        <div class="stat-card" style="margin-top:25px;">
+    <!-- CHART AUTHORS & JOURNALS -->
+    <!-- <div class="stat-card" style="margin-top:25px;">
             <div class="stat-title">Authors & Journals Chart</div>
             <div class="chart-wrapper">
                 <canvas id="authorsJournalsChart" height="140"></canvas>
             </div>
-        </div>
+        </div> -->
 
 
-        <!-- CHART CITATIONS -->
-        <div class="stat-card" style="margin-top:25px;">
+    <!-- CHART CITATIONS -->
+    <!-- <div class="stat-card" style="margin-top:25px;">
             <div class="stat-title">Citations Chart</div>
             <div class="chart-wrapper">
                 <canvas id="citationsChart" height="140"></canvas>
             </div>
         </div>
 
-    </div>
+    </div> -->
     <br>
+    <div class="stat-card" style="margin-top:25px;">
+        <div class="stat-title">Total Sinta Artikel Program Studi</div>
+        <div class="chart-wrapper">
+            <canvas id="articlesStackedChart" height="180"></canvas>
+        </div>
+    </div>
+
+    <br>
+    <div class="stat-card" style="margin-top:25px;">
+        <div class="stat-title">Total Sinta Artikel Fakultas</div>
+        <div class="chart-wrapper">
+            <canvas id="articlesStackedChartFakultas" height="180"></canvas>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -336,6 +351,117 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
         }
+    });
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const d = <?= json_encode($prodi_articles) ?>;
+
+    if (!d || d.length === 0) {
+        console.warn("Data artikel per prodi kosong");
+        return;
+    }
+
+    new Chart(document.getElementById("articlesStackedChart"), {
+        type: "bar",
+        data: {
+            labels: d.map(x => `${x.prodi} (${x.jenjang_name})`),
+            datasets: [{
+                    label: "Scopus",
+                    data: d.map(x => Number(x.scopus)),
+                    backgroundColor: "#FF6384"
+                },
+                {
+                    label: "Scholar",
+                    data: d.map(x => Number(x.scholar)),
+                    backgroundColor: "#36A2EB"
+                },
+                {
+                    label: "WoS",
+                    data: d.map(x => Number(x.wos)),
+                    backgroundColor: "#FFCE56"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const d = <?= json_encode($fakultas_articles) ?>;
+
+    if (!d || d.length === 0) {
+        console.warn("Data artikel per fakultas kosong");
+        return;
+    }
+
+    new Chart(document.getElementById("articlesStackedChartFakultas"), {
+        type: "bar",
+        data: {
+            labels: d.map(x => `${x.fakultas}`),
+            datasets: [{
+                    label: "Scopus",
+                    data: d.map(x => Number(x.scopus)),
+                    backgroundColor: "#FF6384"
+                },
+                {
+                    label: "Scholar",
+                    data: d.map(x => Number(x.scholar)),
+                    backgroundColor: "#36A2EB"
+                },
+                {
+                    label: "WoS",
+                    data: d.map(x => Number(x.wos)),
+                    backgroundColor: "#FFCE56"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                datalabels: {
+                    color: "#000",
+                    anchor: "center",
+                    align: "center",
+                    font: {
+                        weight: "bold",
+                        size: 11
+                    },
+                    formatter: function(value) {
+                        return value > 0 ? value : '';
+                    }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
     });
 
 });
