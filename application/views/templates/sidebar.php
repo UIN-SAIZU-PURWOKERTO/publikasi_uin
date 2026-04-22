@@ -37,23 +37,66 @@
         ?>
 
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <?php 
+                $chart_urls = ['dashboard/affiliations', 'dashboard/scopus_sdgs', 'dashboard/scholar_sdgs', 'dashboard/jurnal_sinta'];
+                $chart_menus = [];
+                foreach ($menus as $m) {
+                    if (in_array($m['url'], $chart_urls)) {
+                        $chart_menus[] = $m;
+                    }
+                }
+                
+                // Tambahkan menu baru ke list chart jika belum ada di database
+                $found_jurnal_sinta = false;
+                foreach($chart_menus as $cm) {
+                    if($cm['url'] == 'dashboard/jurnal_sinta') $found_jurnal_sinta = true;
+                }
+                if(!$found_jurnal_sinta) {
+                    $chart_menus[] = [
+                        'nama' => 'Grafik Jurnal Sinta',
+                        'url' => 'dashboard/jurnal_sinta',
+                        'icon' => 'fas fa-chart-bar'
+                    ];
+                }
+                ?>
 
                 <?php foreach ($menus as $m): ?>
+                    <?php if (in_array($m['url'], $chart_urls)) continue; ?>
 
-                <?php if ($m['icon'] == 'header'): ?>
-                <li class="nav-header"><?= strtoupper($m['nama']) ?></li>
-
-                <?php else: ?>
-                <li class="nav-item">
-                    <a href="<?= base_url($m['url']) ?>" class="nav-link <?= is_active($m['url']) ?>">
-                        <i class="nav-icon <?= $m['icon'] ?>"></i>
-                        <p><?= $m['nama'] ?></p>
-                    </a>
-                </li>
-                <?php endif; ?>
-
+                    <?php if ($m['icon'] == 'header'): ?>
+                        <li class="nav-header"><?= strtoupper($m['nama']) ?></li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a href="<?= base_url($m['url']) ?>" class="nav-link <?= is_active($m['url']) ?>">
+                                <i class="nav-icon <?= $m['icon'] ?>"></i>
+                                <p><?= $m['nama'] ?></p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                 <?php endforeach; ?>
+
+                <!-- Submenu Grafik -->
+                <li class="nav-item <?= (strpos($this->uri->uri_string(), 'dashboard/') !== false && in_array($this->uri->uri_string(), $chart_urls)) ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= (strpos($this->uri->uri_string(), 'dashboard/') !== false && in_array($this->uri->uri_string(), $chart_urls)) ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Grafik / Chart
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <?php foreach ($chart_menus as $cm): ?>
+                        <li class="nav-item">
+                            <a href="<?= base_url($cm['url']) ?>" class="nav-link <?= is_active($cm['url']) ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p><?= $cm['nama'] ?></p>
+                            </a>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
 
                 <!-- Logout -->
                 <li class="nav-header">LAIN-LAIN</li>

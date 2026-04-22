@@ -7,7 +7,7 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         // ini untuk login
-        is_logged_in();
+        // is_logged_in();
 
         $this->load->model('Dashboard_model', 'dashboard');
         $this->load->model('Master_model', 'master');
@@ -674,6 +674,19 @@ class Dashboard extends CI_Controller
         // die;
 
         sendTemplateView(1, 'pub/scholar_sdgs', $data);
+    }
+
+    public function jurnal_sinta()
+    {
+        $data['title'] = 'Grafik Jurnal Berdasarkan Sinta';
+
+        $data['javascript_vendors'] = array('datatables/jquery.dataTables.min.js','datatables-bs4/js/dataTables.bootstrap4.min.js','sweetalert2/sweetalert2.min.js','chart.js/Chart.min.js', 'apex/apexcharts.min.js');
+        $data['javascript'] = array('data-table.js');
+        $data['javascript_controllers'] = array('pesan.js');
+
+        $data['jurnal_sinta'] = $this->dashboard->getJurnalBySinta();
+
+        sendTemplateView(1, 'pub/jurnal_sinta', $data);
     }
 
     public function detail($id)

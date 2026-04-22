@@ -11,29 +11,6 @@ class Master extends CI_Controller
         $this->load->helper('master', 'master');
     }
 
-    public function jadwal()
-    {
-        $data['title'] = 'Jadwal Tes Psikotes';
-
-        $data['javascript_vendors'] = array(
-            'datatables/jquery.dataTables.min.js',
-            'datatables-bs4/js/dataTables.bootstrap4.min.js',
-            'sweetalert2/sweetalert2.min.js');
-        $data['javascript'] = array('data-table.js');
-        $data['javascript_controllers'] = array('pesan.js');
-
-        $data['result'] = $this->master->getJadwal();
-        $data['jenistes'] = $this->master->getJenistes();
-        // print_r($data['jenistes']);
-        // die;
-
-        // if(!empty($this->input->get('id'))){
-        //     $data['loaddata'] = $this->jaspel->getLviById($this->input->get('id'));
-        // }
-        
-        sendTemplateView(1, 'master/jadwal', $data);
-    }
-
     public function fakultas()
     {
         $data['title'] = 'Master Fakultas';
@@ -127,14 +104,6 @@ class Master extends CI_Controller
         ]);
 
         echo json_encode(['status' => 'success']);
-    }
-
-
-    public function ubahPejabat()
-    {
-        $this->master->updatepejabat($this->input->post());
-        $this->session->set_flashdata('flash', 'Berhasil merubah data pejabat');
-        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function hapusAuthor($id)

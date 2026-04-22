@@ -24,13 +24,51 @@
     <!-- MENU BAR -->
     <ul class="navbar-nav ml-3">
 
+        <?php 
+        $chart_urls = ['dashboard/affiliations', 'dashboard/scopus_sdgs', 'dashboard/scholar_sdgs', 'dashboard/jurnal_sinta'];
+        $chart_menus = [];
+        foreach ($menus as $m) {
+            if (in_array($m['url'], $chart_urls)) {
+                $chart_menus[] = $m;
+            }
+        }
+        
+        // Tambahkan menu baru ke list chart jika belum ada di database
+        $found_jurnal_sinta = false;
+        foreach($chart_menus as $cm) {
+            if($cm['url'] == 'dashboard/jurnal_sinta') $found_jurnal_sinta = true;
+        }
+        if(!$found_jurnal_sinta) {
+            $chart_menus[] = [
+                'nama' => 'Grafik Jurnal Sinta',
+                'url' => 'dashboard/jurnal_sinta',
+                'icon' => 'fas fa-chart-bar'
+            ];
+        }
+        ?>
+
         <?php foreach ($menus as $m): ?>
-        <li class="nav-item">
-            <a href="<?= base_url($m['url']) ?>" class="nav-link <?= is_active($m['url']) ?>">
-                <i class="mr-1 <?= $m['icon'] ?>"></i> <?= $m['nama'] ?>
-            </a>
-        </li>
+            <?php if (in_array($m['url'], $chart_urls)) continue; ?>
+            <li class="nav-item">
+                <a href="<?= base_url($m['url']) ?>" class="nav-link <?= is_active($m['url']) ?>">
+                    <i class="mr-1 <?= $m['icon'] ?>"></i> <?= $m['nama'] ?>
+                </a>
+            </li>
         <?php endforeach; ?>
+
+        <!-- Dropdown Grafik -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownGrafik" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-chart-pie mr-1"></i> Grafik
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownGrafik">
+                <?php foreach ($chart_menus as $cm): ?>
+                <a class="dropdown-item <?= is_active($cm['url']) ?>" href="<?= base_url($cm['url']) ?>">
+                    <i class="<?= $cm['icon'] ?> mr-2"></i> <?= $cm['nama'] ?>
+                </a>
+                <?php endforeach; ?>
+            </div>
+        </li>
 
         <!-- INI UNTUK MENU ADMIN SAJA -->
         <?php if (isset($user_info) && ($user_info['role_id'] == 1 || $user_info['role_id'] == 2)) { ?>
@@ -54,6 +92,11 @@
                 <div class="dropdown-divider"></div>
                 <a href="<?= base_url('master/author') ?>" class="dropdown-item">
                     <i class="fas fa-users mr-2"></i> Author / Tendik
+                    <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
+                </a>
+
+                <a href="<?= base_url('jurnal') ?>" class="dropdown-item">
+                    <i class="fas fa-users mr-2"></i> Jurnal
                     <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
                 </a>
                 <a href="<?= base_url('scopus/import') ?>" class="dropdown-item">

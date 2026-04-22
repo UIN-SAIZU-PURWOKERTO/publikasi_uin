@@ -49,4 +49,15 @@ class Dashboard_model extends CI_Model
         ->get('scholar_publications')
         ->result_array();
     }
+
+    public function getJurnalBySinta()
+    {
+        return $this->db->select('sinta, COUNT(*) as jumlah')
+                        ->from('jurnal')
+                        ->where('is_delete', '0')
+                        ->group_by('sinta')
+                        ->order_by('sinta', 'ASC')
+                        ->get()
+                        ->result_array();
+    }
 }
