@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property CI_Input $input
+ * @property CI_DB_query_builder $db
+ * @property CI_Pagination $pagination
+ * @property CI_URI $uri
+ * @property Dashboard_model $dashboard
+ * @property Master_model $master
+ */
 class Dashboard extends CI_Controller
 {
     public function __construct()
@@ -50,7 +58,7 @@ class Dashboard extends CI_Controller
         sendTemplateView(1, 'dashboard', $data);
     }
 
-    public function index()
+    public function authors()
     {
         $data['title'] = 'Authors Data';
         $keyword = $this->input->get('q'); 
@@ -65,24 +73,6 @@ class Dashboard extends CI_Controller
         $this->db->select('sinta_authors.*, mst_prodi.nama_program_studi AS prodi_name, mst_fakultas.fakultas_name AS fakultas_name');
         $this->db->from('sinta_authors');
         $this->db->where('is_deleted', 0);
-
-        $allowed_sort = [
-            'score_overall' => 'sinta_authors.score_overall',
-            'score_3_years' => 'sinta_authors.score_3_years',
-            'score_affiliation' => 'sinta_authors.score_affiliation',
-            'score_affiliation_3_years' => 'sinta_authors.score_affiliation_3_years',
-            'articles_scholar' => 'sinta_authors.articles_scholar',
-            'articles_scopus' => 'sinta_authors.articles_scopus',
-            'articles_wos' => 'sinta_authors.articles_wos',
-            'citations_scholar' => 'sinta_authors.citations_scholar',
-            'citations_scopus' => 'sinta_authors.citations_scopus',
-            'citations_wos' => 'sinta_authors.citations_wos',
-        ];
-        if (!empty($sort) && isset($allowed_sort[$sort])) {
-            $this->db->order_by($allowed_sort[$sort], $order);
-        } else {
-            $this->db->order_by('name', 'ASC');
-        }                
 
         // 2. Terapkan Filter Pencarian jika ada
         if (!empty($keyword)) {
@@ -104,11 +94,30 @@ class Dashboard extends CI_Controller
             $this->db->where('mst_prodi.id', $prodi);
         }
 
+        // 3. Sorting logic
+        $allowed_sort = [
+            'score_overall' => 'sinta_authors.score_overall',
+            'score_3_years' => 'sinta_authors.score_3_years',
+            'score_affiliation' => 'sinta_authors.score_affiliation',
+            'score_affiliation_3_years' => 'sinta_authors.score_affiliation_3_years',
+            'articles_scholar' => 'sinta_authors.articles_scholar',
+            'articles_scopus' => 'sinta_authors.articles_scopus',
+            'articles_wos' => 'sinta_authors.articles_wos',
+            'citations_scholar' => 'sinta_authors.citations_scholar',
+            'citations_scopus' => 'sinta_authors.citations_scopus',
+            'citations_wos' => 'sinta_authors.citations_wos',
+        ];
 
-        // 3. Hitung Total (Gunakan FALSE agar Query Builder TIDAK ter-reset)
+        if (!empty($sort) && isset($allowed_sort[$sort])) {
+            $this->db->order_by($allowed_sort[$sort], $order);
+        } else {
+            $this->db->order_by('name', 'ASC');
+        }                
+
+        // 4. Hitung Total (Gunakan FALSE agar Query Builder TIDAK ter-reset)
         $total_rows = $this->db->count_all_results('', FALSE);
 
-        // 4. Konfigurasi Pagination
+        // 5. Konfigurasi Pagination
         $config['base_url'] = site_url('dashboard/authors');
         $config['total_rows'] = $total_rows;
         $config['per_page'] = 12;
@@ -134,11 +143,10 @@ class Dashboard extends CI_Controller
 
         $this->pagination->initialize($config);
 
-        // 5. Eksekusi Query dengan Limit & Offset
+        // 6. Eksekusi Query dengan Limit & Offset
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         
-        $query = $this->db->order_by('name', 'ASC')
-                        ->limit($config['per_page'], $page)
+        $query = $this->db->limit($config['per_page'], $page)
                         ->get(); // Tidak perlu isi nama tabel lagi di sini
 
         // Assets
@@ -146,7 +154,13 @@ class Dashboard extends CI_Controller
         $data['javascript'] = array('data-table.js', 'adminlte.min.js');
         $data['javascript_controllers'] = array('pesan.js');
         $data['fakultas_list'] = $this->master->getFakultas();
-        $data['prodi_list'] = $this->master->getProdi();
+        
+        // Ambil prodi sesuai fakultas jika fakultas dipilih
+        if (!empty($fakultas)) {
+            $data['prodi_list'] = $this->db->where('fakultas_id', $fakultas)->get('mst_prodi')->result_array();
+        } else {
+            $data['prodi_list'] = $this->master->getProdi();
+        }
 
         // Data Processing
         $data['lecturers'] = [];

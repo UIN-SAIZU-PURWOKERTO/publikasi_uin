@@ -186,11 +186,12 @@
         ">
 
         <!-- FAKULTAS -->
-        <select name="fakultas" style="
+        <select name="fakultas" onchange="this.form.submit()" style="
                 padding: 10px 16px;
                 border-radius: 30px;
                 border: 1px solid #ccc;
                 font-size: 14px;
+                background-color: #f8f9fa;
             ">
             <option value="">Semua Fakultas</option>
             <?php foreach ($fakultas_list as $f): ?>
@@ -201,11 +202,12 @@
         </select>
 
         <!-- PRODI -->
-        <select name="prodi" style="
+        <select name="prodi" onchange="this.form.submit()" style="
                 padding: 10px 16px;
                 border-radius: 30px;
                 border: 1px solid #ccc;
                 font-size: 14px;
+                background-color: #f8f9fa;
             ">
             <option value="">Semua Prodi</option>
             <?php foreach ($prodi_list as $p): ?>
@@ -216,11 +218,12 @@
         </select>
 
         <br>
-        <select name="sort" style="
+        <select name="sort" onchange="this.form.submit()" style="
             padding: 10px 16px;
             border-radius: 30px;
             border: 1px solid #ccc;
             font-size: 14px;
+            background-color: #f8f9fa;
         ">
             <option value="">Sort By (Default)</option>
             <option value="score_overall" <?= ($sort=='score_overall')?'selected':'' ?>>Score Overall</option>
@@ -240,11 +243,12 @@
             <option value="citations_wos" <?= ($sort=='citations_wos')?'selected':'' ?>>Citations WoS</option>
         </select>
 
-        <select name="order" style="
+        <select name="order" onchange="this.form.submit()" style="
         padding: 10px 14px;
         border-radius: 30px;
         border: 1px solid #ccc;
         font-size: 14px;
+        background-color: #f8f9fa;
     ">
             <option value="desc" <?= ($order=='desc')?'selected':'' ?>>Desc</option>
             <option value="asc" <?= ($order=='asc')?'selected':'' ?>>Asc</option>
