@@ -27,9 +27,9 @@ class Jurnal_model extends CI_Model
         $this->db->insert('jurnal',$data);
     }
 
-    public function deletejurnal($id)
+    public function delete_jurnal($id)
     {
-        $data["is_deleted"]        = 1;
+        $data["is_delete"]        = 1;
 
         $this->db->where('jurnal_id', $id);
         $this->db->update('jurnal',$data);

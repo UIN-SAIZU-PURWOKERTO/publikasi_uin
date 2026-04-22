@@ -22,6 +22,7 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th>Aksi</th>
                                 <th>No</th>
                                 <th>Identitas</th>
                                 <th>Nama</th>
@@ -37,13 +38,14 @@
                             $no = 1;
 								foreach ($result as $data) : ?>
                             <tr>
-                                <!-- <td>
+                                <td>
 
-                                    <a href="<?= base_url('master/hapususer/'); ?><?php echo $data['jadwal_id']; ?>"
-                                        class="btn btn-outline-danger btn-sm tombol-hapus"><i class="fa fa-trash"></i>
-                                        Hapus
+                                    <a href="<?= base_url('jurnal/hapusJurnal/'); ?><?= $data['jurnal_id']; ?>"
+                                        class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('Apakah anda ingin menghapus data ini?');">
+                                        <i class="fa fa-trash"></i> Hapus
                                     </a>
-                                </td> -->
+                                </td>
                                 <td><?= $no++; ?></td>
                                 <td><?= $data['identitas']; ?></td>
                                 <td><?= $data['nama']; ?></td>

@@ -35,13 +35,13 @@ class Jurnal extends CI_Controller
         redirect('jurnal/index');
     }
 
-    public function hapusAuthor($id)
+    public function hapusJurnal($id)
     {
-        $this->master->deleteauthor($id);
+        $this->master->delete_jurnal($id);
         // print_r($query);
         // die;
-        $this->session->set_flashdata('flashsalah', 'Berhasil menghapus author');
-        redirect('master/author');
+        $this->session->set_flashdata('flashsalah', 'Berhasil menghapus');
+        redirect('jurnal/index');
     }
 
 }
