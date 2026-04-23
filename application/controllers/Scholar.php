@@ -3,6 +3,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
+/**
+ * @property CI_Input $input
+ * @property CI_DB_query_builder $db
+ * @property CI_Session $session
+ * @property Scholar_model $scholar
+ * @property Scopus_model $scopus
+ */
 class Scholar extends CI_Controller
 {
     public function __construct()
@@ -12,6 +19,23 @@ class Scholar extends CI_Controller
         $this->load->model('Scholar_model', 'scholar');
         $this->load->model('Scopus_model', 'scopus');
         $this->load->helper('master', 'master');
+    }
+
+    public function index()
+    {
+        $data['title'] = 'SCHOLAR PUBLICATIONS';
+
+        $data['javascript_vendors'] = array(
+            'datatables/jquery.dataTables.min.js',
+            'datatables-bs4/js/dataTables.bootstrap4.min.js',
+            'sweetalert2/sweetalert2.min.js');
+        $data['javascript'] = array('data-table.js');
+        $data['javascript_controllers'] = array('pesan.js');
+
+        $data['years'] = $this->scholar->get_distinct_years();
+        $data['accreditations'] = $this->scholar->get_distinct_accreditations();
+
+        sendTemplateView(1, 'scholar/index', $data);
     }
 
     public function import()
@@ -25,7 +49,11 @@ class Scholar extends CI_Controller
             'sweetalert2/sweetalert2.min.js');
         $data['javascript'] = array('data-table.js','select2.js');
         $data['javascript_controllers'] = array('pesan.js','pegawai.js');
-        // $data['result'] = $this->scholar->getPublication();
+        
+        $data['years'] = $this->scholar->get_distinct_years();
+        $data['accreditations'] = $this->scholar->get_distinct_accreditations();
+
+        $data['result'] = $this->scholar->getPublication();
         // print_r($data['result']);
         // die;
         // $this->load->view('scopus/import');

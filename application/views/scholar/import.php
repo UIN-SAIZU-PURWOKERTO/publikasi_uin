@@ -36,7 +36,7 @@
 
 
                 <div class="card-body">
-                    <table id="tableScholar" class="table table-bordered table-striped">
+                    <table id="tableScholar" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -49,6 +49,31 @@
                                 <th>citation</th>
                             </tr>
                         </thead>
+                        <tbody>
+
+                            <?php
+                            $no = 1;
+								foreach ($result as $data) : ?>
+                            <tr>
+                                <!-- <td>
+
+                                    <a href="<?= base_url('master/hapususer/'); ?><?php echo $data['jadwal_id']; ?>"
+                                        class="btn btn-outline-danger btn-sm tombol-hapus"><i class="fa fa-trash"></i>
+                                        Hapus
+                                    </a>
+                                </td> -->
+                                <td><?= $no++; ?></td>
+                                <td><?= getAuthor($data['author_id'], 'name'); ?></td>
+                                <td><?= $data['accreditation']; ?></td>
+                                <td><?= $data['title']; ?></td>
+                                <td><?= $data['journal']; ?></td>
+                                <td><?= $data['author']; ?></td>
+                                <td><?= $data['year']; ?></td>
+                                <td><?= $data['citation']; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+
+                        </tbody>
                     </table>
 
                 </div>
@@ -57,3 +82,27 @@
         </div>
     </div>
 </div>
+
+
+                            <?php
+                            $no = 1;
+								foreach ($result as $data) : ?>
+                            <tr>
+                                <!-- <td>
+
+                                    <a href="<?= base_url('master/hapususer/'); ?><?php echo $data['jadwal_id']; ?>"
+                                        class="btn btn-outline-danger btn-sm tombol-hapus"><i class="fa fa-trash"></i>
+                                        Hapus
+                                    </a>
+                                </td> -->
+                                <td><?= $no++; ?></td>
+                                <td><?= getAuthor($data['author_id'], 'name'); ?></td>
+                                <td><?= $data['accreditation']; ?></td>
+                                <td><?= $data['title']; ?></td>
+                                <td><?= $data['journal']; ?></td>
+                                <td><?= $data['author']; ?></td>
+                                <td><?= $data['year']; ?></td>
+                                <td><?= $data['citation']; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+

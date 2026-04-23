@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * @property CI_DB_query_builder $db
+ * @property CI_Input $input
+ */
 class Scholar_model extends CI_Model
 {
     private $table = 'scholar_publications';
@@ -31,6 +35,17 @@ class Scholar_model extends CI_Model
     private function _get_datatables_query()
     {
         $this->db->from($this->table);
+
+        // 🔎 Custom Filters
+        $filter_year = $this->input->post('year', true);
+        if (!empty($filter_year)) {
+            $this->db->where('year', $filter_year);
+        }
+
+        $filter_acc = $this->input->post('accreditation', true);
+        if (!empty($filter_acc)) {
+            $this->db->where('accreditation', $filter_acc);
+        }
 
         // 🔎 SEARCH
         $search = $this->input->post('search', true);
@@ -80,6 +95,24 @@ class Scholar_model extends CI_Model
     public function count_all()
     {
         return $this->db->count_all($this->table);
+    }
+
+    public function get_distinct_years()
+    {
+        return $this->db->select('year')
+            ->distinct()
+            ->order_by('year', 'DESC')
+            ->get($this->table)
+            ->result_array();
+    }
+
+    public function get_distinct_accreditations()
+    {
+        return $this->db->select('accreditation')
+            ->distinct()
+            ->order_by('accreditation', 'ASC')
+            ->get($this->table)
+            ->result_array();
     }
 
     public function exists($identifier, $year)

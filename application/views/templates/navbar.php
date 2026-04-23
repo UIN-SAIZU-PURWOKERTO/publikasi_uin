@@ -99,6 +99,10 @@
                     <i class="fas fa-users mr-2"></i> Jurnal
                     <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
                 </a>
+                <a href="<?= base_url('scholar') ?>" class="dropdown-item">
+                    <i class="fas fa-graduation-cap mr-2"></i> Scholar Publikasi
+                </a>
+                <div class="dropdown-divider"></div>
                 <a href="<?= base_url('scopus/import') ?>" class="dropdown-item">
                     <i class="fas fa-users mr-2"></i> Import Scopus
                     <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
