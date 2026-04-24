@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'dashboard/authors';
 $route['dashboard'] = 'dashboard/authors';
 $route['dashboard/index'] = 'dashboard/authors';
-$route['404_override'] = '';
+$route['404_override'] = 'errors/page_missing';
 $route['translate_uri_dashes'] = FALSE;
 
 // alias
