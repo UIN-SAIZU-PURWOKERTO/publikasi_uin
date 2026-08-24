@@ -63,7 +63,7 @@ class Scopus extends CI_Controller
             // 🔗 ambil author_id
             // $author_id = $this->Scopus_model->getAuthorIdByName($creator);
             // $author_id = $this->Scopus_model->getAuthorIdByNameSmart($creator);
-            $author_id = $this->Scopus_model->getAuthorIdByNameAdvanced($creator);
+            $author_id = $this->scopus->getAuthorIdByNameAdvanced($creator);
 
         
             $data = [
@@ -78,7 +78,7 @@ class Scopus extends CI_Controller
                 'updated_at'=> date('Y-m-d H:i:s')
             ];
         
-            $result = $this->Scopus_model->upsertPublication($data);
+            $result = $this->scopus->upsertPublication($data);
         
             $result === 'insert' ? $insert++ : $update++;
         }

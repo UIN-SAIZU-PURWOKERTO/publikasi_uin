@@ -126,7 +126,7 @@ class Scholar_model extends CI_Model
     public function getPublication()
     {
         // $this->db->where('is_delete', '0');
-        return $this->db->get('scholar_publications')->result_array();
+        return $this->db->order_by('year', 'desc')->get('scholar_publications')->result_array();
     }
 
     public function insert($data)
