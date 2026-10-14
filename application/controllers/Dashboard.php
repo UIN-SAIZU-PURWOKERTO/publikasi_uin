@@ -48,9 +48,12 @@ class Dashboard extends CI_Controller
                 'artikel_scholar' => $row->articles_scholar,
                 'artikel_scopus' => $row->articles_scopus,
                 'artikel_wos' => $row->articles_wos,
+                'artikel_garuda' => $row->articles_garuda ?? 0,
                 'cit_scholar' => $row->citations_scholar,
                 'cit_scopus' => $row->citations_scopus,
                 'cit_wos' => $row->citations_wos,
+                'cit_garuda' => $row->citations_garuda ?? 0,
+                'cited_garuda' => $row->cited_garuda ?? 0,
                 'subject' => explode(",", $row->subjects) // convert string → array
             ];
         }
@@ -103,9 +106,12 @@ class Dashboard extends CI_Controller
             'articles_scholar' => 'sinta_authors.articles_scholar',
             'articles_scopus' => 'sinta_authors.articles_scopus',
             'articles_wos' => 'sinta_authors.articles_wos',
+            'articles_garuda' => 'sinta_authors.articles_garuda',
             'citations_scholar' => 'sinta_authors.citations_scholar',
             'citations_scopus' => 'sinta_authors.citations_scopus',
             'citations_wos' => 'sinta_authors.citations_wos',
+            'citations_garuda' => 'sinta_authors.citations_garuda',
+            'cited_garuda' => 'sinta_authors.cited_garuda',
         ];
 
         if (!empty($sort) && isset($allowed_sort[$sort])) {
@@ -175,9 +181,14 @@ class Dashboard extends CI_Controller
                 'artikel_scholar' => $r->articles_scholar,
                 'artikel_scopus' => $r->articles_scopus,
                 'artikel_wos' => $r->articles_wos,
+                'artikel_garuda' => $r->articles_garuda ?? 0,
                 'cit_scholar' => $r->citations_scholar,
                 'cit_scopus' => $r->citations_scopus,
                 'cit_wos' => $r->citations_wos,
+                'cit_garuda' => $r->citations_garuda ?? 0,
+                'cited_garuda' => $r->cited_garuda ?? 0,
+                'nidn' => $r->nidn ?? null,
+                'jabatan_fungsional' => $r->jabatan_fungsional ?? null,
                 'subject' => explode(",", $r->subjects),
                 'prodi_id' => $r->prodi_id
             ];

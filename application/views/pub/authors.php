@@ -278,7 +278,7 @@
 
 .metric-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 4px;
 }
 
@@ -309,10 +309,12 @@
 .source-scholar { border-left: 3px solid #2563eb; }
 .source-scopus  { border-left: 3px solid #d97706; }
 .source-wos     { border-left: 3px solid #16a34a; }
+.source-garuda  { border-left: 3px solid #dc2626; }
 
 .source-scholar .mi-source { color: #2563eb; }
 .source-scopus  .mi-source { color: #d97706; }
 .source-wos     .mi-source { color: #16a34a; }
+.source-garuda  .mi-source { color: #dc2626; }
 
 /* ---- Progress Bars ---- */
 .progress-section {
@@ -520,7 +522,7 @@
         <div class="page-header-text">
             <h1 class="page-title">Direktori Akademisi UIN Saizu Purwokerto</h1>
             <div class="page-subtitle">
-                 Data publikasi dari SINTA, Scopus, Scholar &amp; WoS
+                 Data publikasi dari SINTA, Scopus, Scholar, WoS dan Garuda
             </div>
         </div>
     </div>
@@ -589,9 +591,12 @@
             <option value="articles_scholar"          <?= ($sort=='articles_scholar')?'selected':'' ?>>📝 Artikel Scholar</option>
             <option value="articles_scopus"           <?= ($sort=='articles_scopus')?'selected':'' ?>>📝 Artikel Scopus</option>
             <option value="articles_wos"              <?= ($sort=='articles_wos')?'selected':'' ?>>📝 Artikel WoS</option>
+            <option value="articles_garuda"           <?= ($sort=='articles_garuda')?'selected':'' ?>>📝 Artikel Garuda</option>
             <option value="citations_scholar"         <?= ($sort=='citations_scholar')?'selected':'' ?>>💬 Sitasi Scholar</option>
             <option value="citations_scopus"          <?= ($sort=='citations_scopus')?'selected':'' ?>>💬 Sitasi Scopus</option>
             <option value="citations_wos"             <?= ($sort=='citations_wos')?'selected':'' ?>>💬 Sitasi WoS</option>
+            <option value="citations_garuda"          <?= ($sort=='citations_garuda')?'selected':'' ?>>💬 Sitasi Garuda</option>
+            <option value="cited_garuda"              <?= ($sort=='cited_garuda')?'selected':'' ?>>📑 Dok. Tersitasi Garuda</option>
         </select>
 
         <select name="order" class="filter-select" onchange="this.form.submit()">
@@ -623,11 +628,14 @@
         $art_scholar    = (int)($d['artikel_scholar'] ?? 0);
         $art_scopus     = (int)($d['artikel_scopus'] ?? 0);
         $art_wos        = (int)($d['artikel_wos'] ?? 0);
+        $art_garuda     = (int)($d['artikel_garuda'] ?? 0);
         $cit_scholar    = (int)($d['cit_scholar'] ?? 0);
         $cit_scopus     = (int)($d['cit_scopus'] ?? 0);
         $cit_wos        = (int)($d['cit_wos'] ?? 0);
-        $total_articles = $art_scholar + $art_scopus + $art_wos;
-        $total_citations= $cit_scholar + $cit_scopus + $cit_wos;
+        $cit_garuda     = (int)($d['cit_garuda'] ?? 0);
+        $cited_garuda   = (int)($d['cited_garuda'] ?? 0);
+        $total_articles = $art_scholar + $art_scopus + $art_wos + $art_garuda;
+        $total_citations= $cit_scholar + $cit_scopus + $cit_wos + $cit_garuda;
         $max_score      = 5000;
         $pct_all        = min(round(($score_all / $max_score) * 100), 100);
         $pct_3yr        = min(round(($score_3yr / $max_score) * 100), 100);
@@ -658,6 +666,9 @@
                         🏛️ <?= htmlspecialchars($d['dept'] ?? '-') ?>
                     </div>
                     <span class="sinta-badge">✦ SINTA Author</span>
+                    <?php if (!empty($d['nidn'])): ?>
+                    <span class="sinta-badge" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;">🆔 <?= htmlspecialchars($d['nidn']) ?></span>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -697,6 +708,10 @@
                         <span class="mi-source">WoS</span>
                         <span class="mi-value"><?= $art_wos ?></span>
                     </div>
+                    <div class="metric-item source-garuda">
+                        <span class="mi-source">Garuda</span>
+                        <span class="mi-value"><?= $art_garuda ?></span>
+                    </div>
                 </div>
             </div>
 
@@ -715,6 +730,10 @@
                     <div class="metric-item source-wos">
                         <span class="mi-source">WoS</span>
                         <span class="mi-value"><?= number_format($cit_wos) ?></span>
+                    </div>
+                    <div class="metric-item source-garuda" title="Sitasi: <?= number_format($cit_garuda) ?>, Dok. Tersitasi: <?= number_format($cited_garuda) ?>">
+                        <span class="mi-source">Garuda</span>
+                        <span class="mi-value"><?= number_format($cit_garuda) ?></span>
                     </div>
                 </div>
             </div>

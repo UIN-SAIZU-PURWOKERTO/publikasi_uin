@@ -156,10 +156,8 @@
             </div>
 
             <div class="info-box">
-                <div><b>Artikel:</b> Scholar <?= $d['artikel_scholar'] ?> | Scopus <?= $d['artikel_scopus'] ?> | WoS
-                    <?= $d['artikel_wos'] ?></div>
-                <div><b>Citation:</b> Scholar <?= $d['cit_scholar'] ?> | Scopus <?= $d['cit_scopus'] ?> | WoS
-                    <?= $d['cit_wos'] ?></div>
+                <div><b>Artikel:</b> Scholar <?= $d['artikel_scholar'] ?> | Scopus <?= $d['artikel_scopus'] ?> | WoS <?= $d['artikel_wos'] ?> | Garuda <?= $d['artikel_garuda'] ?? 0 ?></div>
+                <div><b>Citation:</b> Scholar <?= $d['cit_scholar'] ?> | Scopus <?= $d['cit_scopus'] ?> | WoS <?= $d['cit_wos'] ?> | Garuda <?= $d['cit_garuda'] ?? 0 ?></div>
             </div>
 
             <div style="margin-top:10px;">

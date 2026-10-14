@@ -2,8 +2,8 @@
 $subjects = array_filter(array_map('trim', explode(',', $author['subjects'] ?? '')));
 
 // Computed metrics
-$total_articles  = (int)($author['articles_scholar']??0) + (int)($author['articles_scopus']??0) + (int)($author['articles_wos']??0);
-$total_citations = (int)($author['citations_scholar']??0) + (int)($author['citations_scopus']??0) + (int)($author['citations_wos']??0);
+$total_articles  = (int)($author['articles_scholar']??0) + (int)($author['articles_scopus']??0) + (int)($author['articles_wos']??0) + (int)($author['articles_garuda']??0);
+$total_citations = (int)($author['citations_scholar']??0) + (int)($author['citations_scopus']??0) + (int)($author['citations_wos']??0) + (int)($author['citations_garuda']??0);
 $score_all  = (float)($author['score_overall']??0);
 $score_3yr  = (float)($author['score_3_years']??0);
 $score_aff  = (float)($author['score_affiliation']??0);
@@ -180,7 +180,7 @@ $max_score  = 5000;
 /* ---- Metric Cards Row ---- */
 .da-metrics-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     margin-bottom: 24px;
 }
@@ -205,6 +205,7 @@ $max_score  = 5000;
 .da-metric-card.scholar::before { background: linear-gradient(90deg, #2563eb, #3b82f6); }
 .da-metric-card.scopus::before  { background: linear-gradient(90deg, #d97706, #f59e0b); }
 .da-metric-card.wos::before     { background: linear-gradient(90deg, #16a34a, #22c55e); }
+.da-metric-card.garuda::before  { background: linear-gradient(90deg, #dc2626, #ef4444); }
 
 .da-source-label {
     font-size: 11px;
@@ -220,6 +221,7 @@ $max_score  = 5000;
 .da-metric-card.scholar .da-source-label { color: #2563eb; }
 .da-metric-card.scopus  .da-source-label { color: #d97706; }
 .da-metric-card.wos     .da-source-label { color: #16a34a; }
+.da-metric-card.garuda  .da-source-label { color: #dc2626; }
 
 .da-source-dot {
     width: 8px; height: 8px;
@@ -230,6 +232,7 @@ $max_score  = 5000;
 .scholar .da-source-dot { background: #2563eb; }
 .scopus  .da-source-dot { background: #d97706; }
 .wos     .da-source-dot { background: #16a34a; }
+.garuda  .da-source-dot { background: #dc2626; }
 
 .da-metric-stat-grid {
     display: grid;
@@ -446,14 +449,18 @@ $max_score  = 5000;
 .da-empty-state p { font-size: 14px; }
 
 /* Responsive */
+@media (max-width: 1200px) {
+    .da-metrics-row { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 900px) {
     .da-hero { flex-direction: column; }
     .da-hero-totals { flex-direction: row; }
-    .da-metrics-row { grid-template-columns: 1fr; }
     .da-bottom-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
+    .da-metrics-row { grid-template-columns: 1fr; }
     .da-hero { padding: 20px; }
     .da-hero-name { font-size: 18px; }
     .da-hero-totals { flex-wrap: wrap; }
@@ -471,11 +478,31 @@ $max_score  = 5000;
     </div>
 
     <div class="da-hero-info">
-        <div class="da-hero-name"><?= htmlspecialchars($author['name']) ?></div>
+        <?php
+            $title_prefix = trim($author['gelar_depan'] ?? '');
+            $title_suffix = trim($author['gelar_belakang'] ?? '');
+            $display_name = $author['name'];
+            if ($title_prefix !== '') {
+                $display_name = $title_prefix . ' ' . $display_name;
+            }
+            if ($title_suffix !== '') {
+                $display_name = $display_name . ', ' . $title_suffix;
+            }
+        ?>
+        <div class="da-hero-name"><?= htmlspecialchars($display_name) ?></div>
         <div class="da-hero-dept">🏛️ <?= htmlspecialchars($author['department'] ?? '') ?></div>
         <div class="da-hero-aff">🏫 <?= htmlspecialchars($author['affiliation_name'] ?? '') ?></div>
 
         <div class="da-hero-badges">
+            <?php if (!empty($author['nidn'])): ?>
+            <span class="da-badge">🆔 NIDN: <?= htmlspecialchars($author['nidn']) ?></span>
+            <?php endif; ?>
+            <?php if (!empty($author['jabatan_fungsional'])): ?>
+            <span class="da-badge">💼 <?= htmlspecialchars($author['jabatan_fungsional']) ?></span>
+            <?php endif; ?>
+            <?php if (!empty($author['pendidikan_terakhir'])): ?>
+            <span class="da-badge">🎓 <?= htmlspecialchars($author['pendidikan_terakhir']) ?></span>
+            <?php endif; ?>
             <?php if (!empty($author['sinta_id'])): ?>
             <span class="da-badge">✦ SINTA ID: <?= htmlspecialchars($author['sinta_id']) ?></span>
             <?php endif; ?>
@@ -577,8 +604,38 @@ $max_score  = 5000;
                 <span class="da-stat-lab">H-Index</span>
             </div>
             <div class="da-stat-item">
-                <span class="da-stat-val">—</span>
-                <span class="da-stat-lab">i10-Index</span>
+                <span class="da-stat-val"><?= isset($author['cited_wos']) && $author['cited_wos'] !== null ? number_format((int)$author['cited_wos']) : '—' ?></span>
+                <span class="da-stat-lab">Dok. Tersitasi</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Garuda -->
+    <div class="da-metric-card garuda">
+        <div class="da-source-label">
+            <span class="da-source-dot"></span> Garuda
+        </div>
+        <div class="da-metric-stat-grid">
+            <div class="da-stat-item">
+                <span class="da-stat-val"><?= number_format((int)($author['citations_garuda']??0)) ?></span>
+                <span class="da-stat-lab">Sitasi</span>
+            </div>
+            <div class="da-stat-item">
+                <span class="da-stat-val"><?= number_format((int)($author['articles_garuda']??0)) ?></span>
+                <span class="da-stat-lab">Artikel</span>
+            </div>
+            <div class="da-stat-item">
+                <span class="da-stat-val"><?= number_format((int)($author['cited_garuda']??0)) ?></span>
+                <span class="da-stat-lab">Dok. Tersitasi</span>
+            </div>
+            <div class="da-stat-item">
+                <?php 
+                    $art_g = (int)($author['articles_garuda'] ?? 0);
+                    $cit_g_doc = (int)($author['cited_garuda'] ?? 0);
+                    $garuda_rate = $art_g > 0 ? round(($cit_g_doc / $art_g) * 100) . '%' : '—';
+                ?>
+                <span class="da-stat-val"><?= $garuda_rate ?></span>
+                <span class="da-stat-lab">% Tersitasi</span>
             </div>
         </div>
     </div>

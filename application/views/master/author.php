@@ -94,8 +94,11 @@
                             $no = 1;
 								foreach ($result as $data) : ?>
                             <tr>
-                                <td>
-
+                                <td class="text-nowrap">
+                                    <a href="<?= base_url('dashboard/detail/' . $data['id']); ?>" target="_blank"
+                                        class="btn btn-outline-info btn-sm mr-1" title="Lihat Detail Author">
+                                        <i class="fa fa-eye"></i> Detail
+                                    </a>
                                     <a href="<?= base_url('master/hapusauthor/'); ?><?php echo $data['id']; ?>"
                                         class="btn btn-outline-danger btn-sm tombol-hapus"><i class="fa fa-trash"></i>
                                         Hapus
