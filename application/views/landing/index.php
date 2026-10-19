@@ -39,6 +39,7 @@
                     <li><a href="<?= base_url('ppip/layanan'); ?>" data-section="layanan" class="nav-section-link <?= ($active_section === 'layanan') ? 'active' : ''; ?>">Layanan & Portal</a></li>
                     <li><a href="<?= base_url('ppip/kinerja'); ?>" data-section="kinerja" class="nav-section-link <?= ($active_section === 'kinerja') ? 'active' : ''; ?>">Kinerja Publikasi</a></li>
                     <li><a href="<?= base_url('ppip/informasi'); ?>" data-section="informasi" class="nav-section-link <?= ($active_section === 'informasi') ? 'active' : ''; ?>">Informasi</a></li>
+                    <li><a href="<?= base_url('ppip/disclaimer'); ?>" data-section="disclaimer" class="nav-section-link <?= ($active_section === 'disclaimer') ? 'active' : ''; ?>">Disclaimer</a></li>
                     <li><a href="<?= base_url('ppip/kontak'); ?>" data-section="kontak" class="nav-section-link <?= ($active_section === 'kontak') ? 'active' : ''; ?>">Kontak</a></li>
                     <!-- <li><a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap mr-1"></i> Peta Situs</a></li> -->
                 </ul>
@@ -380,6 +381,130 @@
     </section>
 
     <!-- ==========================================================================
+       DISCLAIMER RESMI UIN SAIZU
+       ========================================================================== -->
+    <section class="disclaimer-landing-section" id="disclaimer" style="padding: 90px 0 80px; background: #ffffff; border-top: 1px solid var(--border-light);">
+        <div class="container">
+            <div class="section-header text-center" style="max-width: 860px; margin: 0 auto 40px;">
+                <span class="pill-badge gold">
+                    <i class="fas fa-balance-scale"></i> Legalitas & Entitas Kelembagaan
+                </span>
+                <h2 class="section-title" style="font-size: 2.2rem; margin-top: 12px; margin-bottom: 12px;">Disclaimer Resmi UIN SAIZU</h2>
+                <p class="section-desc" style="font-size: 1rem; color: var(--text-secondary); line-height: 1.7;">
+                    Pernyataan resmi keabsahan nama institusi, kesinambungan sejarah transformasi kelembagaan, serta panduan variasi penamaan resmi untuk integrasi data publikasi ilmiah, Webometrics, dan sitasi akademik digital.
+                </p>
+            </div>
+
+            <div style="background: var(--bg-subtle, #F8FAFC); border-radius: var(--radius-lg, 18px); padding: 36px 36px 32px; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+                
+                <!-- Notice Perpres -->
+                <div style="background: linear-gradient(135deg, rgba(4, 120, 87, 0.08) 0%, rgba(2, 132, 199, 0.08) 100%); border-left: 4px solid var(--primary); border-radius: var(--radius-md); padding: 20px 24px; margin-bottom: 24px;">
+                    <div style="font-weight: 700; color: var(--navy-900); font-size: 1.05rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-certificate text-primary"></i> Dasar Penetapan Hukum Institusi
+                    </div>
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7;">
+                        <strong>Universitas Islam Negeri Profesor Kiai Haji Saifuddin Zuhri Purwokerto</strong> merupakan nama resmi institusi sebagaimana ditetapkan berdasarkan <strong>Peraturan Presiden Republik Indonesia Nomor 41 Tahun 2021</strong>.
+                    </p>
+                </div>
+
+                <p style="color: var(--text-secondary); font-size: 0.96rem; line-height: 1.7; margin-bottom: 20px;">
+                    Dalam berbagai dokumen, publikasi, basis data, sistem pemeringkatan, mesin pencari, indeksasi ilmiah, dan rekam jejak digital, institusi ini dapat ditemukan dengan sejumlah variasi penamaan yang merujuk pada lembaga yang sama, antara lain:
+                </p>
+
+                <!-- 12 Variasi Nama Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin-bottom: 28px;">
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">Universitas Islam Negeri Profesor Kiai Haji Saifuddin Zuhri Purwokerto</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">Universitas Islam Negeri Prof. K.H. Saifuddin Zuhri Purwokerto</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">UIN Prof. K.H. Saifuddin Zuhri Purwokerto</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">UIN SAIZU Purwokerto</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">UIN Saizu</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">6</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">UIN Saizu Purwokerto</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">7</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">UIN Saifuddin Zuhri Purwokerto</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">8</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">Universitas Islam Negeri Saifuddin Zuhri Purwokerto</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">9</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">UIN Purwokerto</span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">10</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">State Islamic University Prof. K.H. Saifuddin Zuhri Purwokerto <small style="font-weight: 400; color: var(--text-muted);">(dan variasi bahasa Inggris)</small></span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">11</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">Institut Agama Islam Negeri Purwokerto (IAIN Purwokerto) <small style="font-weight: 400; color: var(--text-muted);">(nama sebelum universitas)</small></span>
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(4, 120, 87, 0.1); color: var(--primary); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">12</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; color: var(--navy-900);">Sekolah Tinggi Agama Islam Negeri Purwokerto (STAIN Purwokerto) <small style="font-weight: 400; color: var(--text-muted);">(nama periode awal)</small></span>
+                    </div>
+                </div>
+
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px;">
+                    Seluruh variasi nama tersebut, sepanjang merujuk pada institusi yang berkedudukan di <strong>Purwokerto, Kabupaten Banyumas</strong>, merupakan bagian dari kesinambungan sejarah dan transformasi kelembagaan institusi yang sama, dan bukan merupakan perguruan tinggi yang berbeda.
+                </p>
+
+                <!-- Callout Highlight -->
+                <div style="background: #FEF3C7; border: 1px solid #FDE68A; border-radius: var(--radius-md); padding: 16px 20px; color: #92400E; font-size: 0.92rem; line-height: 1.7; margin-bottom: 24px; display: flex; gap: 12px; align-items: flex-start;">
+                    <i class="fas fa-info-circle" style="font-size: 1.25rem; color: #D97706; margin-top: 2px; flex-shrink: 0;"></i>
+                    <div>
+                        <strong>Penting untuk Kepentingan Pengumpulan & Integrasi Data:</strong><br>
+                        Untuk kepentingan pengumpulan, verifikasi, integrasi, dan analisis data historis maupun terkini, termasuk data pemeringkatan perguruan tinggi, <strong>Webometrics</strong>, publikasi ilmiah, sitasi, afiliasi penulis, repository, website, backlink, indeksasi, dan rekam jejak akademik digital, seluruh variasi nama tersebut perlu dipertimbangkan sebagai <strong>satu entitas institusi</strong>, yaitu <strong>Universitas Islam Negeri Profesor Kiai Haji Saifuddin Zuhri Purwokerto (UIN SAIZU Purwokerto)</strong>.
+                    </div>
+                </div>
+
+                <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.7; margin-bottom: 24px;">
+                    Penggunaan nama lama seperti <em>IAIN Purwokerto</em> dan <em>STAIN Purwokerto</em> dalam dokumen atau basis data tertentu menunjukkan periode historis kelembagaan pada saat data tersebut diterbitkan, dan tidak menunjukkan keberadaan institusi yang berbeda.
+                </p>
+
+                <!-- Step Transformation -->
+                <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 20px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+                    <div>
+                        <div style="font-size: 0.82rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
+                            Dasar Transformasi Kelembagaan
+                        </div>
+                        <div style="font-size: 0.98rem; font-weight: 700; color: var(--navy-900);">
+                            STAIN Purwokerto &rarr; IAIN Purwokerto &rarr; UIN SAIZU Purwokerto
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                            Transformasi STAIN menjadi IAIN ditetapkan pada <strong>17 Oktober 2014</strong>, sedangkan IAIN menjadi UIN ditetapkan pada <strong>11 Mei 2021</strong>.
+                        </div>
+                    </div>
+                    <div>
+                        <a href="https://uinsaizu.ac.id/disclaimer" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                            <i class="fas fa-external-link-alt mr-1"></i> uinsaizu.ac.id/disclaimer
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
        FOOTER
        ========================================================================== -->
     <footer class="site-footer" id="kontak">
@@ -419,7 +544,8 @@
                         <li><a href="<?= base_url('dashboard/scopus_sdgs'); ?>"><i class="fas fa-chevron-right"></i> Sitasi Scopus Fakultas</a></li>
                         <li><a href="<?= base_url('dashboard/scholar_sdgs'); ?>"><i class="fas fa-chevron-right"></i> Sitasi Google Scholar</a></li>
                         <li><a href="<?= base_url('dashboard/jurnal_sinta'); ?>"><i class="fas fa-chevron-right"></i> Akreditasi SINTA</a></li>
-                        <li><a href="<?= base_url('sitemap'); ?>" style="color: var(--primary-light); font-weight: 600;"><i class="fas fa-sitemap"></i> Peta Situs (Sitemap)</a></li>
+                        <li><a href="<?= base_url('disclaimer'); ?>" style="color: var(--primary-light); font-weight: 600;"><i class="fas fa-balance-scale"></i> Disclaimer Resmi</a></li>
+                        <li><a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap"></i> Peta Situs (Sitemap)</a></li>
                     </ul>
                 </div>
 
@@ -451,6 +577,7 @@
                     <a href="<?= base_url('ppip/beranda'); ?>" data-section="beranda" class="nav-section-link">Beranda</a>
                     <a href="<?= base_url('ppip/tentang'); ?>" data-section="tentang" class="nav-section-link">Tentang</a>
                     <a href="<?= base_url('ppip/layanan'); ?>" data-section="layanan" class="nav-section-link">Layanan</a>
+                    <a href="<?= base_url('disclaimer'); ?>">Disclaimer</a>
                     <a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap mr-1"></i> Peta Situs</a>
                     <a href="<?= base_url('sitemap.xml'); ?>" target="_blank"><i class="fas fa-code mr-1"></i> XML</a>
                     <a href="<?= base_url('auth'); ?>">Login Pengelola</a>

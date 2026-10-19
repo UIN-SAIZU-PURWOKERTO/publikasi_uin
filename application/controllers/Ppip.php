@@ -24,7 +24,7 @@ class Ppip extends CI_Controller
         $stats = $this->ppip_model->get_live_stats();
 
         $section_clean = strtolower(trim($section));
-        $valid_sections = ['beranda', 'tentang', 'layanan', 'kinerja', 'informasi', 'kontak'];
+        $valid_sections = ['beranda', 'tentang', 'layanan', 'kinerja', 'informasi', 'kontak', 'disclaimer'];
         if (!in_array($section_clean, $valid_sections)) {
             $section_clean = 'beranda';
         }
@@ -59,6 +59,22 @@ class Ppip extends CI_Controller
         $this->load->view('landing/sitemap', $data);
     }
 
+    public function disclaimer()
+    {
+        $settings = $this->ppip_model->get_settings();
+        $portals  = $this->ppip_model->get_portals();
+        $stats    = $this->ppip_model->get_live_stats();
+
+        $data = [
+            'title'    => 'Disclaimer Resmi | ' . $settings['hero_title'],
+            'settings' => $settings,
+            'portals'  => $portals,
+            'stats'    => $stats,
+        ];
+
+        $this->load->view('landing/disclaimer', $data);
+    }
+
     public function sitemap_xml()
     {
         $portals = $this->ppip_model->get_portals();
@@ -71,6 +87,7 @@ class Ppip extends CI_Controller
             ['loc' => base_url('ppip#kinerja'), 'priority' => '0.9', 'changefreq' => 'weekly'],
             ['loc' => base_url('ppip#informasi'), 'priority' => '0.8', 'changefreq' => 'daily'],
             ['loc' => base_url('ppip#kontak'), 'priority' => '0.7', 'changefreq' => 'monthly'],
+            ['loc' => base_url('disclaimer'), 'priority' => '0.8', 'changefreq' => 'monthly'],
             ['loc' => base_url('sitemap'), 'priority' => '0.7', 'changefreq' => 'weekly'],
             ['loc' => base_url('dashboard/authors'), 'priority' => '0.8', 'changefreq' => 'weekly'],
             ['loc' => base_url('dashboard/scopus_sdgs'), 'priority' => '0.8', 'changefreq' => 'weekly'],

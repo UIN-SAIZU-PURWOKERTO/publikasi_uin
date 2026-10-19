@@ -82,12 +82,15 @@ $route['peta-situs'] = 'ppip/sitemap';
 $route['sitemap.xml'] = 'ppip/sitemap_xml';
 
 // Section URLs Landing Page PPIP (/ppip/beranda, /ppip/tentang, etc. & alias /tentang, etc.)
-$route['ppip/(beranda|tentang|layanan|kinerja|informasi|kontak)'] = 'index/$1';
-$route['beranda']   = 'index/beranda';
-$route['tentang']   = 'index/tentang';
-$route['layanan']   = 'index/layanan';
-$route['kinerja']   = 'index/kinerja';
-$route['informasi'] = 'index/informasi';
-$route['kontak']    = 'index/kontak';
+$route['ppip/(beranda|tentang|layanan|kinerja|informasi|kontak|disclaimer)'] = 'ppip/index/$1';
+$route['beranda']   = 'ppip/index/beranda';
+$route['tentang']   = 'ppip/index/tentang';
+$route['layanan']   = 'ppip/index/layanan';
+$route['kinerja']   = 'ppip/index/kinerja';
+$route['informasi'] = 'ppip/index/informasi';
+$route['kontak']    = 'ppip/index/kontak';
+
+$route['disclaimer'] = 'ppip/index/disclaimer';
+$route['disclaimer-dokumen'] = 'ppip/disclaimer';
 
 

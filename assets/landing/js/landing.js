@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 3. Section Routing & ScrollSpy System
-    const validSections = ['beranda', 'tentang', 'layanan', 'kinerja', 'informasi', 'kontak'];
+    const validSections = ['beranda', 'tentang', 'layanan', 'kinerja', 'informasi', 'disclaimer', 'kontak'];
     const trackedSections = validSections.map(id => ({
         id: id,
         el: document.getElementById(id)
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const h = href.replace(/^#/, '');
             if (validSections.includes(h)) return h;
         }
-        const match = href.match(/\/(beranda|tentang|layanan|kinerja|informasi|kontak)(?:$|\?|#)/);
+        const match = href.match(/\/(beranda|tentang|layanan|kinerja|informasi|disclaimer|kontak)(?:$|\?|#)/);
         if (match && validSections.includes(match[1])) {
             return match[1];
         }
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function checkInitialSection() {
         let initSec = (window.PPIP_CONFIG && window.PPIP_CONFIG.activeSection) || 'beranda';
         
-        const pathMatch = window.location.pathname.match(/\/(beranda|tentang|layanan|kinerja|informasi|kontak)/);
+        const pathMatch = window.location.pathname.match(/\/(beranda|tentang|layanan|kinerja|informasi|disclaimer|kontak)/);
         if (pathMatch) {
             initSec = pathMatch[1];
         } else if (window.location.hash) {
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('popstate', function (e) {
         let sec = (e.state && e.state.section) ? e.state.section : null;
         if (!sec) {
-            const match = window.location.pathname.match(/\/(beranda|tentang|layanan|kinerja|informasi|kontak)/);
+            const match = window.location.pathname.match(/\/(beranda|tentang|layanan|kinerja|informasi|disclaimer|kontak)/);
             sec = match ? match[1] : 'beranda';
         }
         if (validSections.includes(sec)) {
