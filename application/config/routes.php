@@ -49,7 +49,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'dashboard/authors';
+// $route['default_controller'] = 'dashboard/authors';
+$route['default_controller'] = 'ppip/index';
 $route['dashboard'] = 'dashboard/authors';
 $route['dashboard/index'] = 'dashboard/authors';
 $route['404_override'] = 'errors/page_missing';
@@ -57,3 +58,19 @@ $route['translate_uri_dashes'] = FALSE;
 
 // alias
 $route['master/update_prodau'] = 'master/update_prodi_author';
+
+// Landing Page PPIP LPPM
+$route['ppip'] = 'ppip';
+$route['landing'] = 'ppip';
+
+// Kelola Portal PPIP (Aman dari WAF / Nginx Block)
+$route['kelola_ppip'] = 'kelola_ppip/portals';
+$route['kelola_ppip/(:any)'] = 'kelola_ppip/$1';
+$route['kelola-ppip'] = 'kelola_ppip/portals';
+$route['kelola-ppip/(:any)'] = 'kelola_ppip/$1';
+
+// Admin PPIP (Alias Legacy)
+$route['admin_ppip'] = 'kelola_ppip/portals';
+$route['admin_ppip/(:any)'] = 'kelola_ppip/$1';
+$route['admin-ppip'] = 'kelola_ppip/portals';
+$route['admin-ppip/(:any)'] = 'kelola_ppip/$1';

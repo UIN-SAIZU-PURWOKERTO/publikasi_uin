@@ -12,6 +12,11 @@
                 <b>PUBLIKASI - UIN SAIZU PURWOKERTO</b>
             </a>
         </li>
+        <li class="nav-item d-none d-md-inline-block">
+            <a href="<?= base_url('ppip') ?>" class="nav-link text-white" target="_blank" title="Buka Landing Page PPIP">
+                <i class="fas fa-home mr-1"></i> Portal PPIP
+            </a>
+        </li>
     </ul>
 
     <?php  
@@ -112,6 +117,27 @@
                     <!-- <span class="float-right text-muted text-sm">12 hours</span> -->
                 </a>
                 
+            </div>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-layer-group mr-1"></i> Portal PPIP
+            </a>
+            <div class="dropdown-menu">
+                <a href="<?= base_url('kelola_ppip/portals') ?>" class="dropdown-item">
+                    <i class="fas fa-th-large mr-2"></i> Kelola Layanan / Portal
+                </a>
+                <a href="<?= base_url('kelola_ppip/agenda') ?>" class="dropdown-item">
+                    <i class="fas fa-bullhorn mr-2"></i> Informasi & Agenda
+                </a>
+                <a href="<?= base_url('kelola_ppip/settings') ?>" class="dropdown-item">
+                    <i class="fas fa-sliders-h mr-2"></i> Pengaturan Konten Portal
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="<?= base_url('ppip') ?>" target="_blank" class="dropdown-item text-success">
+                    <i class="fas fa-external-link-alt mr-2"></i> Buka Halaman Depan PPIP
+                </a>
             </div>
         </li>
 
