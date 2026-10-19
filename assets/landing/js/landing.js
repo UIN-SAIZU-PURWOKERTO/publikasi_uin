@@ -37,21 +37,49 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 3. ScrollSpy & Menu Nav Active Highlight
-    const navAnchors = document.querySelectorAll('#navLinks a[href^="#"]');
-    const trackedSections = [
-        { id: 'beranda', el: document.getElementById('beranda') },
-        { id: 'tentang', el: document.getElementById('tentang') },
-        { id: 'layanan', el: document.getElementById('layanan') },
-        { id: 'kinerja', el: document.getElementById('kinerja') },
-        { id: 'informasi', el: document.getElementById('informasi') },
-        { id: 'kontak', el: document.getElementById('kontak') }
-    ].filter(item => item.el !== null);
+    // 3. Section Routing & ScrollSpy System
+    const validSections = ['beranda', 'tentang', 'layanan', 'kinerja', 'informasi', 'kontak'];
+    const trackedSections = validSections.map(id => ({
+        id: id,
+        el: document.getElementById(id)
+    })).filter(item => item.el !== null);
 
-    function setActiveNavLink(hash) {
-        if (!hash) return;
-        navAnchors.forEach(link => {
-            if (link.getAttribute('href') === hash) {
+    // Helper: Determine URL for section based on current path
+    function getSectionUrl(sectionId) {
+        if (!window.PPIP_CONFIG) return '#' + sectionId;
+        const currentPath = window.location.pathname;
+        if (currentPath.includes('/ppip')) {
+            return window.PPIP_CONFIG.sectionBaseUrl + '/' + sectionId;
+        }
+        return window.PPIP_CONFIG.baseUrl + '/' + sectionId;
+    }
+
+    // Helper: Extract section ID from an anchor or element
+    function getTargetSectionId(link) {
+        if (!link) return null;
+        const dataSec = link.getAttribute('data-section');
+        if (dataSec && validSections.includes(dataSec)) {
+            return dataSec;
+        }
+        const href = link.getAttribute('href');
+        if (!href) return null;
+        if (href.startsWith('#')) {
+            const h = href.replace(/^#/, '');
+            if (validSections.includes(h)) return h;
+        }
+        const match = href.match(/\/(beranda|tentang|layanan|kinerja|informasi|kontak)(?:$|\?|#)/);
+        if (match && validSections.includes(match[1])) {
+            return match[1];
+        }
+        return null;
+    }
+
+    // Helper: Update active class on all corresponding section links (navbar & footer)
+    function setActiveNavLink(sectionId) {
+        if (!sectionId) return;
+        document.querySelectorAll('.nav-section-link, [data-section]').forEach(link => {
+            const linkSec = getTargetSectionId(link);
+            if (linkSec === sectionId) {
                 link.classList.add('active');
             } else {
                 link.classList.remove('active');
@@ -59,53 +87,74 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Helper: Smooth scroll to specific section
+    function scrollToSection(sectionId, smooth = true) {
+        const targetSection = document.getElementById(sectionId);
+        if (!targetSection) return;
+        const navbarHeight = navbar ? navbar.offsetHeight : 80;
+        const elementPosition = targetSection.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = Math.max(0, elementPosition - navbarHeight + 5);
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: smooth ? 'smooth' : 'auto'
+        });
+    }
+
     let isManualClickScrolling = false;
     let manualScrollTimeout = null;
+    let lastReportedSection = null;
 
+    // ScrollSpy: Highlights active link and updates URL in address bar saat scroll
     function updateScrollSpy() {
         if (isManualClickScrolling) return;
 
         const scrollY = window.scrollY;
-        const windowHeight = window.innerHeight;
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
         const documentHeight = Math.max(
             document.body.scrollHeight,
             document.documentElement.scrollHeight
         );
         const navbarHeight = navbar ? navbar.offsetHeight : 80;
 
-        // Jika scroll mencapai bagian paling bawah halaman -> aktifkan Kontak
-        if (scrollY + windowHeight >= documentHeight - 60) {
-            setActiveNavLink('#kontak');
-            return;
-        }
-
-        // Jika berada di dekat bagian paling atas -> aktifkan Beranda
-        if (scrollY < 120) {
-            setActiveNavLink('#beranda');
-            return;
-        }
-
-        // Tentukan section yang posisinya sedang berada di viewport
-        const checkPosition = scrollY + navbarHeight + 80;
         let currentActiveId = 'beranda';
 
-        for (let i = 0; i < trackedSections.length; i++) {
-            const sec = trackedSections[i].el;
-            const top = sec.offsetTop;
-            const height = sec.offsetHeight;
+        // 1. Jika sudah scroll mendekati bagian paling bawah halaman -> aktifkan Kontak
+        if (scrollY + windowHeight >= documentHeight - 50) {
+            currentActiveId = 'kontak';
+        } else if (scrollY < 100) {
+            // 2. Jika masih di bagian paling atas -> Beranda
+            currentActiveId = 'beranda';
+        } else {
+            // 3. Deteksi section yang sedang berada di viewport
+            // Trigger point: 30% dari tinggi layar atau tepat di bawah navbar
+            const triggerPoint = Math.max(navbarHeight + 40, windowHeight * 0.32);
 
-            if (checkPosition >= top && checkPosition < top + height) {
-                currentActiveId = trackedSections[i].id;
-                break;
-            } else if (checkPosition >= top) {
-                currentActiveId = trackedSections[i].id;
+            for (let i = trackedSections.length - 1; i >= 0; i--) {
+                const sec = trackedSections[i].el;
+                const rect = sec.getBoundingClientRect();
+
+                // Jika bagian atas section sudah mencapai trigger point dan section belum keluar dari viewport
+                if (rect.top <= triggerPoint && rect.bottom > navbarHeight) {
+                    currentActiveId = trackedSections[i].id;
+                    break;
+                }
             }
         }
 
-        setActiveNavLink('#' + currentActiveId);
+        setActiveNavLink(currentActiveId);
+
+        // Update URL di browser address bar secara dinamis saat scroll ke bawah atau ke atas
+        if (currentActiveId !== lastReportedSection) {
+            lastReportedSection = currentActiveId;
+            const newUrl = getSectionUrl(currentActiveId);
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState({ section: currentActiveId }, '', newUrl);
+            }
+        }
     }
 
-    // Event listener scroll dengan requestAnimationFrame
+    // Scroll event listener dengan requestAnimationFrame untuk performa optimal 60fps
     let ticking = false;
     window.addEventListener('scroll', function () {
         if (!ticking) {
@@ -117,75 +166,113 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, { passive: true });
 
-    // Initial check
-    updateScrollSpy();
-    window.addEventListener('load', updateScrollSpy);
+    // 4. Smooth Scrolling saat klik menu navigasi / tombol section
+    function handleSectionClick(e, sectionId) {
+        e.preventDefault();
+        setActiveNavLink(sectionId);
 
-    // 4. Smooth Scrolling saat klik menu tab atas
-    navAnchors.forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetHash = this.getAttribute('href');
-            if (!targetHash || targetHash === '#' || !targetHash.startsWith('#')) return;
+        // Update URL via pushState agar tercatat di history browser
+        const newUrl = getSectionUrl(sectionId);
+        if (window.history && window.history.pushState) {
+            window.history.pushState({ section: sectionId }, '', newUrl);
+        }
+        lastReportedSection = sectionId;
 
-            const targetSection = document.querySelector(targetHash);
-            if (targetSection) {
-                e.preventDefault();
+        // Kunci update scrollspy sesaat saat transisi scroll berjalan
+        isManualClickScrolling = true;
+        if (manualScrollTimeout) clearTimeout(manualScrollTimeout);
 
-                // Langsung sorot menu yang diklik
-                setActiveNavLink(targetHash);
+        scrollToSection(sectionId, true);
 
-                // Kunci update scrollspy sesaat saat transisi scroll berjalan
-                isManualClickScrolling = true;
-                if (manualScrollTimeout) clearTimeout(manualScrollTimeout);
+        // Lepaskan kunci setelah smooth scroll selesai
+        manualScrollTimeout = setTimeout(() => {
+            isManualClickScrolling = false;
+            updateScrollSpy();
+        }, 850);
 
-                const navbarHeight = navbar ? navbar.offsetHeight : 80;
-                const elementPosition = targetSection.getBoundingClientRect().top + window.scrollY;
-                const offsetPosition = Math.max(0, elementPosition - navbarHeight + 5);
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-
-                // Lepaskan kunci setelah smooth scroll selesai
-                manualScrollTimeout = setTimeout(() => {
-                    isManualClickScrolling = false;
-                    updateScrollSpy();
-                }, 800);
-
-                // Tutup menu mobile jika sedang terbuka
-                if (navLinks && navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                    if (mobileToggle) {
-                        const icon = mobileToggle.querySelector('i');
-                        if (icon) {
-                            icon.classList.remove('fa-times');
-                            icon.classList.add('fa-bars');
-                        }
-                    }
+        // Tutup menu mobile jika sedang terbuka
+        if (navLinks && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            if (mobileToggle) {
+                const icon = mobileToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 }
             }
-        });
+        }
+    }
+
+    // Pasang listener pada semua link section (.nav-section-link, data-section, atau href #section)
+    document.querySelectorAll('.nav-section-link, [data-section], a[href^="#"]').forEach(link => {
+        const secId = getTargetSectionId(link);
+        if (secId) {
+            link.addEventListener('click', function (e) {
+                handleSectionClick(e, secId);
+            });
+        }
     });
 
-    // Smooth scroll juga untuk anchor internal selain navbar (misal tombol di Hero)
-    document.querySelectorAll('a[href^="#"]:not(#navLinks a)').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            if (!targetId || targetId === '#' || !targetId.startsWith('#')) return;
-            const targetEl = document.querySelector(targetId);
-            if (targetEl) {
-                e.preventDefault();
-                const navbarHeight = navbar ? navbar.offsetHeight : 80;
-                const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
-                const offsetPosition = Math.max(0, elementPosition - navbarHeight + 5);
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
+    // Brand link (Logo PPIP) -> Beranda
+    const brandLink = document.querySelector('.brand-wrapper');
+    if (brandLink) {
+        brandLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            handleSectionClick(e, 'beranda');
         });
+    }
+
+    // Initial load check: jika membuka URL /ppip/tentang atau /tentang langsung
+    function checkInitialSection() {
+        let initSec = (window.PPIP_CONFIG && window.PPIP_CONFIG.activeSection) || 'beranda';
+        
+        const pathMatch = window.location.pathname.match(/\/(beranda|tentang|layanan|kinerja|informasi|kontak)/);
+        if (pathMatch) {
+            initSec = pathMatch[1];
+        } else if (window.location.hash) {
+            const h = window.location.hash.replace('#', '');
+            if (validSections.includes(h)) initSec = h;
+        }
+
+        lastReportedSection = initSec;
+        setActiveNavLink(initSec);
+
+        if (initSec && initSec !== 'beranda') {
+            setTimeout(() => {
+                isManualClickScrolling = true;
+                scrollToSection(initSec, false);
+                setTimeout(() => {
+                    isManualClickScrolling = false;
+                    updateScrollSpy();
+                }, 250);
+            }, 100);
+        }
+    }
+
+    checkInitialSection();
+    window.addEventListener('load', function () {
+        updateScrollSpy();
+        if (lastReportedSection && lastReportedSection !== 'beranda') {
+            scrollToSection(lastReportedSection, false);
+        }
+    });
+
+    // 5. Dukungan tombol Back / Forward di browser
+    window.addEventListener('popstate', function (e) {
+        let sec = (e.state && e.state.section) ? e.state.section : null;
+        if (!sec) {
+            const match = window.location.pathname.match(/\/(beranda|tentang|layanan|kinerja|informasi|kontak)/);
+            sec = match ? match[1] : 'beranda';
+        }
+        if (validSections.includes(sec)) {
+            lastReportedSection = sec;
+            setActiveNavLink(sec);
+            isManualClickScrolling = true;
+            scrollToSection(sec, true);
+            setTimeout(() => {
+                isManualClickScrolling = false;
+            }, 850);
+        }
     });
 
     // 5. Generic Modal Handlers

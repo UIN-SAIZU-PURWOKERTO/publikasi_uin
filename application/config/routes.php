@@ -73,4 +73,21 @@ $route['kelola-ppip/(:any)'] = 'kelola_ppip/$1';
 $route['admin_ppip'] = 'kelola_ppip/portals';
 $route['admin_ppip/(:any)'] = 'kelola_ppip/$1';
 $route['admin-ppip'] = 'kelola_ppip/portals';
-$route['admin-ppip/(:any)'] = 'kelola_ppip/$1';
+$route['admin-ppip/(:any)'] = 'kelola_ppip/$1';
+
+// Sitemap & Peta Situs PPIP
+$route['sitemap'] = 'ppip/sitemap';
+$route['ppip/sitemap'] = 'ppip/sitemap';
+$route['peta-situs'] = 'ppip/sitemap';
+$route['sitemap.xml'] = 'ppip/sitemap_xml';
+
+// Section URLs Landing Page PPIP (/ppip/beranda, /ppip/tentang, etc. & alias /tentang, etc.)
+$route['ppip/(beranda|tentang|layanan|kinerja|informasi|kontak)'] = 'index/$1';
+$route['beranda']   = 'index/beranda';
+$route['tentang']   = 'index/tentang';
+$route['layanan']   = 'index/layanan';
+$route['kinerja']   = 'index/kinerja';
+$route['informasi'] = 'index/informasi';
+$route['kontak']    = 'index/kontak';
+
+

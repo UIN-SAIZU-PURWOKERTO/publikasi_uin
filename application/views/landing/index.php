@@ -34,12 +34,13 @@
 
             <nav>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#beranda" class="active">Beranda</a></li>
-                    <li><a href="#tentang">Tentang</a></li>
-                    <li><a href="#layanan">Layanan & Portal</a></li>
-                    <li><a href="#kinerja">Kinerja Publikasi</a></li>
-                    <li><a href="#informasi">Informasi</a></li>
-                    <li><a href="#kontak">Kontak</a></li>
+                    <li><a href="<?= base_url('ppip/beranda'); ?>" data-section="beranda" class="nav-section-link <?= ($active_section === 'beranda') ? 'active' : ''; ?>">Beranda</a></li>
+                    <li><a href="<?= base_url('ppip/tentang'); ?>" data-section="tentang" class="nav-section-link <?= ($active_section === 'tentang') ? 'active' : ''; ?>">Tentang</a></li>
+                    <li><a href="<?= base_url('ppip/layanan'); ?>" data-section="layanan" class="nav-section-link <?= ($active_section === 'layanan') ? 'active' : ''; ?>">Layanan & Portal</a></li>
+                    <li><a href="<?= base_url('ppip/kinerja'); ?>" data-section="kinerja" class="nav-section-link <?= ($active_section === 'kinerja') ? 'active' : ''; ?>">Kinerja Publikasi</a></li>
+                    <li><a href="<?= base_url('ppip/informasi'); ?>" data-section="informasi" class="nav-section-link <?= ($active_section === 'informasi') ? 'active' : ''; ?>">Informasi</a></li>
+                    <li><a href="<?= base_url('ppip/kontak'); ?>" data-section="kontak" class="nav-section-link <?= ($active_section === 'kontak') ? 'active' : ''; ?>">Kontak</a></li>
+                    <!-- <li><a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap mr-1"></i> Peta Situs</a></li> -->
                 </ul>
             </nav>
 
@@ -418,6 +419,7 @@
                         <li><a href="<?= base_url('dashboard/scopus_sdgs'); ?>"><i class="fas fa-chevron-right"></i> Sitasi Scopus Fakultas</a></li>
                         <li><a href="<?= base_url('dashboard/scholar_sdgs'); ?>"><i class="fas fa-chevron-right"></i> Sitasi Google Scholar</a></li>
                         <li><a href="<?= base_url('dashboard/jurnal_sinta'); ?>"><i class="fas fa-chevron-right"></i> Akreditasi SINTA</a></li>
+                        <li><a href="<?= base_url('sitemap'); ?>" style="color: var(--primary-light); font-weight: 600;"><i class="fas fa-sitemap"></i> Peta Situs (Sitemap)</a></li>
                     </ul>
                 </div>
 
@@ -446,9 +448,11 @@
             <div class="footer-bottom">
                 <p>&copy; <?= date('Y'); ?> <?= htmlspecialchars($settings['hero_title']); ?> <?= htmlspecialchars($settings['hero_subtitle']); ?>. All rights reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="#beranda">Beranda</a>
-                    <a href="#tentang">Tentang</a>
-                    <a href="#layanan">Layanan</a>
+                    <a href="<?= base_url('ppip/beranda'); ?>" data-section="beranda" class="nav-section-link">Beranda</a>
+                    <a href="<?= base_url('ppip/tentang'); ?>" data-section="tentang" class="nav-section-link">Tentang</a>
+                    <a href="<?= base_url('ppip/layanan'); ?>" data-section="layanan" class="nav-section-link">Layanan</a>
+                    <a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap mr-1"></i> Peta Situs</a>
+                    <a href="<?= base_url('sitemap.xml'); ?>" target="_blank"><i class="fas fa-code mr-1"></i> XML</a>
                     <a href="<?= base_url('auth'); ?>">Login Pengelola</a>
                 </div>
             </div>
@@ -567,7 +571,14 @@
         </div>
     </div>
 
+    <script>
+        window.PPIP_CONFIG = {
+            baseUrl: '<?= rtrim(base_url(), "/"); ?>',
+            sectionBaseUrl: '<?= rtrim(base_url("ppip"), "/"); ?>',
+            activeSection: '<?= htmlspecialchars($active_section ?? "beranda"); ?>'
+        };
+    </script>
     <!-- Custom Landing Page JS (Isolated in assets/landing/) -->
-    <script src="<?= base_url('assets/landing/js/landing.js'); ?>"></script>
+    <script src="<?= base_url('assets/landing/js/landing.js?v=' . (file_exists(FCPATH . 'assets/landing/js/landing.js') ? filemtime(FCPATH . 'assets/landing/js/landing.js') : time())); ?>"></script>
 </body>
 </html>
