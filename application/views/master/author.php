@@ -112,17 +112,11 @@
                                 <td><?= $data['department']; ?></td>
                                 <td><?= $data['subjects']; ?></td>
                                 <td data-author="<?= $data['id']; ?>">
-
-                                    <b><?= getProdi($data['prodi_id'], 'nama_program_studi'); ?></b>
-                                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalProdi"
-                                        data-id="<?= $data['id']; ?>">
+                                    <span class="prodi-nama font-weight-bold"><?= htmlspecialchars((string) getProdi($data['prodi_id'], 'nama_program_studi')); ?></span>
+                                    <button type="button" class="btn btn-sm btn-primary ml-1 btn-pilih-prodi" data-toggle="modal" data-target="#modalProdi"
+                                        data-id="<?= $data['id']; ?>" data-name="<?= htmlspecialchars((string) $data['name']); ?>">
                                         Pilih Prodi
                                     </button>
-
-                                    <!-- hidden input untuk menyimpan ID prodi -->
-                                    <input type="hidden" id="prodi_id" name="prodi_id"
-                                        value="<?= $data['prodi_id']; ?>">
-                                    <input type="hidden" id="author_id" name="author_id" value="<?= $data['id']; ?>">
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -191,109 +185,161 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 <!-- ========== MODAL PILIH PRODI (BOOTSTRAP 4) ========== -->
 <div class="modal fade" id="modalProdi" tabindex="-1" role="dialog" aria-labelledby="modalProdiLabel">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="modalProdiLabel">Pilih Program Studi</h5>
+                <div>
+                    <h5 class="modal-title" id="modalProdiLabel">Pilih Program Studi</h5>
+                    <small class="text-muted" id="modalAuthorName"></small>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span>&times;</span>
                 </button>
             </div>
 
-            <div class="modal-body p-0">
-                <ul class="list-group">
-                    <?php foreach ($listProdi as $p): ?>
-                    <li class="list-group-item pilih-prodi" data-id="<?= $p['id']; ?>"
-                        data-nama="<?= $p['nama_program_studi']; ?>">
-                        <?= $p['nama_program_studi']; ?> (<?= $p['nama_jenjang_pendidikan']; ?>)
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
+            <div class="modal-body p-2">
+                <input type="hidden" id="selected_author_id" value="">
+                <div class="form-group px-2 pt-1 mb-2">
+                    <input type="text" id="cariProdi" class="form-control" placeholder="Ketik untuk mencari Program Studi...">
+                </div>
+                <div style="max-height: 380px; overflow-y: auto;">
+                    <ul class="list-group" id="listProdiContainer">
+                        <?php foreach ($listProdi as $p): ?>
+                        <li class="list-group-item list-group-item-action pilih-prodi" style="cursor: pointer;"
+                            data-id="<?= $p['id']; ?>"
+                            data-nama="<?= htmlspecialchars($p['nama_program_studi']); ?>">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span><?= htmlspecialchars($p['nama_program_studi']); ?></span>
+                                <span class="badge badge-primary badge-pill"><?= htmlspecialchars($p['nama_jenjang_pendidikan']); ?></span>
+                            </div>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
 
-                <input type="text" id="selected_author_id">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</button>
             </div>
 
         </div>
     </div>
 </div>
 
-<!-- <script>
-$(document).ready(function() {
-
-    $('#modalProdi').on('show.bs.modal', function(event) {
-        let authorId = button.data('id'); // ambil data-id dari button
-        console.log("Author ID:", authorId);
-        // tampilkan ke judul modal
-        $('#modalProdiLabel').text('Pilih Program Studi (ID: ' + authorId + ')');
-
-        // atau tampilkan ke body modal
-        $('#modalProdi .modal-body').prepend(
-            '<div class="alert alert-info mb-2" id="infoId">Author ID: ' + authorId + '</div>'
-        );
-    });
-
-    // supaya tidak dobel setiap buka modal
-    // $('#modalProdi').on('hidden.bs.modal', function() {
-    //     $('#infoId').remove();
-    // });
-
-});
-</script> -->
-
 <script>
-$(document).on('click', '[data-target="#modalProdi"]', function() {
-    currentAuthorId = $(this).data('id');
-    console.log("Author ID dikirim:", currentAuthorId);
-});
-</script>
-<script>
-let currentAuthorId = null;
-
 document.addEventListener("DOMContentLoaded", function() {
 
-    // tangkap tombol klik
-    $(document).on('click', '[data-target="#modalProdi"]', function() {
-        currentAuthorId = $(this).data('id');
-        console.log("Author aktif:", currentAuthorId);
+    // Filter pencarian prodi di dalam modal
+    $('#cariProdi').on('keyup', function() {
+        let value = $(this).val().toLowerCase();
+        $('#listProdiContainer li').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
     });
 
-    // klik prodi
-    $(document).on("click", ".pilih-prodi", function() {
+    // Tangkap data author saat modal dibuka via event Bootstrap 4
+    $('#modalProdi').on('show.bs.modal', function(event) {
+        let button = $(event.relatedTarget);
+        let authorId = button.data('id');
+        let authorName = button.data('name') || '';
 
-        let prodiID = $(this).data("id");
-        let prodiNama = $(this).data("nama");
+        $('#selected_author_id').val(authorId);
+        if (authorName) {
+            $('#modalAuthorName').text('Author: ' + authorName);
+        } else {
+            $('#modalAuthorName').text('Author ID: ' + authorId);
+        }
 
-        // update tampilan baris yang sesuai
-        let row = $('td[data-author="' + currentAuthorId + '"]');
+        // Reset pencarian
+        $('#cariProdi').val('');
+        $('#listProdiContainer li').show();
+    });
 
-        row.html(`
-            ${prodiNama}
-            <button class="btn btn-sm btn-primary ml-2" data-toggle="modal" data-target="#modalProdi" data-id="${currentAuthorId}">
-                Pilih Prodi
-            </button>
-            <input type="hidden" class="prodi_id" name="prodi_id" value="${prodiID}">
-            <input type="hidden" class="author_id" name="author_id" value="${currentAuthorId}">
-        `);
+    $('#modalProdi').on('shown.bs.modal', function() {
+        $('#cariProdi').trigger('focus');
+    });
 
-        $("#modalProdi").modal("hide");
+    // Tangkap klik pilihan prodi
+    $(document).on('click', '.pilih-prodi', function() {
+        let prodiID = $(this).data('id');
+        let prodiNama = $(this).data('nama');
+        let authorId = $('#selected_author_id').val();
 
-        // AJAX kirim data yang BENAR
+        if (!authorId || !prodiID) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Data Tidak Lengkap',
+                text: 'Author ID atau Program Studi tidak valid.'
+            });
+            return;
+        }
+
+        $('#modalProdi').modal('hide');
+        let $cell = $('td[data-author="' + authorId + '"]');
+        let ajaxUrl = "<?= base_url('master/update_prodi_author'); ?>";
+        if (window.location.protocol === 'https:' && ajaxUrl.indexOf('http:') === 0) {
+            ajaxUrl = ajaxUrl.replace(/^http:/, 'https:');
+        }
+
         $.ajax({
-            url: "<?= base_url('master/update_prodau'); ?>",
+            url: ajaxUrl,
             type: "POST",
+            dataType: "json",
             data: {
-                author_id: currentAuthorId,
-                prodi_id: prodiID
+                author_id: authorId,
+                prodi_id: prodiID,
+                '<?= $this->security->get_csrf_token_name(); ?>': '<?= $this->security->get_csrf_hash(); ?>'
             },
             success: function(response) {
-                console.log("Updated:", response);
+                if (response.status === 'success') {
+                    let newHtml = `<span class="prodi-nama font-weight-bold">${prodiNama}</span> <button type="button" class="btn btn-sm btn-primary ml-1 btn-pilih-prodi" data-toggle="modal" data-target="#modalProdi" data-id="${authorId}">Pilih Prodi</button>`;
+
+                    // Sinkronkan dengan DataTables jika aktif agar tidak hilang saat sorting/paging
+                    if (window.jQuery && $.fn.DataTable && $.fn.DataTable.isDataTable('#example1')) {
+                        let table = $('#example1').DataTable();
+                        let cell = table.cell($cell);
+                        if (cell && cell.any()) {
+                            cell.data(newHtml).draw(false);
+                        } else {
+                            $cell.html(newHtml);
+                        }
+                    } else {
+                        $cell.html(newHtml);
+                    }
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2500,
+                        timerProgressBar: true
+                    });
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.message || 'Program Studi berhasil diperbarui!'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: response.message || 'Gagal update program studi!'
+                    });
+                }
             },
-            error: function() {
-                alert("Gagal update prodi!");
+            error: function(xhr, status, error) {
+                let msg = 'Gagal menghubungi server.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    msg = xhr.responseJSON.message;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan Server',
+                    text: msg
+                });
             }
         });
-
     });
 
 });

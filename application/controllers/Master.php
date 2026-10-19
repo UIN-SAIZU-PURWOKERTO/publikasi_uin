@@ -92,20 +92,26 @@ class Master extends CI_Controller
 
     public function update_prodi_author()
     {
+        $this->output->set_content_type('application/json');
+
         $author_id = $this->input->post('author_id');
         $prodi_id  = $this->input->post('prodi_id');
 
         if (!$author_id || !$prodi_id) {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid data']);
+            echo json_encode(['status' => 'error', 'message' => 'Data author atau program studi tidak valid']);
             return;
         }
 
         $this->db->where('id', $author_id);
-        $this->db->update('sinta_authors', [
+        $updated = $this->db->update('sinta_authors', [
             'prodi_id' => $prodi_id
         ]);
 
-        echo json_encode(['status' => 'success']);
+        if ($updated) {
+            echo json_encode(['status' => 'success', 'message' => 'Program Studi berhasil diperbarui']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui data di database']);
+        }
     }
 
     public function hapusAuthor($id)
