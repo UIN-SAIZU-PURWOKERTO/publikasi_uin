@@ -371,6 +371,36 @@ class Dashboard extends CI_Controller
                                 $result = $query->result();
         $data['scopus_pasca'] = $result;
 
+        $fst = $this->db->select('fakultas_id')
+            ->from('mst_fakultas')
+            ->group_start()
+                ->like('fakultas_name', 'Sains')
+                ->or_like('fakultas_name', 'Teknologi')
+                ->or_like('singkatan', 'FST')
+                ->or_like('singkatan', 'SAINTEK')
+            ->group_end()
+            ->get()
+            ->row();
+        $fst_id = $fst ? (int)$fst->fakultas_id : 7;
+
+        $data['scopus_saintek'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun')
+            ->from('scopus_publications sp')
+            ->join('sinta_authors sa', 'sa.id = sp.author_id', 'left')
+            ->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left')
+            ->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left')
+            ->group_start()
+                ->where('mf.fakultas_id', $fst_id)
+                ->or_like('mf.fakultas_name', 'Sains')
+                ->or_like('mf.fakultas_name', 'Teknologi')
+                ->or_like('mf.singkatan', 'FST')
+                ->or_like('mf.singkatan', 'SAINTEK')
+            ->group_end()
+            ->where('sp.author_id IS NOT NULL')
+            ->group_by('sp.year')
+            ->order_by('sp.year', 'ASC')
+            ->get()
+            ->result();
+
         $data['scopus_faculty'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun, mf.fakultas_id AS fakultas_id, mf.fakultas_name AS fakultas_name');
                                 $this->db->from('scopus_publications sp');
                                 $this->db->join('sinta_authors sa', 'sa.id = sp.author_id', 'left');
@@ -468,6 +498,24 @@ class Dashboard extends CI_Controller
                                 $query = $this->db->get();
                                 $result = $query->result();
         $data['scopus_pasca_pub'] = $result;
+
+        $data['scopus_saintek_pub'] = $this->db->select('COUNT(sp.id) AS jumlah_sitasi, sp.year AS tahun')
+            ->from('scopus_publications sp')
+            ->join('sinta_authors sa', 'sa.id = sp.author_id', 'left')
+            ->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left')
+            ->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left')
+            ->group_start()
+                ->where('mf.fakultas_id', $fst_id)
+                ->or_like('mf.fakultas_name', 'Sains')
+                ->or_like('mf.fakultas_name', 'Teknologi')
+                ->or_like('mf.singkatan', 'FST')
+                ->or_like('mf.singkatan', 'SAINTEK')
+            ->group_end()
+            ->where('sp.author_id IS NOT NULL')
+            ->group_by('sp.year')
+            ->order_by('sp.year', 'ASC')
+            ->get()
+            ->result();
 
         $data['scopus_faculty_pub'] = $this->db->select('COUNT(sp.id) AS jumlah_sitasi, sp.year AS tahun, mf.fakultas_id AS fakultas_id, mf.fakultas_name AS fakultas_name');
                                 $this->db->from('scopus_publications sp');
@@ -595,6 +643,35 @@ class Dashboard extends CI_Controller
                                 $result = $query->result();
         $data['scholar_pasca'] = $result;
 
+        $fst = $this->db->select('fakultas_id')
+            ->from('mst_fakultas')
+            ->group_start()
+                ->like('fakultas_name', 'Sains')
+                ->or_like('fakultas_name', 'Teknologi')
+                ->or_like('singkatan', 'FST')
+                ->or_like('singkatan', 'SAINTEK')
+            ->group_end()
+            ->get()
+            ->row();
+        $fst_id = $fst ? (int)$fst->fakultas_id : 7;
+
+        $data['scholar_saintek'] = $this->db->select('SUM(sp.citation) AS jumlah_sitasi, sp.year AS tahun')
+            ->from('scholar_publications sp')
+            ->join('sinta_authors sa', 'sa.id = sp.author_id', 'left')
+            ->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left')
+            ->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left')
+            ->group_start()
+                ->where('mf.fakultas_id', $fst_id)
+                ->or_like('mf.fakultas_name', 'Sains')
+                ->or_like('mf.fakultas_name', 'Teknologi')
+                ->or_like('mf.singkatan', 'FST')
+                ->or_like('mf.singkatan', 'SAINTEK')
+            ->group_end()
+            ->where('sp.author_id IS NOT NULL')
+            ->group_by('sp.year')
+            ->order_by('sp.year', 'ASC')
+            ->get()
+            ->result();
 
         //INI UNTUK HITUNG JUMLAH PUBLIKASI
         $data['scholar_faculty_pub'] = $this->db->select('COUNT(sp.id) AS jumlah_sitasi, sp.year AS tahun, mf.fakultas_id AS fakultas_id, mf.fakultas_name AS fakultas_name');
@@ -694,6 +771,24 @@ class Dashboard extends CI_Controller
                                 $query = $this->db->get();
                                 $result = $query->result();
         $data['scholar_pasca_pub'] = $result;
+
+        $data['scholar_saintek_pub'] = $this->db->select('COUNT(sp.id) AS jumlah_sitasi, sp.year AS tahun')
+            ->from('scholar_publications sp')
+            ->join('sinta_authors sa', 'sa.id = sp.author_id', 'left')
+            ->join('mst_prodi mp', 'mp.id = sa.prodi_id', 'left')
+            ->join('mst_fakultas mf', 'mf.fakultas_id = mp.fakultas_id', 'left')
+            ->group_start()
+                ->where('mf.fakultas_id', $fst_id)
+                ->or_like('mf.fakultas_name', 'Sains')
+                ->or_like('mf.fakultas_name', 'Teknologi')
+                ->or_like('mf.singkatan', 'FST')
+                ->or_like('mf.singkatan', 'SAINTEK')
+            ->group_end()
+            ->where('sp.author_id IS NOT NULL')
+            ->group_by('sp.year')
+            ->order_by('sp.year', 'ASC')
+            ->get()
+            ->result();
 
         // print_r($data['scholar_pasca_pub']);
         // die;

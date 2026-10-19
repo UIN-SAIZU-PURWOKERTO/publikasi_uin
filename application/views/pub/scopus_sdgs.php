@@ -89,6 +89,12 @@
             <canvas id="chart_pasca" height="180"></canvas>
         </div>
 
+        <!-- SAINS DAN TEKNOLOGI -->
+        <div class="stat-card">
+            <div class="stat-title">Sitasi Scopus Sains dan Teknologi per Tahun</div>
+            <canvas id="chart_saintek" height="180"></canvas>
+        </div>
+
     </div>
 
     <!-- INI UNTUK JUMLAH PUBLIKASI SCHOLAR -->
@@ -138,6 +144,12 @@
         <div class="stat-card">
             <div class="stat-title">Publikasi Pascasarjana per Tahun</div>
             <canvas id="chart_pasca_pub" height="180"></canvas>
+        </div>
+
+        <!-- SAINS DAN TEKNOLOGI -->
+        <div class="stat-card">
+            <div class="stat-title">Publikasi Sains dan Teknologi per Tahun</div>
+            <canvas id="chart_saintek_pub" height="180"></canvas>
         </div>
 
     </div>
@@ -448,6 +460,13 @@ document.addEventListener("DOMContentLoaded", function () {
         "#2ECC71"
     );
 
+    buildLineChart(
+        "chart_saintek",
+        <?= json_encode($scopus_saintek) ?>,
+        "Sains dan Teknologi",
+        "#00b894"
+    );
+
     // INI UNTUK JUMLAH PUBLIKASI SCHOLAR
 
     buildBarChartPublikasi(
@@ -496,6 +515,13 @@ document.addEventListener("DOMContentLoaded", function () {
         <?= json_encode($scopus_pasca_pub) ?>,
         "Pascasarjana",
         "#2ECC71"
+    );
+
+    buildLineChartPublikasi(
+        "chart_saintek_pub",
+        <?= json_encode($scopus_saintek_pub) ?>,
+        "Sains dan Teknologi",
+        "#00b894"
     );
 });
 </script>

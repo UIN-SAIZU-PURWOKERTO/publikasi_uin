@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/adminlte.min.css">
-    <link rel="shortcut icon" href="<?= base_url('assets/') ?>images/favicon.ico" />
+    <!-- <link rel="shortcut icon" href="<?= base_url('assets/') ?>images/favicon.ico" /> -->
+    <link rel="icon" type="image/png" href="<?= base_url('assets/') ?>images/logo.png">
     <style>
     .login-page {
         background-image: url('<?= base_url('assets/images/bg.jpg') ?>');
