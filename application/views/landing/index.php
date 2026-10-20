@@ -545,7 +545,7 @@
                         <li><a href="<?= base_url('dashboard/scholar_sdgs'); ?>"><i class="fas fa-chevron-right"></i> Sitasi Google Scholar</a></li>
                         <li><a href="<?= base_url('dashboard/jurnal_sinta'); ?>"><i class="fas fa-chevron-right"></i> Akreditasi SINTA</a></li>
                         <li><a href="<?= base_url('disclaimer'); ?>" style="color: var(--primary-light); font-weight: 600;"><i class="fas fa-balance-scale"></i> Disclaimer Resmi</a></li>
-                        <li><a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap"></i> Peta Situs (Sitemap)</a></li>
+                        <!-- <li><a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap"></i> Peta Situs (Sitemap)</a></li> -->
                     </ul>
                 </div>
 
@@ -578,8 +578,8 @@
                     <a href="<?= base_url('ppip/tentang'); ?>" data-section="tentang" class="nav-section-link">Tentang</a>
                     <a href="<?= base_url('ppip/layanan'); ?>" data-section="layanan" class="nav-section-link">Layanan</a>
                     <a href="<?= base_url('disclaimer'); ?>">Disclaimer</a>
-                    <a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap mr-1"></i> Peta Situs</a>
-                    <a href="<?= base_url('sitemap.xml'); ?>" target="_blank"><i class="fas fa-code mr-1"></i> XML</a>
+                    <!-- <a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap mr-1"></i> Peta Situs</a> -->
+                    <!-- <a href="<?= base_url('sitemap.xml'); ?>" target="_blank"><i class="fas fa-code mr-1"></i> XML</a> -->
                     <a href="<?= base_url('auth'); ?>">Login Pengelola</a>
                 </div>
             </div>
