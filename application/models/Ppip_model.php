@@ -566,5 +566,224 @@ class Ppip_model extends CI_Model
         }
         return true;
     }
+
+    /**
+     * Data 2 Jurnal UIN SAIZU Terindeks Scopus Internasional
+     */
+    public function get_scopus_journals()
+    {
+        return [
+            [
+                'name'         => 'Al-Manahij: Jurnal Kajian Hukum Islam',
+                'short_name'   => 'Al-Manahij',
+                'scopus_id'    => '21101183612',
+                'scopus_url'   => 'https://www.scopus.com/sourceid/21101183612',
+                'ojs_url'      => 'http://ejournal.uinsaizu.ac.id/index.php/almanahij',
+                'sinta_url'    => 'https://sinta.kemdikbud.go.id/journals/profile/2202',
+                'sinta_grade'  => 'SINTA 1',
+                'p_issn'       => '1978-6670',
+                'e_issn'       => '2579-4167',
+                'publisher'    => 'Faculty of Sharia, State Islamic University of Prof. K.H. Saifuddin Zuhri Purwokerto',
+                'scope'        => 'Kajian hukum Islam kontemporer, perbandingan hukum Islam, fatwa, dan sosiologi hukum Islam.',
+                'coverage'     => '2018 - Present',
+                'doaj_indexed' => true
+            ],
+            [
+                'name'         => 'Volksgeist: Jurnal Ilmu Hukum dan Konstitusi',
+                'short_name'   => 'Volksgeist',
+                'scopus_id'    => '21101176851',
+                'scopus_url'   => 'https://www.scopus.com/sourceid/21101176851',
+                'ojs_url'      => 'https://ejournal.uinsaizu.ac.id/index.php/volksgeist',
+                'sinta_url'    => 'https://sinta.kemdikbud.go.id/journals/profile/5973',
+                'sinta_grade'  => 'SINTA 2',
+                'p_issn'       => '2615-174X',
+                'e_issn'       => '2615-5648',
+                'publisher'    => 'Faculty of Sharia, UIN Prof. K.H. Saifuddin Zuhri Purwokerto',
+                'scope'        => 'Ilmu hukum, hukum tata negara, hukum konstitusi, hukum administrasi, dan hak asasi manusia.',
+                'coverage'     => '2020 - Present',
+                'doaj_indexed' => true
+            ]
+        ];
+    }
+
+    /**
+     * Data 19 Jurnal UIN SAIZU Terindeks DOAJ (Directory of Open Access Journals)
+     */
+    public function get_doaj_journals()
+    {
+        return [
+            [
+                'name'      => 'Al-Manahij: Jurnal Kajian Hukum Islam',
+                'publisher' => 'Faculty of Sharia, UIN Prof. K.H. Saifuddin Zuhri',
+                'p_issn'    => '1978-6670',
+                'e_issn'    => '2579-4167',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/almanahij',
+                'doaj_url'  => 'https://doaj.org/toc/2579-4167',
+                'sinta'     => 'S1'
+            ],
+            [
+                'name'      => "Maghza: Jurnal Ilmu Al Qur'an dan Tafsir",
+                'publisher' => 'Fakultas Ushuluddin, Adab dan Humaniora',
+                'p_issn'    => '2528-6773',
+                'e_issn'    => '2549-9971',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/maghza/index',
+                'doaj_url'  => 'https://doaj.org/toc/2549-9971',
+                'sinta'     => 'S2'
+            ],
+            [
+                'name'      => 'International Journal of Research in Mathematics Education (IJRME)',
+                'publisher' => 'Fakultas Tarbiyah dan Ilmu Keguruan (FTIK)',
+                'p_issn'    => '3025-1842',
+                'e_issn'    => '3025-7638',
+                'url'       => 'https://ejournal.uinsaizu.ac.id/index.php/ijrme',
+                'doaj_url'  => 'https://doaj.org/toc/3025-7638',
+                'sinta'     => '-'
+            ],
+            [
+                'name'      => 'Indonesian Community Development Journal (ICODEV)',
+                'publisher' => 'Fakultas Dakwah',
+                'p_issn'    => '-',
+                'e_issn'    => '2775-1538',
+                'url'       => 'https://ejournal.uinsaizu.ac.id/index.php/icodev',
+                'doaj_url'  => 'https://doaj.org/toc/2775-1538',
+                'sinta'     => 'S3'
+            ],
+            [
+                'name'      => "Al-Ma'mun: Jurnal Kajian Perpustakaan dan Informasi",
+                'publisher' => 'UPT Perpustakaan UIN Prof. K.H. Saifuddin Zuhri',
+                'p_issn'    => '2723-3596',
+                'e_issn'    => '2746-0509',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/jkki',
+                'doaj_url'  => 'https://doaj.org/toc/2746-0509',
+                'sinta'     => 'S4'
+            ],
+            [
+                'name'      => 'el-Aqwal: Journal of Sharia and Comparative Law',
+                'publisher' => 'Fakultas Syariah UIN SAIZU',
+                'p_issn'    => '-',
+                'e_issn'    => '2962-5289',
+                'url'       => 'https://ejournal.uinsaizu.ac.id/index.php/elaqwal/index',
+                'doaj_url'  => 'https://doaj.org/toc/2962-5289',
+                'sinta'     => 'S3'
+            ],
+            [
+                'name'      => 'Jurnal Kependidikan',
+                'publisher' => 'Ikatan Keluarga Alumni (IKA) UIN Saizu',
+                'p_issn'    => '2355-018X',
+                'e_issn'    => '2598-4845',
+                'url'       => 'https://ejournal.uinsaizu.ac.id/index.php/jurnalkependidikan',
+                'doaj_url'  => 'https://doaj.org/toc/2598-4845',
+                'sinta'     => 'S2'
+            ],
+            [
+                'name'      => 'Transactions on Informatics and Data Science (TIDS)',
+                'publisher' => 'Universitas Islam Negeri Profesor Kiai Haji Saifuddin Zuhri',
+                'p_issn'    => '-',
+                'e_issn'    => '3064-1772',
+                'url'       => 'https://ejournal.uinsaizu.ac.id/index.php/tids/',
+                'doaj_url'  => 'https://doaj.org/toc/3064-1772',
+                'sinta'     => '-'
+            ],
+            [
+                'name'      => 'Yinyang: Jurnal Studi Islam, Gender dan Anak',
+                'publisher' => 'Pusat Studi Gender dan Anak (PSGA) LPPM',
+                'p_issn'    => '1907-2791',
+                'e_issn'    => '2548-5385',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/yinyang',
+                'doaj_url'  => 'https://doaj.org/toc/2548-5385',
+                'sinta'     => 'S2'
+            ],
+            [
+                'name'      => 'INSANIA: Jurnal Pemikiran Alternatif Kependidikan',
+                'publisher' => 'Fakultas Tarbiyah dan Ilmu Keguruan (FTIK)',
+                'p_issn'    => '1410-0053',
+                'e_issn'    => '2598-3091',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/insania',
+                'doaj_url'  => 'https://doaj.org/toc/2598-3091',
+                'sinta'     => 'S3'
+            ],
+            [
+                'name'      => 'Jurnal Nusantara Raya',
+                'publisher' => 'Lembaga Kajian Nusantara Raya UIN Saizu',
+                'p_issn'    => '-',
+                'e_issn'    => '2963-4970',
+                'url'       => 'https://ejournal.uinsaizu.ac.id/index.php/numera/index',
+                'doaj_url'  => 'https://doaj.org/toc/2963-4970',
+                'sinta'     => 'S4'
+            ],
+            [
+                'name'      => 'Journal of Islamic History and Manuscript (JIHM)',
+                'publisher' => 'LPPM UIN Prof. K.H. Saifuddin Zuhri',
+                'p_issn'    => '2964-416X',
+                'e_issn'    => '2963-3354',
+                'url'       => 'https://ejournal.uinsaizu.ac.id/index.php/jihm',
+                'doaj_url'  => 'https://doaj.org/toc/2963-3354',
+                'sinta'     => 'S3'
+            ],
+            [
+                'name'      => "IBDA': Jurnal Kebudayaan Islam",
+                'publisher' => 'LPPM UIN Prof. K.H. Saifuddin Zuhri',
+                'p_issn'    => '1693-6736',
+                'e_issn'    => '2477-5517',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/ibda',
+                'doaj_url'  => 'https://doaj.org/toc/2477-5517',
+                'sinta'     => 'S2'
+            ],
+            [
+                'name'      => 'Volksgeist: Jurnal Ilmu Hukum dan Konstitusi',
+                'publisher' => 'Faculty of Sharia UIN Prof. K.H. Saifuddin Zuhri',
+                'p_issn'    => '2615-174X',
+                'e_issn'    => '2615-5648',
+                'url'       => 'https://ejournal.uinsaizu.ac.id/index.php/volksgeist',
+                'doaj_url'  => 'https://doaj.org/toc/2615-5648',
+                'sinta'     => 'S2'
+            ],
+            [
+                'name'      => 'Mabsya: Jurnal Manajemen Bisnis Syariah',
+                'publisher' => 'Fakultas Ekonomi dan Bisnis Islam (FEBI)',
+                'p_issn'    => '2714-5565',
+                'e_issn'    => '2714-7797',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/mabsya/index',
+                'doaj_url'  => 'https://doaj.org/toc/2714-7797',
+                'sinta'     => 'S4'
+            ],
+            [
+                'name'      => 'Tarling: Jurnal Pendidikan Bahasa Arab',
+                'publisher' => 'Pendidikan Bahasa Arab FTIK',
+                'p_issn'    => '2599-1302',
+                'e_issn'    => '2614-4271',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/tarling/index',
+                'doaj_url'  => 'https://doaj.org/toc/2614-4271',
+                'sinta'     => 'S3'
+            ],
+            [
+                'name'      => 'El-Jizya: Jurnal Ekonomi Islam',
+                'publisher' => 'Fakultas Ekonomi dan Bisnis Islam (FEBI)',
+                'p_issn'    => '2354-905X',
+                'e_issn'    => '2579-6208',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/eljizya',
+                'doaj_url'  => 'https://doaj.org/toc/2579-6208',
+                'sinta'     => 'S3'
+            ],
+            [
+                'name'      => 'Komunika: Jurnal Dakwah dan Komunikasi',
+                'publisher' => 'Fakultas Dakwah UIN Saizu',
+                'p_issn'    => '1978-1261',
+                'e_issn'    => '2548-9496',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/komunika/',
+                'doaj_url'  => 'https://doaj.org/toc/2548-9496',
+                'sinta'     => 'S3'
+            ],
+            [
+                'name'      => "Ijtimā'iyya: Journal of Muslim Society Research",
+                'publisher' => 'Pascasarjana (Postgraduate) UIN Saizu',
+                'p_issn'    => '2541-2736',
+                'e_issn'    => '2541-0040',
+                'url'       => 'http://ejournal.uinsaizu.ac.id/index.php/ijtimaiyya',
+                'doaj_url'  => 'https://doaj.org/toc/2541-0040',
+                'sinta'     => 'S3'
+            ]
+        ];
+    }
 }
 

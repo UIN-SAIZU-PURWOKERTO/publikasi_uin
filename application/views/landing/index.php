@@ -14,8 +14,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url('assets/plugins/fontawesome-free/css/all.min.css'); ?>">
 
-    <!-- Custom Landing Page CSS (Isolated in assets/landing/) -->
-    <link rel="stylesheet" href="<?= base_url('assets/landing/css/landing.css'); ?>">
+    <!-- Custom Landing Page CSS (Isolated in assets/landing/) with Cache Buster -->
+    <link rel="stylesheet" href="<?= base_url('assets/landing/css/landing.css?v=' . (file_exists(FCPATH . 'assets/landing/css/landing.css') ? filemtime(FCPATH . 'assets/landing/css/landing.css') : time())); ?>">
 </head>
 <body>
 
@@ -97,43 +97,87 @@
 
             <!-- Stats Banner (Live dari Database) -->
             <div class="hero-stats">
+                <!-- 1. Jurnal Ilmiah -->
                 <div class="stat-item">
                     <div class="stat-icon green">
                         <i class="fas fa-book-open"></i>
                     </div>
                     <div class="stat-info">
-                        <h3 data-counter="<?= (int)($stats['total_journals'] ?? 28); ?>" data-suffix="+"><?= (int)($stats['total_journals'] ?? 28); ?>+</h3>
-                        <p>Jurnal Ilmiah</p>
+                        <h3>39</h3>
+                        <div class="stat-label">Jurnal Ilmiah</div>
+                        <a href="https://ejournal.uinsaizu.ac.id" target="_blank" rel="noopener noreferrer" class="stat-action-btn">
+                            <i class="fas fa-globe"></i> Griya Jurnal
+                        </a>
                     </div>
                 </div>
 
+                <!-- 2. Terakreditasi SINTA -->
+                <div class="stat-item interactive" data-open-modal="modalJurnalDetail" data-tab="sinta" title="Klik untuk melihat detail akreditasi SINTA">
+                    <div class="stat-icon teal">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>25</h3>
+                        <div class="stat-label">Terakreditasi SINTA</div>
+                        <button type="button" class="stat-action-btn" data-open-modal="modalJurnalDetail" data-tab="sinta">
+                            <i class="fas fa-layer-group"></i> Lihat Akreditasi &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Terindeks Scopus -->
+                <div class="stat-item interactive" data-open-modal="modalJurnalDetail" data-tab="scopus" title="Klik untuk melihat capaian & profil 2 Jurnal Scopus">
+                    <div class="stat-icon gold">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>2</h3>
+                        <div class="stat-label">Terindeks Scopus</div>
+                        <button type="button" class="stat-action-btn gold" data-open-modal="modalJurnalDetail" data-tab="scopus">
+                            <i class="fas fa-star"></i> Detail 2 Jurnal &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Terindeks DOAJ -->
+                <div class="stat-item interactive" data-open-modal="modalJurnalDetail" data-tab="doaj" title="Klik untuk melihat daftar 19 Jurnal terindeks DOAJ">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>19</h3>
+                        <div class="stat-label">Terindeks DOAJ</div>
+                        <button type="button" class="stat-action-btn blue" data-open-modal="modalJurnalDetail" data-tab="doaj">
+                            <i class="fas fa-list-ul"></i> Lihat 19 Jurnal &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. Buku Ber-ISBN -->
                 <div class="stat-item">
                     <div class="stat-icon amber">
                         <i class="fas fa-book"></i>
                     </div>
                     <div class="stat-info">
                         <h3 data-counter="<?= (int)($stats['total_books'] ?? 150); ?>" data-suffix="+"><?= (int)($stats['total_books'] ?? 150); ?>+</h3>
-                        <p>Buku Ber-ISBN</p>
+                        <div class="stat-label">Buku Ber-ISBN</div>
+                        <a href="https://books.uinsaizu.ac.id" target="_blank" rel="noopener noreferrer" class="stat-action-btn gold">
+                            <i class="fas fa-external-link-alt"></i> Saizu Publisher
+                        </a>
                     </div>
                 </div>
 
-                <div class="stat-item">
-                    <div class="stat-icon blue">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 data-counter="<?= (int)($stats['total_authors'] ?? 350); ?>" data-suffix="+"><?= (int)($stats['total_authors'] ?? 350); ?>+</h3>
-                        <p>Author Terdaftar</p>
-                    </div>
-                </div>
-
+                <!-- 6. Artikel SDGs -->
                 <div class="stat-item">
                     <div class="stat-icon purple">
-                        <i class="fas fa-file-signature"></i>
+                        <i class="fas fa-chart-pie"></i>
                     </div>
                     <div class="stat-info">
-                        <h3 data-counter="<?= (int)($stats['total_proceedings'] ?? 12); ?>" data-suffix="+"><?= (int)($stats['total_proceedings'] ?? 12); ?>+</h3>
-                        <p>Prosiding Ilmiah</p>
+                        <h3>69%</h3>
+                        <div class="stat-label">Artikel SDGs</div>
+                        <a href="https://www.scopus.com/pages/organization/60281245#tab=sdgs" class="stat-action-btn purple">
+                            <i class="fas fa-chart-line"></i> Capaian SDGs
+                        </a>
                     </div>
                 </div>
             </div>
@@ -303,13 +347,13 @@
                     </div>
                 </a>
 
-                <a href="<?= base_url('dashboard/jurnal_sinta'); ?>" class="perf-card">
+                <a href="https://sinta.kemdiktisaintek.go.id/journals/index/184" class="perf-card">
                     <div class="perf-icon">
                         <i class="fas fa-award"></i>
                     </div>
                     <div class="perf-detail">
                         <h4>Peringkat Jurnal Terakreditasi</h4>
-                        <p>Distribusi akreditasi jurnal ilmiah UIN Saizu dari SINTA 1 hingga SINTA 6.</p>
+                        <p>Distribusi akreditasi jurnal ilmiah UIN Saizu dari SINTA 1 hingga SINTA 6. 25 Jurnal Terakreditasi</p>
                     </div>
                 </a>
             </div>
@@ -580,7 +624,7 @@
                     <a href="<?= base_url('disclaimer'); ?>">Disclaimer</a>
                     <!-- <a href="<?= base_url('sitemap'); ?>"><i class="fas fa-sitemap mr-1"></i> Peta Situs</a> -->
                     <!-- <a href="<?= base_url('sitemap.xml'); ?>" target="_blank"><i class="fas fa-code mr-1"></i> XML</a> -->
-                    <a href="<?= base_url('auth'); ?>">Login Pengelola</a>
+                    <!-- <a href="<?= base_url('auth'); ?>">Login Pengelola</a> -->
                 </div>
             </div>
         </div>
@@ -589,6 +633,295 @@
     <!-- ==========================================================================
        MODALS
        ========================================================================== -->
+
+    <!-- Modal Detail Jurnal (Scopus, DOAJ & SINTA) -->
+    <div class="ppip-modal" id="modalJurnalDetail">
+        <div class="ppip-modal-card ppip-modal-card-lg">
+            <button type="button" class="ppip-modal-close" aria-label="Tutup modal">&times;</button>
+            
+            <div style="margin-bottom: 18px;">
+                <span class="pill-badge primary" style="margin-bottom: 8px;">
+                    <i class="fas fa-award"></i> Direktori Reputasi Jurnal
+                </span>
+                <h3 style="font-size: 1.45rem; color: var(--navy-900); margin-bottom: 4px;">
+                    Jurnal Bereputasi Internasional & Nasional
+                </h3>
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">
+                    LPPM UIN Prof. K.H. Saifuddin Zuhri Purwokerto
+                </p>
+            </div>
+
+            <!-- Tab Navigation Bar -->
+            <div class="journal-modal-tabs">
+                <button type="button" class="journal-tab-btn tab-scopus active" data-journal-tab="scopus">
+                    <i class="fas fa-award"></i> 2 Jurnal Scopus
+                    <span class="journal-tab-badge">Internasional</span>
+                </button>
+                <button type="button" class="journal-tab-btn tab-doaj" data-journal-tab="doaj">
+                    <i class="fas fa-globe-americas"></i> 19 Jurnal DOAJ
+                    <span class="journal-tab-badge">19 Jurnal</span>
+                </button>
+                <button type="button" class="journal-tab-btn" data-journal-tab="sinta">
+                    <i class="fas fa-certificate"></i> 25 Jurnal SINTA
+                    <span class="journal-tab-badge">Akreditasi</span>
+                </button>
+            </div>
+
+            <!-- TAB PANE 1: SCOPUS -->
+            <div class="journal-tab-pane active" id="tabPane_scopus">
+                <div style="margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; background: #FFFBEB; border-left: 4px solid #F59E0B; padding: 12px 16px; border-radius: 6px;">
+                    <strong><i class="fas fa-star" style="color: #D97706;"></i> Rekam Jejak Indeksasi Global:</strong><br>
+                    UIN Saizu Purwokerto menaungi <strong>2 jurnal ilmiah</strong> yang telah terindeks secara resmi di database bereputasi global <strong>Scopus (Elsevier)</strong>.
+                </div>
+
+                <!-- Card 1: Al-Manahij -->
+                <div class="scopus-detail-card">
+                    <div class="scopus-card-header">
+                        <div>
+                            <h4 class="scopus-card-title">Al-Manahij: Jurnal Kajian Hukum Islam</h4>
+                            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+                                Pengelola: Faculty of Sharia, UIN Prof. K.H. Saifuddin Zuhri Purwokerto
+                            </div>
+                        </div>
+                        <div class="scopus-badges">
+                            <span class="badge-scopus"><i class="fas fa-star"></i> Scopus Indexed</span>
+                            <span class="badge-sinta">SINTA 1</span>
+                            <span class="badge-doaj">DOAJ</span>
+                            <span class="badge-issn">p-ISSN: 1978-6670</span>
+                            <span class="badge-issn">e-ISSN: 2579-4167</span>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+                        Jurnal ilmiah bereputasi internasional yang fokus pada kajian hukum Islam kontemporer, fatwa, sosiologi hukum Islam, dan perbandingan mazhab hukum di tingkat regional maupun internasional.
+                    </div>
+
+                    <div class="scopus-meta-grid">
+                        <div class="scopus-meta-item">
+                            <strong>Scopus Source ID</strong>
+                            <span>21101183612</span>
+                        </div>
+                        <div class="scopus-meta-item">
+                            <strong>Status Akreditasi</strong>
+                            <span>SINTA 1 (Nasional) &bull; Scopus</span>
+                        </div>
+                        <div class="scopus-meta-item">
+                            <strong>Cakupan Tahun</strong>
+                            <span>2018 s.d Sekarang</span>
+                        </div>
+                    </div>
+
+                    <div class="scopus-card-actions">
+                        <a href="http://ejournal.uinsaizu.ac.id/index.php/almanahij" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                            <i class="fas fa-external-link-alt mr-1"></i> Website Jurnal (OJS)
+                        </a>
+                        <a href="https://www.scopus.com/sourceid/21101183612" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                            <i class="fas fa-search mr-1"></i> Profil Scopus Resmi
+                        </a>
+                        <!-- <a href="https://sinta.kemdikbud.go.id/journals/profile/2202" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                            <i class="fas fa-certificate mr-1"></i> Profil SINTA
+                        </a> -->
+                    </div>
+                </div>
+
+                <!-- Card 2: Volksgeist -->
+                <div class="scopus-detail-card">
+                    <div class="scopus-card-header">
+                        <div>
+                            <h4 class="scopus-card-title">Volksgeist: Jurnal Ilmu Hukum dan Konstitusi</h4>
+                            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+                                Pengelola: Faculty of Sharia, UIN Prof. K.H. Saifuddin Zuhri Purwokerto
+                            </div>
+                        </div>
+                        <div class="scopus-badges">
+                            <span class="badge-scopus"><i class="fas fa-star"></i> Scopus Indexed</span>
+                            <span class="badge-sinta">SINTA 2</span>
+                            <span class="badge-doaj">DOAJ</span>
+                            <span class="badge-issn">p-ISSN: 2615-174X</span>
+                            <span class="badge-issn">e-ISSN: 2615-5648</span>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+                        Mempublikasikan artikel hasil riset teoritis dan empiris dalam cabang ilmu hukum tata negara, hukum konstitusi, hukum administrasi negara, dinamika peradilan, dan perlindungan hak asasi manusia.
+                    </div>
+
+                    <div class="scopus-meta-grid">
+                        <div class="scopus-meta-item">
+                            <strong>Scopus Source ID</strong>
+                            <span>21101176851</span>
+                        </div>
+                        <div class="scopus-meta-item">
+                            <strong>Status Akreditasi</strong>
+                            <span>SINTA 2 (Nasional) &bull; Scopus</span>
+                        </div>
+                        <div class="scopus-meta-item">
+                            <strong>Cakupan Tahun</strong>
+                            <span>2020 s.d Sekarang</span>
+                        </div>
+                    </div>
+
+                    <div class="scopus-card-actions">
+                        <a href="https://ejournal.uinsaizu.ac.id/index.php/volksgeist" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                            <i class="fas fa-external-link-alt mr-1"></i> Website Jurnal (OJS)
+                        </a>
+                        <a href="https://www.scopus.com/sourceid/21101176851" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                            <i class="fas fa-search mr-1"></i> Profil Scopus Resmi
+                        </a>
+                        <!-- <a href="https://sinta.kemdikbud.go.id/journals/profile/5973" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                            <i class="fas fa-certificate mr-1"></i> Profil SINTA
+                        </a> -->
+                    </div>
+                </div>
+
+                <!-- Callout Afiliasi Scopus -->
+                <div class="affiliation-callout">
+                    <div>
+                        <div style="font-size: 0.78rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;">
+                            <i class="fas fa-university mr-1"></i> Profil Institusi di Scopus
+                        </div>
+                        <div style="font-size: 0.98rem; font-weight: 800; color: var(--navy-900); margin: 2px 0;">
+                            Universitas Islam Negeri Profesor Kiai Haji Saifuddin Zuhri Purwokerto
+                        </div>
+                        <div style="font-size: 0.82rem; color: var(--text-muted);">
+                            Scopus Affiliation ID: <strong>60281245</strong> (mencakup data publikasi dosen & sitasi internasional)
+                        </div>
+                    </div>
+                    <div>
+                        <a href="https://www.scopus.com/pages/organization/60281245" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
+                            <i class="fas fa-chart-line mr-1"></i> Lihat Capaian Afiliasi Scopus
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB PANE 2: DOAJ -->
+            <div class="journal-tab-pane" id="tabPane_doaj">
+                <div style="margin-bottom: 18px; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; background: #F0F9FF; border-left: 4px solid #0284C7; padding: 12px 16px; border-radius: 6px;">
+                    <strong><i class="fas fa-globe-americas" style="color: #0284C7;"></i> Directory of Open Access Journals (DOAJ):</strong><br>
+                    Terdapat <strong>19 jurnal ilmiah</strong> di lingkungan UIN Saizu Purwokerto yang terindeks resmi di DOAJ sebagai pengakuan mutu tata kelola editorial berkualifikasi akses terbuka internasional.
+                </div>
+
+                <div class="doaj-toolbar">
+                    <div class="doaj-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="doajSearchInput" placeholder="Cari nama jurnal, fakultas, atau ISSN...">
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">
+                        Menampilkan <strong id="doajFilteredCount"><?= !empty($doaj_journals) ? count($doaj_journals) : 19; ?></strong> jurnal
+                    </div>
+                    <div>
+                        <a href="https://doaj.org/search/journals?ref=homepage-box&source=%7B%22query%22%3A%7B%22bool%22%3A%7B%22must%22%3A%5B%7B%22terms%22%3A%7B%22bibjson.publisher.name.exact%22%3A%5B%22Universitas%20Islam%20Negeri%20Profesor%20Kiai%20Haji%20Saifuddin%20Zuhri%20Purwokerto%22%2C%22Fakultas%20Ekonomi%20dan%20Bisnis%20Islam%20IAIN%20Purwokerto%22%2C%22Faculty%20of%20Sharia%20UIN%20Prof.%20K.H.%20Saifuddin%20Zuhri%20Purwokerto%22%2C%22LPPM%20IAIN%20Purwokerto%22%2C%22Faculty%20of%20Syariah%2C%20State%20Islamic%20University%20of%20Prof.%20K.H.%20Saifuddin%20Zuhri%20Purwokerto%22%2C%22Fakultas%20Dakwah%20IAIN%20Purwokerto%22%2C%22Fakultas%20Dakwah%20UIN%20Saizu%20Purwokerto%22%2C%22Fakultas%20Tarbiyah%20dan%20Ilmu%20Keguruan%20IAIN%20Purwokerto%22%2C%22Fakultas%20Tarbiyah%20dan%20Ilmu%20Keguruan%20UIN%20Prof.%20K.H.%20Saifuddin%20Zuhri%20Purwokerto%22%2C%22Ikatan%20Keluarga%20Alumni%20UIN%20Prof.%20K.H.%20Saifuddin%20Zuhri%20Purwokerto%22%2C%22LPPM%20UIN%20Prof.%20K.H.%20Saifuddin%20Zuhri%20Purwokerto%22%2C%22Lembaga%20Kajian%20Nusantara%20Raya%20UIN%20Prof.%20K.H.%20Saifudin%20Zuhri%20Purwokerto%22%2C%22Pendidikan%20Bahasa%20Arab%20FTIK%20IAIN%20Purwokerto%22%2C%22Postgraduate%20State%20Institute%20on%20Islamic%20Studies%20Purwokerto%22%2C%22Pusat%20Studi%20Gender%20dan%20Anak%20UIN%20SAIZU%20Purwokerto%22%2C%22UPT.%20Perpustakaan%20UIN%20Prof.%20K.H.%20Saifuddin%20Zuhri%20Purwokerto%22%5D%7D%7D%2C%7B%22query_string%22%3A%7B%22query%22%3A%22purwokerto%22%2C%22default_operator%22%3A%22AND%22%2C%22default_field%22%3A%22bibjson.publisher.name%22%7D%7D%5D%7D%7D%2C%22track_total_hits%22%3Atrue%7D" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                            <i class="fas fa-external-link-alt mr-1"></i> Buka di DOAJ.org
+                        </a>
+                    </div>
+                </div>
+
+                <div class="doaj-list-container">
+                    <?php if (!empty($doaj_journals)): ?>
+                        <?php foreach ($doaj_journals as $idx => $dj): ?>
+                            <div class="doaj-journal-row">
+                                <div class="doaj-journal-left">
+                                    <div class="doaj-index-num"><?= $idx + 1; ?></div>
+                                    <div class="doaj-journal-info">
+                                        <h4>
+                                            <a href="<?= htmlspecialchars($dj['url']); ?>" target="_blank" rel="noopener noreferrer">
+                                                <?= htmlspecialchars($dj['name']); ?>
+                                            </a>
+                                        </h4>
+                                        <div class="doaj-journal-publisher">
+                                            <i class="far fa-building mr-1"></i> <?= htmlspecialchars($dj['publisher']); ?>
+                                        </div>
+                                        <div class="doaj-journal-tags">
+                                            <?php if (!empty($dj['e_issn']) && $dj['e_issn'] !== '-'): ?>
+                                                <span class="badge-issn">e-ISSN: <?= htmlspecialchars($dj['e_issn']); ?></span>
+                                            <?php endif; ?>
+                                            <?php if (!empty($dj['p_issn']) && $dj['p_issn'] !== '-'): ?>
+                                                <span class="badge-issn">p-ISSN: <?= htmlspecialchars($dj['p_issn']); ?></span>
+                                            <?php endif; ?>
+                                            <?php if (!empty($dj['sinta']) && $dj['sinta'] !== '-'): ?>
+                                                <span class="badge-sinta"><?= htmlspecialchars($dj['sinta']); ?></span>
+                                            <?php endif; ?>
+                                            <span class="badge-doaj"><i class="fas fa-check-circle"></i> DOAJ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="doaj-journal-actions">
+                                    <a href="<?= htmlspecialchars($dj['url']); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" title="Kunjungi Portal Jurnal">
+                                        <i class="fas fa-globe"></i> <span class="d-none-sm">Kunjungi</span>
+                                    </a>
+                                    <?php if (!empty($dj['doaj_url'])): ?>
+                                        <a href="<?= htmlspecialchars($dj['doaj_url']); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" title="Lihat di DOAJ">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <div id="doajNoResults" style="display: none; text-align: center; padding: 36px 20px; color: var(--text-muted);">
+                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px; color: var(--border-light);"></i>
+                        <p style="margin: 0; font-size: 0.95rem;">Tidak ditemukan jurnal yang cocok dengan kata kunci pencarian.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB PANE 3: SINTA -->
+            <div class="journal-tab-pane" id="tabPane_sinta">
+                <div style="margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; background: #ECFDF5; border-left: 4px solid #047857; padding: 12px 16px; border-radius: 6px;">
+                    <strong><i class="fas fa-certificate" style="color: #047857;"></i> Akreditasi Nasional ARJUNA (SINTA):</strong><br>
+                    Sebanyak <strong>25 Jurnal Ilmiah</strong> UIN Saizu Purwokerto telah memperoleh peringkat akreditasi nasional resmi dari Kementerian Pendidikan Tinggi, Sains, dan Teknologi Republik Indonesia.
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px;">
+                    <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 16px; text-align: center;">
+                        <div style="font-size: 0.8rem; font-weight: 700; color: #047857; text-transform: uppercase;">SINTA 1</div>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: var(--navy-900); margin: 4px 0;">1</div>
+                        <div style="font-size: 0.76rem; color: var(--text-muted);">Al-Manahij</div>
+                    </div>
+                    <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 16px; text-align: center;">
+                        <div style="font-size: 0.8rem; font-weight: 700; color: #059669; text-transform: uppercase;">SINTA 2</div>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: var(--navy-900); margin: 4px 0;">5</div>
+                        <div style="font-size: 0.76rem; color: var(--text-muted);">Volksgeist, Maghza, dll</div>
+                    </div>
+                    <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 16px; text-align: center;">
+                        <div style="font-size: 0.8rem; font-weight: 700; color: #0D9488; text-transform: uppercase;">SINTA 3</div>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: var(--navy-900); margin: 4px 0;">8</div>
+                        <div style="font-size: 0.76rem; color: var(--text-muted);">Insania, Icodec, dll</div>
+                    </div>
+                    <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 16px; text-align: center;">
+                        <div style="font-size: 0.8rem; font-weight: 700; color: #0284C7; text-transform: uppercase;">SINTA 4 - 5</div>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: var(--navy-900); margin: 4px 0;">11</div>
+                        <div style="font-size: 0.76rem; color: var(--text-muted);">Mabsya, Numera, dll</div>
+                    </div>
+                </div>
+
+                <div style="background: #F8FAFC; border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                    <div>
+                        <div style="font-weight: 700; color: var(--navy-900); font-size: 1rem;">Eksplorasi Analitik Akreditasi & Jurnal Lengkap</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px;">
+                            Buka grafik sebaran akreditasi SINTA atau kunjungi Rumah Jurnal LPPM UIN Saizu.
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <!-- <a href="<?= base_url('dashboard/jurnal_sinta'); ?>" class="btn btn-primary btn-sm">
+                            <i class="fas fa-chart-bar mr-1"></i> Grafik SINTA
+                        </a> -->
+                        <a href="https://ejournal.uinsaizu.ac.id" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                            <i class="fas fa-globe mr-1"></i> Griya Jurnal
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <span style="font-size: 0.82rem; color: var(--text-muted);">
+                    Data diverifikasi oleh LPPM UIN Prof. K.H. Saifuddin Zuhri Purwokerto
+                </span>
+                <button type="button" class="btn btn-outline btn-sm" data-close-modal>Tutup</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Tentang PPIP -->
     <div class="ppip-modal" id="modalAbout">

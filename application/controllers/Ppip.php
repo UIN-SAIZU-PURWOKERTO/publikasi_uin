@@ -23,6 +23,10 @@ class Ppip extends CI_Controller
         // 4. Ambil statistik kinerja terkini (live metrics) dari basis data
         $stats = $this->ppip_model->get_live_stats();
 
+        // 5. Ambil data terperinci jurnal terindeks Scopus & DOAJ
+        $scopus_journals = $this->ppip_model->get_scopus_journals();
+        $doaj_journals   = $this->ppip_model->get_doaj_journals();
+
         $section_clean = strtolower(trim($section));
         $valid_sections = ['beranda', 'tentang', 'layanan', 'kinerja', 'informasi', 'kontak', 'disclaimer'];
         if (!in_array($section_clean, $valid_sections)) {
@@ -30,12 +34,14 @@ class Ppip extends CI_Controller
         }
 
         $data = [
-            'title'          => $settings['hero_title'] . ' | ' . $settings['hero_badge'],
-            'settings'       => $settings,
-            'portals'        => $portals,
-            'agendas'        => $agendas,
-            'stats'          => $stats,
-            'active_section' => $section_clean,
+            'title'           => $settings['hero_title'] . ' | ' . $settings['hero_badge'],
+            'settings'        => $settings,
+            'portals'         => $portals,
+            'agendas'         => $agendas,
+            'stats'           => $stats,
+            'scopus_journals' => $scopus_journals,
+            'doaj_journals'   => $doaj_journals,
+            'active_section'  => $section_clean,
         ];
 
         $this->load->view('landing/index', $data);

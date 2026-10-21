@@ -15,8 +15,8 @@
     <!-- FontAwesome 5 -->
     <link rel="stylesheet" href="<?= base_url('assets/plugins/fontawesome-free/css/all.min.css'); ?>">
 
-    <!-- Custom Landing Page CSS -->
-    <link rel="stylesheet" href="<?= base_url('assets/landing/css/landing.css'); ?>">
+    <!-- Custom Landing Page CSS with Cache Buster -->
+    <link rel="stylesheet" href="<?= base_url('assets/landing/css/landing.css?v=' . (file_exists(FCPATH . 'assets/landing/css/landing.css') ? filemtime(FCPATH . 'assets/landing/css/landing.css') : time())); ?>">
 
     <style>
         .sitemap-header {

@@ -292,23 +292,83 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Attach open buttons
-    document.querySelectorAll('[data-open-modal]').forEach(btn => {
-        btn.addEventListener('click', function (e) {
+    // Tab switcher helper for journal modal
+    function switchJournalTab(tabName) {
+        if (!tabName) return;
+        const targetBtn = document.querySelector(`.journal-tab-btn[data-journal-tab="${tabName}"]`);
+        const targetPane = document.getElementById(`tabPane_${tabName}`);
+        
+        if (targetBtn && targetPane) {
+            document.querySelectorAll('.journal-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.journal-tab-pane').forEach(pane => pane.classList.remove('active'));
+            targetBtn.classList.add('active');
+            targetPane.classList.add('active');
+        }
+    }
+
+    // Attach journal tab click listener via delegation
+    document.addEventListener('click', function (e) {
+        const tabBtn = e.target.closest('.journal-tab-btn');
+        if (tabBtn) {
             e.preventDefault();
-            const modalId = this.getAttribute('data-open-modal');
-            openModal(modalId);
-        });
+            const tabName = tabBtn.getAttribute('data-journal-tab');
+            switchJournalTab(tabName);
+        }
     });
 
-    // Attach close buttons
-    document.querySelectorAll('.ppip-modal-close, [data-close-modal]').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const modal = this.closest('.ppip-modal');
+    // Attach open buttons with tab support via delegation
+    document.addEventListener('click', function (e) {
+        const modalBtn = e.target.closest('[data-open-modal]');
+        if (modalBtn) {
+            e.preventDefault();
+            const modalId = modalBtn.getAttribute('data-open-modal');
+            const targetTab = modalBtn.getAttribute('data-tab');
+            if (targetTab) {
+                switchJournalTab(targetTab);
+            }
+            openModal(modalId);
+        }
+    });
+
+    // Live search for DOAJ journal list inside modal
+    const doajSearchInput = document.getElementById('doajSearchInput');
+    if (doajSearchInput) {
+        doajSearchInput.addEventListener('input', function () {
+            const query = this.value.toLowerCase().trim();
+            const rows = document.querySelectorAll('.doaj-journal-row');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    row.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            const countBadge = document.getElementById('doajFilteredCount');
+            if (countBadge) {
+                countBadge.textContent = visibleCount;
+            }
+
+            const noResultEl = document.getElementById('doajNoResults');
+            if (noResultEl) {
+                noResultEl.style.display = (visibleCount === 0) ? 'block' : 'none';
+            }
+        });
+    }
+
+    // Attach close buttons via delegation
+    document.addEventListener('click', function (e) {
+        const closeBtn = e.target.closest('.ppip-modal-close, [data-close-modal]');
+        if (closeBtn) {
+            const modal = closeBtn.closest('.ppip-modal');
             if (modal) {
                 closeModal(modal.id);
             }
-        });
+        }
     });
 
     // Close when clicking outside of modal card
